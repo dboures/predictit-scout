@@ -29,3 +29,7 @@ const UserSchema = new mongoose.Schema({
 
 
 module.exports = mongoose.model('User', UserSchema);
+
+
+// TODO: modify this to include which predictit markets the user is watching,
+// and values for what they want to watch at
