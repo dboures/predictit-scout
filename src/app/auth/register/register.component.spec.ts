@@ -25,14 +25,41 @@ describe('RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should test form validity', () => {
+  it('should reject empty forms', () => {
     const form = component.userForm;
     expect(form.valid).toBeFalsy();
+  });
 
-    // const nameInput = form.controls.name;
-    // nameInput.setValue('John Peter');
+  it('should reject forms with incorrect email', () => {
+    const form = component.userForm;
 
-    // expect(form.valid).toBeTruthy();
-  })
+    const nameInput = form.controls.fullname;
+    const emailInput = form.controls.email;
+    const passwordInput = form.controls.password;
+    const repeatPasswordInput = form.controls.repeatPassword;
+
+    nameInput.setValue('John Peter');
+    emailInput.setValue('jpeteratgmail.com');
+    passwordInput.setValue('verysecret');
+    repeatPasswordInput.setValue('verysecret');
+
+    expect(form.valid).toBeFalsy();
+  });
+
+  it('should accept complete + correct forms', () => {
+    const form = component.userForm;
+
+    const nameInput = form.controls.fullname;
+    const emailInput = form.controls.email;
+    const passwordInput = form.controls.password;
+    const repeatPasswordInput = form.controls.repeatPassword;
+
+    nameInput.setValue('John Peter');
+    emailInput.setValue('jpeter@gmail.com');
+    passwordInput.setValue('verysecret');
+    repeatPasswordInput.setValue('verysecret');
+    
+    expect(form.valid).toBeTruthy();
+  });
 
 });

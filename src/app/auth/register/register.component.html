@@ -8,7 +8,7 @@
         <tr>
           <td>
             <mat-form-field>
-              <input matInput placeholder="Fullname" formControlName="fullname" name="fullname" required>
+              <input matInput placeholder="Full Name" formControlName="fullname" name="fullname" required>
             </mat-form-field>
           </td>
         </tr>
@@ -40,6 +40,6 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="register()" color="primary">Register</button>
-    <span>Allrady have an account ? <a [routerLink]="['/auth/login']">login</a> here</span>
+    <span>Already have an account ? <a [routerLink]="['/auth/login']">login</a> here</span>
   </mat-card-actions>
 </mat-card>
