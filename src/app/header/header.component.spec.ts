@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { MatMenuModule } from '@angular/material/menu';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
@@ -8,6 +10,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HttpClientTestingModule, MatMenuModule],
       declarations: [ HeaderComponent ]
     })
     .compileComponents();
