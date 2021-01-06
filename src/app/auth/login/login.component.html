@@ -24,6 +24,10 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="login()" color="primary">Login</button>
-    <span>Don't have an account ? <a [routerLink]="['/auth/register']" >register</a> here</span>
+    <span *ngIf="showLoginError"> Error logging in, please check your email and password and try again</span>
   </mat-card-actions>
+  <mat-card-footer>
+    <span> Don't have an account? Register <a [routerLink]="['/auth/register']">here</a></span>
+  </mat-card-footer>
+
 </mat-card>

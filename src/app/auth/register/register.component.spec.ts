@@ -46,7 +46,7 @@ describe('RegisterComponent', () => {
     expect(form.valid).toBeFalsy();
   });
 
-  it('should accept complete + correct forms', () => {
+  it('should accept complete and correct forms', () => {
     const form = component.userForm;
 
     const nameInput = form.controls.fullname;

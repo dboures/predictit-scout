@@ -11,12 +11,17 @@ import { AuthService } from '@app/shared/services';
 export class LoginComponent {
   email: string | null = null;
   password: string | null = null;
+  showLoginError: boolean = false;
 
   constructor(private router: Router, private authService: AuthService) {}
 
   login(): void {
-    this.authService.login(this.email!, this.password!).subscribe(() => {
-      this.router.navigateByUrl('/');
-    });
+    this.authService.login(this.email!, this.password!).subscribe(
+      data => {
+        this.router.navigateByUrl('/');
+      },
+      error => {
+        this.showLoginError = true
+      });
   }
 }
