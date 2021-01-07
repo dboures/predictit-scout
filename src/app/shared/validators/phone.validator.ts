@@ -5,8 +5,7 @@ const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
 
 
-export function phoneValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
+export function phoneValidator(control: AbstractControl): { [key: string]: boolean } | null {
       let validNumber = false;
     //   try {
     //     const phoneNumber = phoneNumberUtil.parseAndKeepRawInput(
@@ -14,10 +13,9 @@ export function phoneValidator(): ValidatorFn {
     //     );
     //     validNumber = phoneNumberUtil.isValidNumber(phoneNumber);
     //   } catch (e) {console.log(e) }
-      console.log(validNumber)
       if(validNumber){
           return {'phone': true};
       }
-      return null;
-    }
-  }
+      //return null;
+      return {'phone': false};
+    };
