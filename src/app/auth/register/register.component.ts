@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '@app/shared/services';
+import { phoneValidator } from '@app/shared/validators/phone.validator';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,7 @@ export class RegisterComponent {
   userForm = new FormGroup({
     fullname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl('', [Validators.required]), // TODO add validator
+    phone: new FormControl('', [Validators.required, phoneValidator()]), // TODO add validator
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required, this.passwordsMatchValidator]),
   });
@@ -44,6 +45,7 @@ export class RegisterComponent {
   }
 
   get phone(): AbstractControl {
+    //want to strip down to just the phone here
     return this.userForm.get('phone')!;
   }
 
