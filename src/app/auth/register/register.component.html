@@ -23,6 +23,14 @@
         <tr>
           <td>
             <mat-form-field>
+              <input matInput placeholder="Phone Number" formControlName="phone" name="phone" required>
+              <!-- TODO <mat-error *ngIf="phone.invalid && email.hasError('email')">Invalid phone number</mat-error> -->
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field>
               <input matInput placeholder="Password" formControlName="password" type="password" name="password" required>
             </mat-form-field>
           </td>

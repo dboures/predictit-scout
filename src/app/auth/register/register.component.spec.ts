@@ -46,16 +46,36 @@ describe('RegisterComponent', () => {
     expect(form.valid).toBeFalsy();
   });
 
-  it('should accept complete and correct forms', () => {
+  it('should reject forms with incorrect phone number', () => {
     const form = component.userForm;
 
     const nameInput = form.controls.fullname;
     const emailInput = form.controls.email;
+    const phoneInput = form.controls.phone;
     const passwordInput = form.controls.password;
     const repeatPasswordInput = form.controls.repeatPassword;
 
     nameInput.setValue('John Peter');
     emailInput.setValue('jpeter@gmail.com');
+    phoneInput.setValue('212-5o7-5591'); // form is not validating yet
+    passwordInput.setValue('verysecret');
+    repeatPasswordInput.setValue('verysecret');
+
+    expect(form.valid).toBeFalsy();
+  });
+
+  it('should accept complete and correct forms', () => {
+    const form = component.userForm;
+
+    const nameInput = form.controls.fullname;
+    const emailInput = form.controls.email;
+    const phoneInput = form.controls.phone;
+    const passwordInput = form.controls.password;
+    const repeatPasswordInput = form.controls.repeatPassword;
+
+    nameInput.setValue('John Peter');
+    emailInput.setValue('jpeter@gmail.com');
+    phoneInput.setValue('212-507-5591');
     passwordInput.setValue('verysecret');
     repeatPasswordInput.setValue('verysecret');
     

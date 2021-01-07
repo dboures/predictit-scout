@@ -30,6 +30,7 @@ export class RegisterComponent {
   userForm = new FormGroup({
     fullname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
+    phone: new FormControl('', [Validators.required]), // TODO add validator
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required, this.passwordsMatchValidator]),
   });
@@ -40,6 +41,10 @@ export class RegisterComponent {
 
   get email(): AbstractControl {
     return this.userForm.get('email')!;
+  }
+
+  get phone(): AbstractControl {
+    return this.userForm.get('phone')!;
   }
 
   get password(): AbstractControl {
