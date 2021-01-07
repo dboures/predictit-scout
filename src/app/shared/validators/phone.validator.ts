@@ -5,7 +5,7 @@ const phoneNumberUtil = PhoneNumberUtil.getInstance();
 
 
 
-export function phoneValidator(regionCode: string = "US"): ValidatorFn {
+export function phoneValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       let validNumber = false;
     //   try {
@@ -14,7 +14,7 @@ export function phoneValidator(regionCode: string = "US"): ValidatorFn {
     //     );
     //     validNumber = phoneNumberUtil.isValidNumber(phoneNumber);
     //   } catch (e) {console.log(e) }
-      
+      console.log(validNumber)
       if(validNumber){
           return {'phone': true};
       }

@@ -57,7 +57,7 @@ describe('RegisterComponent', () => {
 
     nameInput.setValue('John Peter');
     emailInput.setValue('jpeter@gmail.com');
-    phoneInput.setValue('212-5o7-5591'); // form is not validating yet
+    phoneInput.setValue('212-5k7-5591'); // form is not validating yet
     passwordInput.setValue('verysecret');
     repeatPasswordInput.setValue('verysecret');
 
