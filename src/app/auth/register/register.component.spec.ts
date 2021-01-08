@@ -35,11 +35,13 @@ describe('RegisterComponent', () => {
 
     const nameInput = form.controls.fullname;
     const emailInput = form.controls.email;
+    const phoneInput = form.controls.phone;
     const passwordInput = form.controls.password;
     const repeatPasswordInput = form.controls.repeatPassword;
 
     nameInput.setValue('John Peter');
     emailInput.setValue('jpeteratgmail.com');
+    phoneInput.setValue('2125075591');
     passwordInput.setValue('verysecret');
     repeatPasswordInput.setValue('verysecret');
 
@@ -57,7 +59,7 @@ describe('RegisterComponent', () => {
 
     nameInput.setValue('John Peter');
     emailInput.setValue('jpeter@gmail.com');
-    phoneInput.setValue('212-5k7-5591'); // form is not validating yet
+    phoneInput.setValue('212-5k7-5591');
     passwordInput.setValue('verysecret');
     repeatPasswordInput.setValue('verysecret');
 

@@ -1,21 +1,16 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
 import { PhoneNumberUtil, PhoneNumber } from 'google-libphonenumber';
 
-const phoneNumberUtil = PhoneNumberUtil.getInstance();
-
-
 
 export function phoneValidator(control: AbstractControl): { [key: string]: boolean } | null {
-      let validNumber = false;
-    //   try {
-    //     const phoneNumber = phoneNumberUtil.parseAndKeepRawInput(
-    //       control.value, regionCode
-    //     );
-    //     validNumber = phoneNumberUtil.isValidNumber(phoneNumber);
-    //   } catch (e) {console.log(e) }
-      if(validNumber){
-          return {'phone': true};
-      }
-      //return null;
-      return {'phone': false};
-    };
+  const phoneNumberUtil = PhoneNumberUtil.getInstance();
+  try {
+    const number = phoneNumberUtil.parseAndKeepRawInput(control.value, 'US');
+    console.log(phoneNumberUtil.isValidNumber(number))
+    if (!phoneNumberUtil.isValidNumber(number)) {
+      return { 'phone': true }; // TODO how do we store/return the parsed number??
+    }
+  } 
+  catch (e) { }
+return null;
+};

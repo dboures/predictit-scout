@@ -1,11 +1,9 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { FormControl, Validators } from '@angular/forms';
 import { phoneValidator } from '@app/shared/validators/phone.validator';
 
 describe('phoneValidator', () => {
     const control = new FormControl('', [Validators.required, phoneValidator]);
-  
+
     it('should invalidate form if no input', () => {
         expect(control.valid).toBeFalsy();
     });
@@ -16,7 +14,7 @@ describe('phoneValidator', () => {
     });
 
     it('should accept form if phone is good', () => {
-    control.setValue('123-456-7890');
-    expect(control.valid).toBeTruthy();
+        control.setValue('3126984237'); // cannot just be random numbers, must have legit area code
+        expect(control.valid).toBeTruthy();
     });
 });

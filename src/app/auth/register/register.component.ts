@@ -31,7 +31,7 @@ export class RegisterComponent {
   userForm = new FormGroup({
     fullname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl('', [Validators.required, phoneValidator]), // TODO add validator
+    phone: new FormControl('', [Validators.required, phoneValidator]),
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required, this.passwordsMatchValidator]),
   });
