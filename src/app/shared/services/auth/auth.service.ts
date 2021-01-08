@@ -34,6 +34,7 @@ export class AuthService {
   register(
     fullname: string,
     email: string,
+    phone: string,
     password: string,
     repeatPassword: string
   ): Observable<User> {
@@ -41,6 +42,7 @@ export class AuthService {
       .post<AuthResponse>('/api/auth/register', {
         fullname,
         email,
+        phone,
         password,
         repeatPassword,
       })

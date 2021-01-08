@@ -10,6 +10,7 @@ import {
 
 import { AuthService } from '@app/shared/services';
 import { phoneValidator } from '@app/shared/validators/phone.validator';
+import { PhoneNumberUtil, PhoneNumberFormat } from 'google-libphonenumber';
 
 @Component({
   selector: 'app-register',
@@ -17,14 +18,15 @@ import { phoneValidator } from '@app/shared/validators/phone.validator';
   styleUrls: ['../auth.component.scss'],
 })
 export class RegisterComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  phoneNumberUtil = PhoneNumberUtil.getInstance()
+  constructor(private router: Router, private authService: AuthService) { }
 
   passwordsMatchValidator(control: FormControl): ValidationErrors | null {
     const password = control.root.get('password');
     return password && control.value !== password.value
       ? {
-          passwordMatch: true,
-        }
+        passwordMatch: true,
+      }
       : null;
   }
 
@@ -45,7 +47,6 @@ export class RegisterComponent {
   }
 
   get phone(): AbstractControl {
-    //want to strip down to just the phone here
     return this.userForm.get('phone')!;
   }
 
@@ -62,9 +63,11 @@ export class RegisterComponent {
       return;
     }
 
-    const { fullname, email, password, repeatPassword } = this.userForm.getRawValue();
+    const { fullname, email, phone, password, repeatPassword } = this.userForm.getRawValue();
+    const libphone = this.phoneNumberUtil.parseAndKeepRawInput(phone, 'US')
+    const cleanPhone = this.phoneNumberUtil.format(libphone, PhoneNumberFormat.E164);
 
-    this.authService.register(fullname, email, password, repeatPassword).subscribe(data => {
+    this.authService.register(fullname, email, cleanPhone, password, repeatPassword).subscribe(data => {
       this.router.navigate(['']);
     });
   }
