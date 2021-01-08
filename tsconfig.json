@@ -22,6 +22,10 @@
     "importHelpers": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+
   }
 }

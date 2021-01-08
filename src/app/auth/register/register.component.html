@@ -1,4 +1,5 @@
 <mat-card class="example-card">
+  <!-- TODO: center all these things -->
   <mat-card-header>
     <mat-card-title>Register</mat-card-title>
   </mat-card-header>
@@ -23,23 +24,40 @@
         <tr>
           <td>
             <mat-form-field>
-              <input matInput placeholder="Phone Number" formControlName="phone" name="phone" required>
-              <!-- TODO <mat-error *ngIf="phone.invalid && email.hasError('email')">Invalid phone number</mat-error> -->
+              <mat-select [(ngModel)]="this.countryCode" [ngModelOptions]="{standalone: true}">
+                <mat-option *ngFor="let country of phoneCountryMap.default" [value]="country.dial_code">
+                  {{country.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td class = "country-extension">
+            <h3>{{this.countryCode}}</h3>
+          </td>
+          <td class = "phone-number">
+            <mat-form-field>
+              <!-- <input value="{{country.dial_code}}" disabled/> -->
+          <input matInput placeholder="Phone Number" formControlName="phone" name="phone" required>
             </mat-form-field>
           </td>
         </tr>
         <tr>
           <td>
             <mat-form-field>
-              <input matInput placeholder="Password" formControlName="password" type="password" name="password" required>
+              <input matInput placeholder="Password" formControlName="password" type="password" name="password"
+                required>
             </mat-form-field>
           </td>
         </tr>
         <tr>
           <td>
             <mat-form-field>
-              <input matInput placeholder="Repeat Password" formControlName="repeatPassword" type="password" name="repeatPassword" required>
-              <mat-error *ngIf="repeatPassword.invalid && repeatPassword.hasError('passwordMatch')">Password mismatch</mat-error>
+              <input matInput placeholder="Repeat Password" formControlName="repeatPassword" type="password"
+                name="repeatPassword" required>
+              <mat-error *ngIf="repeatPassword.invalid && repeatPassword.hasError('passwordMatch')">Password mismatch
+              </mat-error>
             </mat-form-field>
           </td>
         </tr>
@@ -48,6 +66,6 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="register()" color="primary">Register</button>
-    <span>Already have an account ? <a [routerLink]="['/auth/login']">login</a> here</span>
+    <span>Already have an account? <a [routerLink]="['/auth/login']">login</a> here</span>
   </mat-card-actions>
 </mat-card>

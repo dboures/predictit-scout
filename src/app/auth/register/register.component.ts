@@ -9,8 +9,9 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '@app/shared/services';
-import { phoneValidator } from '@app/shared/validators/phone.validator';
+import { phoneValidator } from '@app/shared/phone/phone.validator';
 import { PhoneNumberUtil, PhoneNumberFormat } from 'google-libphonenumber';
+import * as phoneCountryCodeMap from '@app/shared/phone/phoneCountryCodeMap.json';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,9 @@ import { PhoneNumberUtil, PhoneNumberFormat } from 'google-libphonenumber';
   styleUrls: ['../auth.component.scss'],
 })
 export class RegisterComponent {
-  phoneNumberUtil = PhoneNumberUtil.getInstance()
+  phoneNumberUtil = PhoneNumberUtil.getInstance();
+  phoneCountryMap = phoneCountryCodeMap;
+  countryCode: string = '';
   constructor(private router: Router, private authService: AuthService) { }
 
   passwordsMatchValidator(control: FormControl): ValidationErrors | null {
@@ -33,7 +36,7 @@ export class RegisterComponent {
   userForm = new FormGroup({
     fullname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl('', [Validators.required, phoneValidator]),
+    phone: new FormControl('', [Validators.required, phoneValidator(this.countryCode)]),
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required, this.passwordsMatchValidator]),
   });
@@ -64,8 +67,8 @@ export class RegisterComponent {
     }
 
     const { fullname, email, phone, password, repeatPassword } = this.userForm.getRawValue();
-    const libphone = this.phoneNumberUtil.parseAndKeepRawInput(phone, 'US')
-    const cleanPhone = this.phoneNumberUtil.format(libphone, PhoneNumberFormat.E164);
+    const number = this.phoneNumberUtil.parse(this.countryCode.concat(phone), "");
+    const cleanPhone = this.phoneNumberUtil.format(number, PhoneNumberFormat.E164);
 
     this.authService.register(fullname, email, cleanPhone, password, repeatPassword).subscribe(data => {
       this.router.navigate(['']);

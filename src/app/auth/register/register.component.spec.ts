@@ -21,6 +21,7 @@ describe('RegisterComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
+    component.countryCode = '+1'
     authService = TestBed.get(AuthService);
     fixture.detectChanges();
   });
