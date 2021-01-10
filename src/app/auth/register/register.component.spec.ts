@@ -12,10 +12,10 @@ describe('RegisterComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule],
-      declarations: [ RegisterComponent ],
+      declarations: [RegisterComponent],
       providers: [AuthService],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -105,7 +105,7 @@ describe('RegisterComponent', () => {
     repeatPasswordInput.setValue('verysecret');
 
     component.register()
-    
+
     expect(authService.register).not.toHaveBeenCalled();
   });
 
