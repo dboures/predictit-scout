@@ -13,7 +13,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './shared/services';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCardFooter, MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 
 export function appInitializerFactory(authService: AuthService) {
@@ -21,7 +21,7 @@ export function appInitializerFactory(authService: AuthService) {
 }
 
 @NgModule({
-  imports: [BrowserAnimationsModule, HttpClientModule, SharedModule, AppRoutingModule, MatSelectModule, MatCardModule, MatCardFooter, MatOptionModule],
+  imports: [BrowserAnimationsModule, HttpClientModule, SharedModule, AppRoutingModule],
   declarations: [AppComponent, HeaderComponent, HomeComponent],
   providers: [
     {
