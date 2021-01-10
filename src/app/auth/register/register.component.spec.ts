@@ -21,7 +21,6 @@ describe('RegisterComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
-    component.countryCode = '+1'
     authService = TestBed.get(AuthService);
     fixture.detectChanges();
   });
@@ -85,7 +84,7 @@ describe('RegisterComponent', () => {
     phoneInput.setValue('212-507-5591');
     passwordInput.setValue('verysecret');
     repeatPasswordInput.setValue('verysecret');
-    
+
     expect(form.valid).toBeTruthy();
   });
 

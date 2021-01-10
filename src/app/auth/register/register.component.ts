@@ -21,7 +21,7 @@ import * as phoneCountryCodeMap from '@app/shared/phone/phoneCountryCodeMap.json
 export class RegisterComponent {
   phoneNumberUtil = PhoneNumberUtil.getInstance();
   phoneCountryMap = phoneCountryCodeMap;
-  countryCode: string = '';
+  countryCode: string = '+1';
   constructor(private router: Router, private authService: AuthService) { }
 
   passwordsMatchValidator(control: FormControl): ValidationErrors | null {

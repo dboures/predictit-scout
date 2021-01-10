@@ -1,5 +1,5 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 
 
 // export function phoneValidator(control: AbstractControl): { [key: string]: boolean } | null {
@@ -16,7 +16,6 @@ import { PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 // };
 
 export function phoneValidator(countryCode: string): ValidatorFn {
-  const phoneValidationError = { 'phone': true }
   return (control: AbstractControl): {[key: string]: boolean} | null => {
     const phoneNumberUtil = PhoneNumberUtil.getInstance();
     const phoneValidationError = { 'phone': true };
