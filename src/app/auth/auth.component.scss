@@ -6,10 +6,32 @@
   flex: 1 1 auto;
 }
 
-.example-card {
-  width: 400px;
+.login-card {
+  width: 250px; //ideally not just pixelized
   margin: 10% auto;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.register-card {
+  width: 325px; //ideally not just pixelized
+  margin: 10% auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.phone-extension {
+  font-size: medium;
+}
+
+.country-select {
+  width: 50px;
 }
 
 .mat-card-title {

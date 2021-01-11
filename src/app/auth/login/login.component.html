@@ -1,9 +1,9 @@
-<mat-card class="example-card">
+<mat-card class="login-card">
   <mat-card-header>
     <mat-card-title>Login</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form class="example-form">
+    <form class="login-form">
       <table cellspacing="0">
         <tr>
           <td>
@@ -27,7 +27,8 @@
     <span *ngIf="showLoginError"> Error logging in, please check your email and password and try again</span>
   </mat-card-actions>
   <mat-card-footer>
-    <span> Don't have an account? Register <a [routerLink]="['/auth/register']">here</a></span>
+    <span> Don't have an account?<br />
+      <a [routerLink]="['/auth/register']">Register</a></span>
   </mat-card-footer>
 
 </mat-card>
