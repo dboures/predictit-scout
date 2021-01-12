@@ -6,34 +6,55 @@
   flex: 1 1 auto;
 }
 
-.login-card {
-  width: 250px; //ideally not just pixelized
-  margin: 10% auto;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.register-card {
-  width: 325px; //ideally not just pixelized
-  margin: 10% auto;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.phone-extension {
+.start-card {
   font-size: medium;
+  max-width: 15vw;
+  min-width: 260px;
+  margin: 10% auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.country-select {
-  width: 50px;
+.standard-field {
+  min-width: 220px;
+  max-width: 20vw;
+}
+
+mat-card-footer {
+  margin-bottom: 0.5%;
 }
 
 .mat-card-title {
   font-size: 16px;
+}
+
+tr {
+  display: block;
+}
+
+div {
+  padding: 15%;
+}
+
+.phone {
+  position: relative;
+}
+
+.phone-number {
+  max-width: 10vw;
+  min-width: 160px;
+  overflow: hidden;
+  position: absolute;
+  left: 50px;
+}
+
+.phone-extension {
+  position: absolute;
+  max-width: 5vw;
+  min-width: 60px;
+  left: -15px;
+  top: 20px;
 }

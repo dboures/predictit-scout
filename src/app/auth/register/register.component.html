@@ -1,21 +1,21 @@
-<mat-card class="register-card">
+<mat-card class="start-card">
   <!-- TODO: center all these things -->
   <mat-card-header>
     <mat-card-title>Register</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form class="register-form">
+    <form>
       <table cellspacing="0" [formGroup]="userForm">
         <tr>
           <td>
-            <mat-form-field>
+            <mat-form-field class="standard-field">
               <input matInput placeholder="Full Name" formControlName="fullname" name="fullname" required>
             </mat-form-field>
           </td>
         </tr>
         <tr>
           <td>
-            <mat-form-field>
+            <mat-form-field class="standard-field">
               <input matInput placeholder="Email" formControlName="email" name="email" required>
               <mat-error *ngIf="email.invalid && email.hasError('email')">Invalid email address</mat-error>
             </mat-form-field>
@@ -23,7 +23,7 @@
         </tr>
         <tr>
           <td>
-            <mat-form-field style="width:50px">
+            <mat-form-field class="standard-field">
               <mat-select [(ngModel)]="this.countryCode" [ngModelOptions]="{standalone: true}">
                 <mat-option *ngFor="let country of phoneCountryMap.default" [value]="country.dial_code">
                   {{country.name}}
@@ -33,16 +33,17 @@
           </td>
         </tr>
         <tr>     
-          <td>
+          <td class="phone">
             <span class="phone-extension">{{this.countryCode}}</span>
-            <mat-form-field>
+            <mat-form-field class="phone-number">
           <input matInput placeholder="Phone Number" formControlName="phone" name="phone" required>
             </mat-form-field>
           </td>
         </tr>
+        <tr><div></div></tr>
         <tr>
           <td>
-            <mat-form-field>
+            <mat-form-field class="standard-field">
               <input matInput placeholder="Password" formControlName="password" type="password" name="password"
                 required>
             </mat-form-field>
@@ -50,7 +51,7 @@
         </tr>
         <tr>
           <td>
-            <mat-form-field>
+            <mat-form-field class="standard-field">
               <input matInput placeholder="Repeat Password" formControlName="repeatPassword" type="password"
                 name="repeatPassword" required>
               <mat-error *ngIf="repeatPassword.invalid && repeatPassword.hasError('passwordMatch')">Password mismatch
