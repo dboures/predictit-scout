@@ -6,11 +6,24 @@
   flex: 1 1 auto;
 }
 
-.start-card {
+.main-card {
   font-size: medium;
   max-width: 15vw;
   min-width: 260px;
   margin: 10% auto;
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.bottom-card {
+  font-size: medium;
+  max-width: 15vw;
+  min-width: 260px;
+  margin: 0 auto;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -25,6 +38,11 @@
 
 mat-card-footer {
   margin-bottom: 0.5%;
+}
+
+.error-message {
+  color: red;
+  font-size: small;
 }
 
 .mat-card-title {

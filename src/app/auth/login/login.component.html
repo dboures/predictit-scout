@@ -1,4 +1,4 @@
-<mat-card class="start-card">
+<mat-card class="main-card">
   <mat-card-header>
     <mat-card-title>Login</mat-card-title>
   </mat-card-header>
@@ -24,11 +24,13 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="login()" color="primary">Login</button>
-    <span *ngIf="showLoginError"> Error logging in, please check your email and password and try again</span>
   </mat-card-actions>
   <mat-card-footer>
-    <span> Don't have an account?<br />
-      <a [routerLink]="['/auth/register']">Register</a></span>
+    <span *ngIf="showLoginError" class="error-message"> Error logging in, please check your email/password and try again <br /> <br /></span>
   </mat-card-footer>
-
+</mat-card>
+<mat-card class="bottom-card">
+  <span> Don't have an account?<br />
+    <a [routerLink]="['/auth/register']">Register</a>
+  </span>
 </mat-card>

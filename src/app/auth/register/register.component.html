@@ -1,5 +1,4 @@
-<mat-card class="start-card">
-  <!-- TODO: center all these things -->
+<mat-card class="main-card">
   <mat-card-header>
     <mat-card-title>Register</mat-card-title>
   </mat-card-header>
@@ -66,8 +65,8 @@
     <button mat-raised-button (click)="register()" color="primary">Register</button>
     
   </mat-card-actions>
-  <mat-card-footer>
-    <span>Already have an account?<br /> 
-      <a [routerLink]="['/auth/login']">Login</a></span>
-  </mat-card-footer>
+</mat-card>
+<mat-card class="bottom-card">
+  <span>Already have an account?<br /> 
+    <a [routerLink]="['/auth/login']">Login</a></span>
 </mat-card>
