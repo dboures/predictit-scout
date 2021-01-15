@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { AuthService } from './shared/services';
+import { MonitorService } from './shared/services';
 
 export function appInitializerFactory(authService: AuthService) {
   return () => authService.checkTheUserOnTheFirstLoad();
