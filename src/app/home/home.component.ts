@@ -8,7 +8,7 @@ import { MonitorService } from '@app/shared/services';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  viewValue = 44;
+  viewValue = '44';
   constructor(private router: Router, private monitorService: MonitorService) { }
 
   ngOnInit() {
@@ -18,10 +18,11 @@ export class HomeComponent implements OnInit {
 
   monitor() {
     this.monitorService.monitor().subscribe(
-      data => { 
+      data => {
         console.log(data)
-        this.viewValue = data },
-      error => { 
+        this.viewValue = data
+      },
+      error => {
         console.log(error);
       }
     );

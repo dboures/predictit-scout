@@ -9,7 +9,5 @@ module.exports = {
 
 function monitor() {
   console.log("The monitor function was called")
-  return new Promise(function(resolve, reject){
-      resolve(71);
-  });
+  return '71';
 }
