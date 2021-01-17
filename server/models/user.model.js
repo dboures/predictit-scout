@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  alerts : { 
+    type : Array ,
+    default : [] //TODO: will contain the yet to be designed alert objects
+  },
   roles: [{
     type: String,
   }]
@@ -33,7 +37,3 @@ const UserSchema = new mongoose.Schema({
 
 
 module.exports = mongoose.model('User', UserSchema);
-
-
-// TODO: modify this to include which predictit markets the user is watching,
-// and values for what they want to watch at

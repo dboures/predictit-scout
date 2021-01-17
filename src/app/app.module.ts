@@ -21,7 +21,7 @@ export function appInitializerFactory(authService: AuthService) {
 @NgModule({
   imports: [BrowserAnimationsModule, HttpClientModule, SharedModule, AppRoutingModule],
   declarations: [AppComponent, HeaderComponent, HomeComponent],
-  providers: [
+  providers: [ AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHeaderInterceptor,
