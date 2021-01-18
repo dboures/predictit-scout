@@ -10,7 +10,6 @@ import { AlertService } from '@app/shared/services';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  viewValue = '44';
   alerts: Alert[] = [];
   constructor(private router: Router, private AlertService: AlertService) { }
 
