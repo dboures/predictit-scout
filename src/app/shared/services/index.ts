@@ -1,2 +1,2 @@
 export * from './auth/auth.service';
-export * from './monitor/monitor.service';
+export * from './alert/alert.service';

@@ -1,28 +1,28 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const monitorCtrl = require('../controllers/monitor.controller');
+const alertCtrl = require('../controllers/alert.controller');
 
 const router = express.Router();
 module.exports = router;
 
 router.get('/', function (req, res) {
-  monitor(req, res);
+  alert(req, res);
 });
 
 // will want to post to add alerts to array in json
 // router.post('/', function (req, res) {
-//   monitor(req, res);
+//   alert(req, res);
 // });
 
 // will want to put to update alerts to array in json
 // router.put('/', function (req, res) {
-//   monitor(req, res);
+//   alert(req, res);
 // });
 
 
 // will want to delete to remove alerts to array in json
 // router.delete('/', function (req, res) {
-//   monitor(req, res);
+//   alert(req, res);
 // });
 
 
@@ -37,12 +37,12 @@ router.get('/', function (req, res) {
 // });
 
 router.route('/')
-  .get(asyncHandler(monitor));
+  .get(asyncHandler(alert));
 
 
-function monitor(req, res) {
-  // let status = monitorCtrl.monitor();
+function alert(req, res) {
+  // let status = alertCtrl.alert();
   // console.log(status)
   // res.send(status);
-  monitorCtrl.monitor(req, res)
+  alertCtrl.alert(req, res)
 }

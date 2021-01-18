@@ -6,11 +6,11 @@ import { AuthService } from '../auth/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MonitorService {
+export class AlertService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  monitor(): Observable<string> {
-    return this.http.get<string>('/api/monitor') // TODO: I guess this needs to be json? Maybe I should just make the object
+  loadAlerts(): Observable<string> {
+    return this.http.get<string>('/api/alerts') // TODO: I guess this needs to be json? Maybe I should just make the object
   }
 }

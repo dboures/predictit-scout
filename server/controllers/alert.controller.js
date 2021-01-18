@@ -4,27 +4,20 @@ const User = require('../models/user.model');
 
 
 module.exports = {
-  monitor
+  alert
 }
 
 
-function monitor(req, res) {
-  console.log("The monitor function was called")
+function alert(req, res) {
   const authHeader = req.headers.authorization
   if (authHeader.startsWith("Bearer ")){
     token = authHeader.substring(7, authHeader.length);
-  } else {
-    //pass
-    return //res.status(200)
-  }
-  console.log(token)
+  } else { return res.status(401) } // unauthorized
+
   jwt.verify(token, config.jwtSecret, (err, verifiedJwt) => {
     if(err){
-      console.log('error')
-      console.log(err.message)
       res.status(200).send(err.message)
     } else {
-      console.log(verifiedJwt.email)
       userEmail = verifiedJwt.email
     }
   })
@@ -40,6 +33,7 @@ function monitor(req, res) {
     // callback function
     (err, user) => {
         if (err) return res.status(200).send(err)
+        console.log(user.fullname)
         return res.status(200).send(user.fullname)
     }
 );
