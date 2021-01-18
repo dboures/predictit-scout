@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 
@@ -10,7 +11,7 @@ export class AlertService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  loadAlerts(): Observable<string> {
-    return this.http.get<string>('/api/alerts') // TODO: I guess this needs to be json? Maybe I should just make the object
+  loadAlerts(): Observable<Alert[]> {
+    return this.http.get<Alert[]>('/api/alerts')
   }
 }

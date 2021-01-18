@@ -4,11 +4,11 @@ const User = require('../models/user.model');
 
 
 module.exports = {
-  alert
+  loadAlerts
 }
 
 
-function alert(req, res) {
+function loadAlerts(req, res) {
   const authHeader = req.headers.authorization
   if (authHeader.startsWith("Bearer ")){
     token = authHeader.substring(7, authHeader.length);
@@ -33,8 +33,8 @@ function alert(req, res) {
     // callback function
     (err, user) => {
         if (err) return res.status(200).send(err)
-        console.log(user.fullname)
-        return res.status(200).send(user.fullname)
+        console.log(user.alerts)
+        return res.status(200).send(user.alerts)
     }
 );
 
