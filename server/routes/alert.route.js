@@ -5,14 +5,8 @@ const alertCtrl = require('../controllers/alert.controller');
 const router = express.Router();
 module.exports = router;
 
-router.get('/load', function (req, res) {
-  loadAlerts(req, res);
-});
-
-// will want to post to add alerts to array in json
-// router.post('/', function (req, res) {
-//   alert(req, res);
-// });
+router.get('/', function (req, res) { alertCtrl.loadAlerts(req, res) });
+router.post('/', function (req, res) { alertCtrl.addAlerts(req, res) });
 
 // will want to put to update alerts to array in json
 // router.put('/', function (req, res) {
@@ -36,13 +30,4 @@ router.get('/load', function (req, res) {
 //   }
 // });
 
-router.route('/')
-  .get(asyncHandler(loadAlerts));
 
-
-function loadAlerts(req, res) {
-  // let status = alertCtrl.alert();
-  // console.log(status)
-  // res.send(status);
-  alertCtrl.loadAlerts(req, res)
-}

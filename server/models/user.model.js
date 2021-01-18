@@ -24,9 +24,9 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  alerts : { 
-    type : Array ,
-    default : [] //TODO: will contain the yet to be designed alert objects
+  alerts: {
+    type: Array,
+    default: []
   },
   roles: [{
     type: String,
