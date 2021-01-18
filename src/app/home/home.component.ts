@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Contract } from '@app/shared/interfaces/contract.interface';
+import { Market } from '@app/shared/interfaces/market.interface';
 import { AlertService } from '@app/shared/services';
+import { MarketService } from '@app/shared/services/market/market.service';
 
 @Component({
   selector: 'app-home',
@@ -11,14 +13,16 @@ import { AlertService } from '@app/shared/services';
 })
 export class HomeComponent implements OnInit {
   alerts: Alert[] = [];
-  constructor(private router: Router, private AlertService: AlertService) { }
+  showAlertCreation: boolean = false;
+  // market: Market = ;
+  constructor(private router: Router, private alertService: AlertService, private marketService: MarketService) { }
 
   ngOnInit() {
     this.loadAlerts()
   }
 
   loadAlerts() {
-    this.AlertService.loadAlerts().subscribe(
+    this.alertService.loadAlerts().subscribe(
       data => {
         console.log(data)
         this.alerts = data
@@ -30,7 +34,7 @@ export class HomeComponent implements OnInit {
   }
 
   saveAlerts() {
-    this.AlertService.saveAlerts(this.alerts).subscribe(
+    this.alertService.saveAlerts(this.alerts).subscribe(
       data => {
         console.log(data)
         this.alerts = data
@@ -41,13 +45,33 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  getMarket() {
+    this.marketService.getMarket(7054).subscribe(
+      data => {
+        console.log(data)
+        //this.market = data
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  toggleAlertCreation() {
+    this.showAlertCreation = !this.showAlertCreation;
+  }
+
+  removeTemporaryAlert() {
+    //do something
+    this.showAlertCreation = !this.showAlertCreation;
+  }
+
   addDummyAlert() {
     const sampleContract: Contract = {
       id: 1234,
       name: 'dummy contract',
       shortName: 'dc',
-      watchField: 'BestBuyPrice',
-      isOpen: true,
+      watchField: 'BestBuyPrice'
     };
 
     const sampleAlert: Alert = {

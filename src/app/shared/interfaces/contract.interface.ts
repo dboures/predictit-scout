@@ -3,5 +3,4 @@ export interface Contract {
     name: string;
     shortName: string;
     watchField: string;
-    isOpen: boolean;
   }

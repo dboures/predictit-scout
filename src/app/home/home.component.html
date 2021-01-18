@@ -3,9 +3,13 @@
     <mat-card-title>Current Alerts</mat-card-title>
   </mat-card-header>
   <mat-card-content>
+    <div *ngIf=showAlertCreation>
+      here is the alert creation form
+    </div>
     <table>
       <tr *ngFor="let alert of alerts" >
-        row
+        {{alert.contract.name}}, {{alert.contract.id}}
+
       </tr>
     </table>
   </mat-card-content>
@@ -14,5 +18,10 @@
     <button mat-raised-button (click)="addDummyAlert()" color="primary">Add Alert</button>
 
     <button mat-raised-button (click)="saveAlerts()" color="primary">Save Alerts</button>
+    <button mat-raised-button  (click) ="toggleAlertCreation()" [disabled] = "showAlertCreation" color="primary">Create Alert</button>
+    <!-- will eventually be part of the alert form -->
+    <button mat-raised-button  (click) ="removeTemporaryAlert()" [disabled] = "!showAlertCreation" color="primary">Remove Proposed Alert</button>
+    <button mat-raised-button  (click) ="getMarket()" color="primary">Load Market</button>
+    
   </mat-card-actions>
 </mat-card>
