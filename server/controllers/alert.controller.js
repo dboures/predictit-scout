@@ -15,7 +15,6 @@ function loadAlerts(req, res) {
 
     (err, user) => {
       if (err) return res.status(200).send(err)
-      console.log(user.alerts)
       return res.status(200).send(user.alerts)
     }
   );
@@ -31,7 +30,6 @@ function addAlerts(req, res) {
 
     (err, user) => {
       if (err) return res.status(200).send(err)
-      console.log(user.alerts)
       return res.status(200).send(user.alerts)
     }
   );
