@@ -8,7 +8,7 @@
         here is the alert creation form
 
 
-        <table mat-table >
+        <table mat-table>
         <!-- Header row first group -->
         <tr>
           <th colspan="12" class="market-name">
@@ -17,7 +17,7 @@
         </tr>
         <tr>
           <th>
-            Contract Name
+            Contract
           </th>
           <th>
             Indicator
@@ -45,17 +45,46 @@
          </tr>
       
       </table>
+      <!-- put this on the right of the table -->
+      <button mat-raised-button  (click) ="removeTemporaryAlert()" [disabled] = "!showAlertCreation" color="primary">Remove Proposed Alert</button>
       </div>
 
 
-      <!-- <input></input> -->
-      <button mat-raised-button  (click) ="toggleAlertCreation()" [disabled] = "showAlertCreation" color="primary">Create Alert</button>
-      <button mat-raised-button  (click) ="removeTemporaryAlert()" [disabled] = "!showAlertCreation" color="primary">Remove Proposed Alert</button>
     </form>
     <table>
+      <tr>
+        <th>
+          Market Name
+        </th>
+        <th>
+          Contract
+        </th>
+        <th>
+          Indicator
+        </th>
+        <th>
+          Operator
+        </th>
+        <th>
+          Limit
+        </th>
+      </tr>
       <tr *ngFor="let alert of alerts" >
-        {{alert.contract.name}}, {{alert.contract.id}}
-
+        <td>
+          {{alert.marketName}}
+        </td>
+        <td>
+          {{alert.contract.name}}
+        </td>
+        <td>
+          {{alert.indicator}}
+        </td>
+        <td>
+          {{alert.operator}}
+        </td>
+        <td>
+          {{alert.limit}}
+        </td>
       </tr>
     </table>
   </mat-card-content>
@@ -66,6 +95,7 @@
     <button mat-raised-button (click)="saveAlerts()" color="primary">Save Alerts</button>
     
     <!-- will eventually be part of the alert form -->
+    <button mat-raised-button  (click) ="toggleAlertCreation()" [disabled] = "showAlertCreation" color="primary">Create Alert</button>
     <button mat-raised-button  (click) ="getMarket()" color="primary">Load Market</button>
     
   </mat-card-actions>
