@@ -1,4 +1,23 @@
 table {
   width: 100%;
   text-align: center;
+  border: 1px solid rgb(131, 131, 131);
+}
+
+.main-card {
+  font-size: medium;
+  max-width: 40vw;
+  min-width: 260px;
+  margin: 10% auto;
+  margin-bottom: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.market-name {
+  font-size: large;
+  border: 1px solid rgb(131, 131, 131);
 }
