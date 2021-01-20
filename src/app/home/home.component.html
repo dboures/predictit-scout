@@ -7,6 +7,13 @@
       here is the alert creation form
     </div>
     <table>
+      <tr *ngFor="let contract of this.market.contracts" >
+        {{contract.name}}, {{contract.id}}
+
+      </tr>
+    </table>
+    
+    <table>
       <tr *ngFor="let alert of alerts" >
         {{alert.contract.name}}, {{alert.contract.id}}
 

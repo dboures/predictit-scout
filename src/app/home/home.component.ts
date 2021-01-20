@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Contract } from '@app/shared/interfaces/contract.interface';
@@ -14,12 +15,18 @@ import { MarketService } from '@app/shared/services/market/market.service';
 export class HomeComponent implements OnInit {
   alerts: Alert[] = [];
   showAlertCreation: boolean = false;
-  // market: Market = ;
+  newAlert: Alert | undefined;
+  market: Market | undefined;
   constructor(private router: Router, private alertService: AlertService, private marketService: MarketService) { }
 
   ngOnInit() {
     this.loadAlerts()
   }
+
+  newAlertForm = new FormGroup({
+    id: new FormControl('', [Validators.required]),
+    contract: new FormControl('', [Validators.required]),
+  });
 
   loadAlerts() {
     this.alertService.loadAlerts().subscribe(
@@ -49,7 +56,7 @@ export class HomeComponent implements OnInit {
     this.marketService.getMarket(7054).subscribe(
       data => {
         console.log(data)
-        //this.market = data
+        this.market = data
       },
       error => {
         console.log(error);
@@ -61,27 +68,32 @@ export class HomeComponent implements OnInit {
     this.showAlertCreation = !this.showAlertCreation;
   }
 
-  removeTemporaryAlert() {
+  removeTemporaryAlert() { // wtf is this
     //do something
     this.showAlertCreation = !this.showAlertCreation;
   }
 
-  addDummyAlert() {
-    const sampleContract: Contract = {
-      id: 1234,
-      name: 'dummy contract',
-      shortName: 'dc',
-      watchField: 'BestBuyPrice'
-    };
+  addNewAlert(newAlert: Alert) {
+    // const sampleContract: Contract = {
+    //   id: 1234,
+    //   name: 'dummy contract',
+    //   shortName: 'dc',
+    //   watchField: 'BestBuyPrice'
+    // };
 
-    const sampleAlert: Alert = {
-      contract: sampleContract,
-      operator: '>',
-      limit: 50,
-      constant: true
-    };
+    // const sampleAlert: Alert = {
+    //   contract: sampleContract,
+    //   operator: '>',
+    //   limit: 50,
+    //   constant: true
+    // };
 
-    this.alerts.push(sampleAlert);
+    if (this.newAlertForm.invalid) {
+      return;
+    }
+
+    this.alerts.push(newAlert);
+    this.newAlert = undefined;
   }
 
 }
