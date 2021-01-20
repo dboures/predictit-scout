@@ -17,7 +17,7 @@ describe('HomeComponent', () => {
     id: 1234,
     name: 'dummy contract',
     shortName: 'dc',
-    watchField: 'BestBuyPrice'
+    indicator: 'BestBuyPrice'
   };
 
   const sampleAlert: Alert = {

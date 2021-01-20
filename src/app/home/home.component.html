@@ -3,16 +3,53 @@
     <mat-card-title>Current Alerts</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div *ngIf=showAlertCreation>
-      here is the alert creation form
-    </div>
-    <table>
-      <tr *ngFor="let contract of this.market.contracts" >
-        {{contract.name}}, {{contract.id}}
+    <form>
+      <div *ngIf=showAlertCreation>
+        here is the alert creation form
 
-      </tr>
-    </table>
-    
+
+        <table mat-table >
+        <!-- Header row first group -->
+        <tr>
+            {{this.market.name}}
+        </tr>
+        <tr>
+          <th>
+            Contract Name
+          </th>
+          <th>
+            Indicator
+          </th>
+          <th>
+            Operator
+          </th>
+          <th>
+            Limit
+          </th>
+        </tr>
+         <tr>
+           <td>
+             contract dropdown
+           </td>
+           <td>
+             indicator dropdown
+           </td>
+           <td>
+             operator dropdown
+           </td>
+           <td>
+             limit input
+           </td>
+         </tr>
+      
+      </table>
+      </div>
+
+
+      <!-- <input></input> -->
+      <button mat-raised-button  (click) ="toggleAlertCreation()" [disabled] = "showAlertCreation" color="primary">Create Alert</button>
+      <button mat-raised-button  (click) ="removeTemporaryAlert()" [disabled] = "!showAlertCreation" color="primary">Remove Proposed Alert</button>
+    </form>
     <table>
       <tr *ngFor="let alert of alerts" >
         {{alert.contract.name}}, {{alert.contract.id}}
@@ -25,10 +62,22 @@
     <button mat-raised-button (click)="addDummyAlert()" color="primary">Add Alert</button>
 
     <button mat-raised-button (click)="saveAlerts()" color="primary">Save Alerts</button>
-    <button mat-raised-button  (click) ="toggleAlertCreation()" [disabled] = "showAlertCreation" color="primary">Create Alert</button>
+    
     <!-- will eventually be part of the alert form -->
-    <button mat-raised-button  (click) ="removeTemporaryAlert()" [disabled] = "!showAlertCreation" color="primary">Remove Proposed Alert</button>
     <button mat-raised-button  (click) ="getMarket()" color="primary">Load Market</button>
     
   </mat-card-actions>
 </mat-card>
+
+
+<!-- <th>
+            <td>Contract</td>
+            <td></td>
+            <td></td>
+          </th>
+          <tr *ngFor="let contract of this.market.contracts" >
+            {{contract.name}}, {{contract.id}}
+    
+          </tr>
+          <button mat-raised-button  (click) ="getMarket()" color="primary">Load Market</button>
+        </table> -->

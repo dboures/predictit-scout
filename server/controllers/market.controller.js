@@ -82,12 +82,12 @@ function parseMarketFromResponse(response) {
   // console.log(contracts[0])
   let newContracts = [];
   contracts.forEach(function (contract) {
-    console.log(contract.id)
+    // console.log(contract.id)
     let newContract = {
       "id": contract.id,
       "name": contract.name,
       "shortName": contract.shortName,
-      "watchField": ''
+      "indicator": ''
     };
     newContracts.push(newContract);
   });
@@ -103,7 +103,7 @@ function parseMarketFromResponse(response) {
     market.isOpen = false;
   }
   delete market.status;
-  console.log(market)
+  // console.log(market)
 
   return market
 }
