@@ -3,50 +3,54 @@
     <mat-card-title>Current Alerts</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form>
+    <form [formGroup]="newAlertForm">
+      <div *ngIf=!showAlertCreation>
+        <mat-form-field class="standard-field">
+          <input matInput placeholder="Market Id" formControlName="marketId" name="marketId" OnlyNumber="true" required>
+        </mat-form-field>
+      </div>
       <div *ngIf=showAlertCreation>
         here is the alert creation form
-
-
         <table mat-table>
-        <!-- Header row first group -->
-        <tr>
-          <th colspan="12" class="market-name">
-            {{this.market.name}}
-          </th>
-        </tr>
-        <tr>
-          <th>
-            Contract
-          </th>
-          <th>
-            Indicator
-          </th>
-          <th>
-            Operator
-          </th>
-          <th>
-            Limit
-          </th>
-        </tr>
-         <tr>
-           <td>
-             contract dropdown
-           </td>
-           <td>
-             indicator dropdown
-           </td>
-           <td>
-             operator dropdown
-           </td>
-           <td>
-             limit input
-           </td>
-         </tr>
-      
-      </table>
-      <!-- put this on the right of the table -->
-      <button mat-raised-button  (click) ="removeTemporaryAlert()" [disabled] = "!showAlertCreation" color="primary">Remove Proposed Alert</button>
+          <!-- Header row first group -->
+          <tr>
+            <th colspan="12" class="market-name">
+              {{this.market.name}}
+            </th>
+          </tr>
+          <tr>
+            <th>
+              Contract
+            </th>
+            <th>
+              Indicator
+            </th>
+            <th>
+              Operator
+            </th>
+            <th>
+              Limit
+            </th>
+          </tr>
+          <tr>
+            <td>
+              contract dropdown
+            </td>
+            <td>
+              indicator dropdown
+            </td>
+            <td>
+              operator dropdown
+            </td>
+            <td>
+              limit input
+            </td>
+          </tr>
+
+        </table>
+        <!-- put this on the right of the table -->
+        <button mat-raised-button (click)="removeTemporaryAlert()" [disabled]="!showAlertCreation"
+          color="primary">Remove Proposed Alert</button>
       </div>
 
 
@@ -69,7 +73,7 @@
           Limit
         </th>
       </tr>
-      <tr *ngFor="let alert of alerts" >
+      <tr *ngFor="let alert of alerts">
         <td>
           {{alert.marketName}}
         </td>
@@ -93,11 +97,12 @@
     <button mat-raised-button (click)="addDummyAlert()" color="primary">Add Alert</button>
 
     <button mat-raised-button (click)="saveAlerts()" color="primary">Save Alerts</button>
-    
+
     <!-- will eventually be part of the alert form -->
-    <button mat-raised-button  (click) ="toggleAlertCreation()" [disabled] = "showAlertCreation" color="primary">Create Alert</button>
-    <button mat-raised-button  (click) ="getMarket()" color="primary">Load Market</button>
-    
+    <button mat-raised-button (click)="toggleAlertCreation()" [disabled]="showAlertCreation" color="primary">Create
+      Alert</button>
+    <button mat-raised-button (click)="getMarket()" color="primary">Load Market</button>
+
   </mat-card-actions>
 </mat-card>
 

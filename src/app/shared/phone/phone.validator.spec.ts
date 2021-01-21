@@ -1,8 +1,8 @@
-import { ControlContainer, FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { phoneValidator } from '@app/shared/phone/phone.validator';
 
 describe('phoneValidator', () => {
-    var control: FormControl;    
+    var control: FormControl;
 
     it('should reject form if no input', () => {
         control = new FormControl('', [Validators.required, phoneValidator('+1')]);
@@ -23,10 +23,10 @@ describe('phoneValidator', () => {
         control = new FormControl('030 901820', [Validators.required, phoneValidator('+49')]);
         expect(control.valid).toBeTruthy();
 
-        control.setValue('06339 98 62 65 '); 
+        control.setValue('06339 98 62 65 ');
         expect(control.valid).toBeTruthy();
 
-        control.setValue('711 901820'); 
+        control.setValue('711 901820');
         expect(control.valid).toBeTruthy();
     });
 });

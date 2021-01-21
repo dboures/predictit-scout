@@ -21,6 +21,7 @@ describe('HomeComponent', () => {
   };
 
   const sampleAlert: Alert = {
+    marketName: 'this is a market',
     contract: sampleContract,
     operator: '>',
     limit: 50,
@@ -30,10 +31,10 @@ describe('HomeComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule],
-      declarations: [ HomeComponent ],
-      providers: [ AlertService ]
+      declarations: [HomeComponent],
+      providers: [AlertService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

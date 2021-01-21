@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Alert } from '@app/shared/interfaces/alert.interface';
-import { Contract } from '@app/shared/interfaces/contract.interface';
 import { Market } from '@app/shared/interfaces/market.interface';
+import { marketIdValidator } from '@app/shared/marketId/marketId.validator';
 import { AlertService } from '@app/shared/services';
 import { MarketService } from '@app/shared/services/market/market.service';
 
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   newAlertForm = new FormGroup({
-    id: new FormControl('', [Validators.required]),
+    marketId: new FormControl('', [Validators.required, Validators.minLength(4), marketIdValidator()]),
     contract: new FormControl('', [Validators.required]),
   });
 
@@ -53,10 +53,16 @@ export class HomeComponent implements OnInit {
   }
 
   getMarket() {
-    this.marketService.getMarket(7054).subscribe(
+    if (this.newAlertForm.get('marketId')?.invalid) {
+      console.log('invalid marketID'); // TODO: remove
+      return;
+    }
+    console.log('valid')
+    let marketId = +this.newAlertForm.get('marketId')?.value;
+    this.marketService.getMarket(marketId).subscribe(
       data => {
         console.log(data)
-        this.market = data
+        this.market = data;
       },
       error => {
         console.log(error);
