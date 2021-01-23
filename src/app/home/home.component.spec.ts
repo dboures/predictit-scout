@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Contract } from '@app/shared/interfaces/contract.interface';
 import { AlertService } from '@app/shared/services';
+import { MarketService } from '@app/shared/services/market/market.service';
 import { of } from 'rxjs';
 
 import { HomeComponent } from './home.component';
@@ -12,6 +13,7 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let alertService: AlertService;
+  let marketService: MarketService;
 
   const sampleContract: Contract = {
     id: 1234,
@@ -32,7 +34,7 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule],
       declarations: [HomeComponent],
-      providers: [AlertService]
+      providers: [AlertService, MarketService]
     })
       .compileComponents();
   }));
@@ -41,6 +43,7 @@ describe('HomeComponent', () => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     alertService = TestBed.get(AlertService);
+    marketService = TestBed.get(MarketService);
     fixture.detectChanges();
   });
 
@@ -60,5 +63,15 @@ describe('HomeComponent', () => {
     component.saveAlerts()
 
     expect(alertService.saveAlerts).toHaveBeenCalled();
+  });
+
+  it('will not call marketService if a poorly formed id is used', () => {
+    spyOn(marketService, 'getMarket').and.stub();
+    const form = component.newAlertForm;
+    const marketIdInput = form.controls.marketId;
+    marketIdInput.setValue(123);
+    
+    component.getMarket();
+    expect(marketService.getMarket).not.toHaveBeenCalled();
   });
 });

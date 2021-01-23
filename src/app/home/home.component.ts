@@ -17,6 +17,16 @@ export class HomeComponent implements OnInit {
   showAlertCreation: boolean = false;
   newAlert: Alert | undefined;
   market: Market | undefined;
+  indicators: String[] =
+    ['LastTradePrice',
+      'BestBuyYesCost',
+      'BestBuyNoCost',
+      'BestSellYesCost',
+      'BestSellNoCost',
+      'LastClosePrice'];
+
+  operators: String[] = ['>', '=', '<'];
+
   constructor(private router: Router, private alertService: AlertService, private marketService: MarketService) { }
 
   ngOnInit() {
@@ -26,6 +36,9 @@ export class HomeComponent implements OnInit {
   newAlertForm = new FormGroup({
     marketId: new FormControl('', [Validators.required, Validators.minLength(4), marketIdValidator()]),
     contract: new FormControl('', [Validators.required]),
+    indicator: new FormControl('', [Validators.required]),
+    operator: new FormControl('', [Validators.required]),
+    limit: new FormControl('', [Validators.required]),
   });
 
   loadAlerts() {
@@ -52,10 +65,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getMarket() {
+  createAlert() {
     if (this.newAlertForm.get('marketId')?.invalid) {
-      console.log('invalid marketID'); // TODO: remove
-      return;
+      console.log('invalid marketID'); // TODO: turn into an error message
+      return
     }
     console.log('valid')
     let marketId = +this.newAlertForm.get('marketId')?.value;
@@ -63,6 +76,7 @@ export class HomeComponent implements OnInit {
       data => {
         console.log(data)
         this.market = data;
+        this.showAlertCreation = true;
       },
       error => {
         console.log(error);
@@ -70,13 +84,9 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  toggleAlertCreation() {
-    this.showAlertCreation = !this.showAlertCreation;
-  }
-
   removeTemporaryAlert() { // wtf is this
     //do something
-    this.showAlertCreation = !this.showAlertCreation;
+    this.showAlertCreation = false;
   }
 
   addNewAlert(newAlert: Alert) {
