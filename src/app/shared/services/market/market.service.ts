@@ -10,7 +10,7 @@ export class MarketService {
 
   constructor(private http: HttpClient) { }
 
-  getMarket(id: number): Observable<Market> { //TODO: how do i send extra data with a get request?
-    return this.http.get<Market>('/api/market')
+  getMarket(id: number): Observable<Market> {
+    return this.http.get<Market>('/api/market?id='.concat(id.toString()))
   }
 }

@@ -17,8 +17,10 @@ function getMarket(req, res) {
     if (err) {
       res.status(200).send(err.message)
     } else {
+      const marketId = req.param('id');
+      console.log(marketId);
       const base_url = "https://www.predictit.org/api/marketdata/markets/";
-      const url = base_url.concat('7054') // Todo: figure out best practice for this, not sure if it's in request header or what
+      const url = base_url.concat(marketId)
       console.log(url);
       //
       makeRequest(url)
