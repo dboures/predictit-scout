@@ -6,7 +6,11 @@ const router = express.Router();
 module.exports = router;
 
 router.get('/', function (req, res) { alertCtrl.loadAlerts(req, res) });
-router.post('/', function (req, res) { alertCtrl.addAlerts(req, res) });
+router.put('/', function (req, res) { alertCtrl.saveAlerts(req, res) });
+
+
+
+//TODO: delete below, bc I think they are unnneccesary, DB will always just be updated to persist what you see on website.
 
 // will want to put to update alerts to array in json
 // router.put('/', function (req, res) {

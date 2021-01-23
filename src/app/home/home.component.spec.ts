@@ -70,8 +70,8 @@ describe('HomeComponent', () => {
     const form = component.newAlertForm;
     const marketIdInput = form.controls.marketId;
     marketIdInput.setValue(123);
-    
-    component.getMarket();
+
+    component.createAlert();
     expect(marketService.getMarket).not.toHaveBeenCalled();
   });
 });

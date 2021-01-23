@@ -15,7 +15,6 @@ import { MarketService } from '@app/shared/services/market/market.service';
 export class HomeComponent implements OnInit {
   alerts: Alert[] = [];
   showAlertCreation: boolean = false;
-  newAlert: Alert | undefined;
   market: Market | undefined;
   indicators: String[] =
     ['LastTradePrice',
@@ -35,10 +34,11 @@ export class HomeComponent implements OnInit {
 
   newAlertForm = new FormGroup({
     marketId: new FormControl('', [Validators.required, Validators.minLength(4), marketIdValidator()]),
-    contract: new FormControl('', [Validators.required]),
+    contractName: new FormControl('', [Validators.required]),
     indicator: new FormControl('', [Validators.required]),
     operator: new FormControl('', [Validators.required]),
     limit: new FormControl('', [Validators.required]),
+    // constant
   });
 
   loadAlerts() {
@@ -84,12 +84,12 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  removeTemporaryAlert() { // wtf is this
+  removeTemporaryAlert() {
     //do something
     this.showAlertCreation = false;
   }
 
-  addNewAlert(newAlert: Alert) {
+  addNewAlert(newAlert: Alert) { // gray this out until alert is valid
     // const sampleContract: Contract = {
     //   id: 1234,
     //   name: 'dummy contract',
@@ -105,11 +105,21 @@ export class HomeComponent implements OnInit {
     // };
 
     if (this.newAlertForm.invalid) {
+      console.log('invalid newAlert Form');
+      console.log(this.newAlertForm);
       return;
     }
+    newAlert.marketName = this.market?.name ? this.market.name: '';
+    console.log(newAlert);
 
     this.alerts.push(newAlert);
-    this.newAlert = undefined;
+    this.alertService.saveAlerts(this.alerts);
+    // this.newAlert = undefined;
+    // this.removeTemporaryAlert();
+    // clear form
+    
+
+
   }
 
 }

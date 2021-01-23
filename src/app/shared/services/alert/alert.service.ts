@@ -16,6 +16,6 @@ export class AlertService {
   }
 
   saveAlerts(userAlerts: Alert[]): Observable<Alert[]> {
-    return this.http.post<Alert[]>('/api/alerts', userAlerts)
+    return this.http.put<Alert[]>('/api/alerts', userAlerts)
   }
 }

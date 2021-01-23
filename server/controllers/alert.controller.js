@@ -5,7 +5,7 @@ const User = require('../models/user.model');
 
 module.exports = {
   loadAlerts,
-  addAlerts
+  saveAlerts
 }
 
 
@@ -20,7 +20,7 @@ function loadAlerts(req, res) {
   );
 }
 
-function addAlerts(req, res) {
+function saveAlerts(req, res) {
   const userEmail = getAccountEmailFromHeader(req, res);
 
   User.findOneAndUpdate(

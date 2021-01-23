@@ -31,19 +31,22 @@
             <th>
               Limit
             </th>
+            <th>
+              Continuous??
+            </th>
           </tr>
           <tr>
             <td>
               <mat-form-field>
-                <select matNativeControl>
-                  <option *ngFor="let contract of market.contracts">
+                <select matNativeControl formControlName="contractName" name="conractName">
+                  <option *ngFor="let contract of market.contracts" [ngValue]="contract.shortName">
                     {{contract.shortName}}
                   </option>
                 </select>
               </mat-form-field>
             </td>
             <td>
-              <select matNativeControl>
+              <select matNativeControl formControlName="indicator" name="indicator">
                 <option *ngFor="let indicator of indicators">
                   {{indicator}}
                   <!-- TODO: Where is the arrow? -->
@@ -51,7 +54,7 @@
               </select>
             </td>
             <td>
-              <select matNativeControl>
+              <select matNativeControl formControlName="operator" name="operator">
                 <option *ngFor="let operator of operators">
                   {{operator}}
                   <!-- TODO: Where is the arrow? -->
@@ -60,15 +63,20 @@
             </td>
             <td>
               <mat-form-field>
-                <input matInput placeholder="1-99" formControlName="limit" name="limit" OnlyNumber="true" required>
+                <input matInput placeholder="1-99" formControlName="limit" name="limit" OnlyNumber="true">
               </mat-form-field>
+            </td>
+            <td>
+              constant alert or nah?
             </td>
           </tr>
 
         </table>
         <!-- put this on the right of the table -->
+        <!-- god this formatting -->
         <button mat-raised-button (click)="removeTemporaryAlert()" [disabled]="!showAlertCreation"
           color="primary">Remove Proposed Alert</button>
+        <button mat-raised-button (click)="addNewAlert(newAlertForm.value)" color="primary">Add Alert</button>
       </div>
 
 
@@ -90,13 +98,16 @@
         <th>
           Limit
         </th>
+        <th>
+          Continuous??
+        </th>
       </tr>
       <tr *ngFor="let alert of alerts">
         <td>
           {{alert.marketName}}
         </td>
         <td>
-          {{alert.contract.name}}
+          {{alert.contractName}}
         </td>
         <td>
           {{alert.indicator}}
@@ -107,12 +118,14 @@
         <td>
           {{alert.limit}}
         </td>
+        <td>
+          {{alert.constant}}
+        </td>
       </tr>
     </table>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="loadAlerts()" color="primary">Load Alerts</button>
-    <button mat-raised-button (click)="addDummyAlert()" color="primary">Add Alert</button>
 
     <button mat-raised-button (click)="saveAlerts()" color="primary">Save Alerts</button>
 
