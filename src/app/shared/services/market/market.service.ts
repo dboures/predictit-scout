@@ -11,6 +11,6 @@ export class MarketService {
   constructor(private http: HttpClient) { }
 
   getMarket(id: number): Observable<Market> {
-    return this.http.get<Market>('/api/market?id='.concat(id.toString()))
+    return this.http.get<Market>('/api/market/'.concat(id.toString()))
   }
 }

@@ -5,4 +5,4 @@ const marketCtrl = require('../controllers/market.controller');
 const router = express.Router();
 module.exports = router;
 
-router.get('/', function (req, res) { marketCtrl.getMarket(req, res) });
+router.get('/:id', function (req, res) { marketCtrl.getMarket(req, res) });
