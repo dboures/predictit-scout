@@ -101,6 +101,8 @@
         <th>
           Continuous??
         </th>
+        <th>
+        </th>
       </tr>
       <tr *ngFor="let alert of alerts">
         <td>
@@ -120,6 +122,9 @@
         </td>
         <td>
           {{alert.constant}}
+        </td>
+        <td>
+          <button mat-raised-button (click)="removeAlert(alert)" color="primary">X</button>
         </td>
       </tr>
     </table>

@@ -63,7 +63,6 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     );
-    this.removeTemporaryAlert();  
   }
 
   createAlert() {
@@ -89,6 +88,13 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  removeAlert(alert: Alert) {
+    const index = this.alerts.indexOf(alert);
+    if (index > -1) {
+      this.alerts.splice(index, 1);
+    }
+  }
+
   addNewAlert(newAlert: Alert) { // gray this out until alert is valid
 
     if (this.newAlertForm.invalid) {
@@ -99,13 +105,16 @@ export class HomeComponent implements OnInit {
     newAlert.marketName = this.market?.name ? this.market.name: '';
     console.log(newAlert);
 
-    this.alerts.push(newAlert);
+    if (!this.alerts.some(a => a === newAlert)) {
+      this.alerts.push(newAlert);
+    } else [
+      console.log('already exists in alerts')
+    ]
   }
 
   removeTemporaryAlert() {
 
     this.newAlertForm.reset();
-    // clear form
     this.showAlertCreation = false;
   }
 
