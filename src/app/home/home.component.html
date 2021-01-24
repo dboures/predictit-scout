@@ -8,11 +8,12 @@
         <mat-form-field>
           <input matInput placeholder="Market Id" formControlName="marketId" name="marketId" OnlyNumber="true" required>
         </mat-form-field>
+        spacer
+        <button mat-raised-button (click)="createAlert()" [disabled]="showAlertCreation" color="primary">Create
+          Alert</button>
       </div>
-      <div *ngIf=showAlertCreation>
-        here is the alert creation form
+      <div *ngIf=showAlertCreation class=alert-creation>
         <table mat-table>
-          <!-- Header row first group -->
           <tr>
             <th colspan="12" class="market-name">
               {{this.market.name}}
@@ -26,10 +27,10 @@
               Indicator
             </th>
             <th>
-              Operator
+              Comparison Operator
             </th>
             <th>
-              Limit
+              Value
             </th>
             <th>
               Continuous??
@@ -38,7 +39,7 @@
           <tr>
             <td>
               <mat-form-field>
-                <select matNativeControl formControlName="contractName" name="conractName">
+                <select matNativeControl formControlName="contractName" name="conrtactName">
                   <option *ngFor="let contract of market.contracts" [ngValue]="contract.shortName">
                     {{contract.shortName}}
                   </option>
@@ -131,25 +132,7 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="loadAlerts()" color="primary">Load Alerts</button>
-
     <button mat-raised-button (click)="saveAlerts()" color="primary">Save Alerts</button>
-
-    <!-- will eventually be part of the alert form -->
-    <button mat-raised-button (click)="createAlert()" [disabled]="showAlertCreation" color="primary">Create
-      Alert</button>
 <!-- how to create alert popup -->
   </mat-card-actions>
 </mat-card>
-
-
-<!-- <th>
-            <td>Contract</td>
-            <td></td>
-            <td></td>
-          </th>
-          <tr *ngFor="let contract of this.market.contracts" >
-            {{contract.name}}, {{contract.id}}
-    
-          </tr>
-          <button mat-raised-button  (click) ="getMarket()" color="primary">Load Market</button>
-        </table> -->

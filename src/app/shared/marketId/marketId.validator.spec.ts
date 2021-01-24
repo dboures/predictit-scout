@@ -29,8 +29,8 @@ describe('marketIdValidator', () => {
         expect(control.valid).toBeTruthy();
     });
 
-    it('should accept form if input length < 2', () => { // Notable because the builtin length validator is used for the actual form
+    it('should reject form if input length < 2', () => {
         control = new FormControl('1', [Validators.required, marketIdValidator()]);
-        expect(control.valid).toBeTruthy();
+        expect(control.valid).toBeFalsy();
     });
 });

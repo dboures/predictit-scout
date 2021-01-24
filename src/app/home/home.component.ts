@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   }
 
   newAlertForm = new FormGroup({
-    marketId: new FormControl('', [Validators.required, Validators.minLength(4), marketIdValidator()]),
+    marketId: new FormControl('', [Validators.required, marketIdValidator()]),
     contractName: new FormControl('', [Validators.required]),
     indicator: new FormControl('', [Validators.required]),
     operator: new FormControl('', [Validators.required]),
