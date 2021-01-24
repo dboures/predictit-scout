@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit {
         console.log(error);
       }
     );
+    this.removeTemporaryAlert();  
   }
 
   createAlert() {
@@ -75,8 +76,12 @@ export class HomeComponent implements OnInit {
     this.marketService.getMarket(marketId).subscribe(
       data => {
         console.log(data)
-        this.market = data;
-        this.showAlertCreation = true;
+        if (data.isOpen){
+          this.market = data;
+          this.showAlertCreation = true;
+        } else {
+          console.log('market is closed or does not exist')
+        }
       },
       error => {
         console.log(error);
@@ -84,25 +89,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  removeTemporaryAlert() {
-    //do something
-    this.showAlertCreation = false;
-  }
-
   addNewAlert(newAlert: Alert) { // gray this out until alert is valid
-    // const sampleContract: Contract = {
-    //   id: 1234,
-    //   name: 'dummy contract',
-    //   shortName: 'dc',
-    //   indicator: 'BestBuyPrice'
-    // };
-
-    // const sampleAlert: Alert = {
-    //   contract: sampleContract,
-    //   operator: '>',
-    //   limit: 50,
-    //   constant: true
-    // };
 
     if (this.newAlertForm.invalid) {
       console.log('invalid newAlert Form');
@@ -113,13 +100,13 @@ export class HomeComponent implements OnInit {
     console.log(newAlert);
 
     this.alerts.push(newAlert);
-    this.alertService.saveAlerts(this.alerts);
-    // this.newAlert = undefined;
-    // this.removeTemporaryAlert();
+  }
+
+  removeTemporaryAlert() {
+
+    this.newAlertForm.reset();
     // clear form
-    
-
-
+    this.showAlertCreation = false;
   }
 
 }
