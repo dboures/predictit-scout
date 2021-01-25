@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Market } from '@app/shared/interfaces/market.interface';
 import { marketIdValidator } from '@app/shared/marketId/marketId.validator';
+import { InfoModalComponent } from '@app/shared/modals/info-modal/info-modal.component';
 import { AlertService } from '@app/shared/services';
 import { MarketService } from '@app/shared/services/market/market.service';
 
@@ -26,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   operators: String[] = ['>', '=', '<'];
 
-  constructor(private router: Router, private alertService: AlertService, private marketService: MarketService) { }
+  constructor(private router: Router, private alertService: AlertService, private marketService: MarketService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.loadAlerts()
@@ -116,6 +118,19 @@ export class HomeComponent implements OnInit {
 
     this.newAlertForm.reset();
     this.showAlertCreation = false;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(InfoModalComponent, {}
+      // width: '250px',
+      // data: { name: this.name, animal: this.city }
+    );
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed', result);
+    //   this.city = result;
+    //   this.food_from_modal = result.food;
+    // });
   }
 
 }
