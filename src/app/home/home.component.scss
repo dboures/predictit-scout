@@ -16,9 +16,14 @@ table {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  vertical-align: text-top;
 }
 
 .market-name {
   font-size: large;
   border: 1px solid rgb(131, 131, 131);
+}
+
+.input-center {
+  text-align: center;
 }

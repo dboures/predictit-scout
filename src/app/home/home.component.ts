@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Alert } from '@app/shared/interfaces/alert.interface';
@@ -17,6 +17,7 @@ import { MarketService } from '@app/shared/services/market/market.service';
 export class HomeComponent implements OnInit {
   alerts: Alert[] = [];
   showAlertCreation: boolean = false;
+  marketErrorMessage: any =  {show: false, marketId: 0};
   market: Market | undefined;
   indicators: String[] =
     ['LastTradePrice',
@@ -39,9 +40,29 @@ export class HomeComponent implements OnInit {
     contractName: new FormControl('', [Validators.required]),
     indicator: new FormControl('', [Validators.required]),
     operator: new FormControl('', [Validators.required]),
-    limit: new FormControl('', [Validators.required]),
+    limit: new FormControl('', [Validators.required, Validators.min(1), Validators.max(99)]),
     // constant
   });
+
+  get marketId(): AbstractControl {
+    return this.newAlertForm.get('marketId')!;
+  }
+
+  get contractName(): AbstractControl {
+    return this.newAlertForm.get('contractName')!;
+  }
+
+  get indicator(): AbstractControl {
+    return this.newAlertForm.get('indicator')!;
+  }
+
+  get operator(): AbstractControl {
+    return this.newAlertForm.get('operator')!;
+  }
+
+  get limit(): AbstractControl {
+    return this.newAlertForm.get('limit')!;
+  }
 
   loadAlerts() {
     this.alertService.loadAlerts().subscribe(
@@ -69,10 +90,8 @@ export class HomeComponent implements OnInit {
 
   createAlert() {
     if (this.newAlertForm.get('marketId')?.invalid) {
-      console.log('invalid marketID'); // TODO: turn into an error message
       return
     }
-    console.log('valid')
     let marketId = +this.newAlertForm.get('marketId')?.value;
     this.marketService.getMarket(marketId).subscribe(
       data => {
@@ -80,8 +99,10 @@ export class HomeComponent implements OnInit {
         if (data.isOpen){
           this.market = data;
           this.showAlertCreation = true;
+          this.closeMarketErrorMessage();
         } else {
-          console.log('market is closed or does not exist')
+          this.marketErrorMessage.show = true;
+          this.marketErrorMessage.marketId = marketId;
         }
       },
       error => {
@@ -120,17 +141,14 @@ export class HomeComponent implements OnInit {
     this.showAlertCreation = false;
   }
 
+  closeMarketErrorMessage() {
+    this.marketErrorMessage.show = false;
+    this.marketErrorMessage.marketId = 0;
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(InfoModalComponent, {}
-      // width: '250px',
-      // data: { name: this.name, animal: this.city }
     );
-
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed', result);
-    //   this.city = result;
-    //   this.food_from_modal = result.food;
-    // });
   }
 
 }

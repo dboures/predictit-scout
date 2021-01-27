@@ -4,15 +4,23 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="newAlertForm">
+      <div *ngIf="marketErrorMessage.show" class= "alert alert-danger" role="alert">
+        <strong>Error: </strong> Market with id {{marketErrorMessage.marketId}} is closed or does not exist
+        <button type="button" class="close" (click)="closeMarketErrorMessage()" aria-label="Close">
+          <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+      </div>
       <div *ngIf=!showAlertCreation>
         <mat-form-field>
+          
           <input matInput placeholder="Market Id" formControlName="marketId" name="marketId" OnlyNumber="true" required>
-          <mat-error *ngIf="marketId.invalid || marketId.hasError('marketId')">Market closed or incorrect ID</mat-error>
+          <mat-error *ngIf="(marketId.invalid && marketId.hasError('marketId'))">Invalid MarketId</mat-error>
         </mat-form-field>
         spacer
         <button mat-raised-button (click)="createAlert()" [disabled]="showAlertCreation" color="primary">Create
           Alert</button>
       </div>
+      <br>
       <div *ngIf=showAlertCreation class=alert-creation>
         <table mat-table>
           <tr>
@@ -49,7 +57,7 @@
             </td>
             <td>
               <select matNativeControl formControlName="indicator" name="indicator">
-                <option *ngFor="let indicator of indicators">
+                <option *ngFor="let indicator of indicators" [ngValue] ="indicator">
                   {{indicator}}
                   <!-- TODO: Where is the arrow? -->
                 </option>
@@ -64,8 +72,8 @@
               </select>
             </td>
             <td>
-              <mat-form-field>
-                <input matInput placeholder="1-99" formControlName="limit" name="limit" OnlyNumber="true">
+              <mat-form-field class="input-center">
+                <input matInput placeholder="(1-99)" formControlName="limit" name="limit" OnlyNumber="true" class="input-center">
               </mat-form-field>
             </td>
             <td>
@@ -77,7 +85,7 @@
         <!-- put this on the right of the table -->
         <!-- god this formatting -->
         <button mat-raised-button (click)="removeTemporaryAlert()" [disabled]="!showAlertCreation"
-          color="primary">Remove Proposed Alert</button>
+          color="red">&times;</button>
         <button mat-raised-button (click)="addNewAlert(newAlertForm.value)" color="primary">Add Alert</button>
       </div>
 
@@ -139,4 +147,4 @@
 </mat-card>
 
 
-<button mat-raised-button (click)="openDialog()">Open Dialog</button>
+<button mat-raised-button (click)="openDialog()">Help</button>
