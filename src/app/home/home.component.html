@@ -7,6 +7,7 @@
       <div *ngIf=!showAlertCreation>
         <mat-form-field>
           <input matInput placeholder="Market Id" formControlName="marketId" name="marketId" OnlyNumber="true" required>
+          <mat-error *ngIf="marketId.invalid || marketId.hasError('marketId')">Market closed or incorrect ID</mat-error>
         </mat-form-field>
         spacer
         <button mat-raised-button (click)="createAlert()" [disabled]="showAlertCreation" color="primary">Create
