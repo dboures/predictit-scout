@@ -17,7 +17,7 @@ import { MarketService } from '@app/shared/services/market/market.service';
 export class HomeComponent implements OnInit {
   alerts: Alert[] = [];
   showAlertCreation: boolean = false;
-  marketErrorMessage: any =  {show: false, marketId: 0};
+  marketErrorMessage: any = { show: false, marketId: 0 };
   market: Market | undefined;
   indicators: String[] =
     ['LastTradePrice',
@@ -67,7 +67,6 @@ export class HomeComponent implements OnInit {
   loadAlerts() {
     this.alertService.loadAlerts().subscribe(
       data => {
-        console.log(data)
         this.alerts = data
       },
       error => {
@@ -79,7 +78,6 @@ export class HomeComponent implements OnInit {
   saveAlerts() {
     this.alertService.saveAlerts(this.alerts).subscribe(
       data => {
-        console.log(data)
         this.alerts = data
       },
       error => {
@@ -95,8 +93,7 @@ export class HomeComponent implements OnInit {
     let marketId = +this.newAlertForm.get('marketId')?.value;
     this.marketService.getMarket(marketId).subscribe(
       data => {
-        console.log(data)
-        if (data.isOpen){
+        if (data.isOpen) {
           this.market = data;
           this.showAlertCreation = true;
           this.closeMarketErrorMessage();
@@ -118,22 +115,23 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  addNewAlert(newAlert: Alert) { // gray this out until alert is valid
-
-    if (this.newAlertForm.invalid) {
-      console.log('invalid newAlert Form');
-      console.log(this.newAlertForm);
-      return;
-    }
-    newAlert.marketName = this.market?.name ? this.market.name: '';
-    console.log(newAlert);
-
-    if (!this.alerts.some(a => a === newAlert)) {
+  addNewAlert(newAlert: Alert) {
+    newAlert.marketName = this.market?.name ? this.market.name : '';
+    if (!this.alerts.some(a => this.alertsAreSame(a,newAlert))) {
       this.alerts.push(newAlert);
-    } else [
-      console.log('already exists in alerts')
-    ]
+    } 
   }
+
+  alertsAreSame(alert: Alert, newAlert: Alert) {
+    let isSame = alert.marketName === newAlert.marketName 
+              && alert.contractName == newAlert.contractName 
+              && alert.indicator === newAlert.indicator 
+              && alert.operator === newAlert.operator 
+              && alert.limit === newAlert.limit;
+
+    return isSame
+  }
+
 
   removeTemporaryAlert() {
 

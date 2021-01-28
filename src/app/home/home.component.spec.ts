@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Alert } from '@app/shared/interfaces/alert.interface';
@@ -41,9 +42,17 @@ describe('HomeComponent', () => {
     isOpen: true
   };
 
+  const closedMarket: Market = {
+    id: 1000,
+    name: 'dummy market',
+    shortName: 'dm',
+    contracts: [sampleContract],
+    isOpen: false
+  };
+
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, MatDialogModule],
       declarations: [HomeComponent],
       providers: [AlertService, MarketService]
     })
@@ -142,9 +151,97 @@ describe('HomeComponent', () => {
   //  TODO:
   // });
 
-  // it('createAlert will open closed market popup if market is closed, or could not find', () => {
-  //  TODO:
-  // });
+  it('createAlert will open error message if market is closed, or could not find', () => {
+    spyOn(marketService, 'getMarket').and.returnValue(of(closedMarket));
 
+    expect(component.marketErrorMessage.show).toBeFalse();
+    
+    const form = component.newAlertForm;
+    const marketIdInput = form.controls.marketId;
+    const contractNameInput = form.controls.contractName;
+    const indicatorInput = form.controls.indicator;
+    const operatorInput = form.controls.operator;
+    const limitInput = form.controls.limit;
+
+    marketIdInput.setValue('1234');
+    contractNameInput.setValue('cName');
+    indicatorInput.setValue('buyprice');
+    operatorInput.setValue('=');
+    limitInput.setValue(45);
+
+    component.createAlert();
+    expect(component.marketErrorMessage.show).toBeTrue();
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('.alert alert-danger'))).toBeDefined();
+  });
+
+
+
+
+  it('alertsAreSame returns true for the same alerts ', () => {
+    const form = component.newAlertForm;
+    const marketIdInput = form.controls.marketId;
+    const contractNameInput = form.controls.contractName;
+    const indicatorInput = form.controls.indicator;
+    const operatorInput = form.controls.operator;
+    const limitInput = form.controls.limit;
+
+    marketIdInput.setValue('1234');
+    contractNameInput.setValue('cName');
+    indicatorInput.setValue('buyprice');
+    operatorInput.setValue('=');
+    limitInput.setValue(45);
+
+    const other_form = component.newAlertForm;
+    const other_marketIdInput = other_form.controls.marketId;
+    const other_contractNameInput = other_form.controls.contractName;
+    const other_indicatorInput = other_form.controls.indicator;
+    const other_operatorInput = other_form.controls.operator;
+    const other_limitInput = other_form.controls.limit;
+
+    other_marketIdInput.setValue('1234');
+    other_contractNameInput.setValue('cName');
+    other_indicatorInput.setValue('buyprice');
+    other_operatorInput.setValue('=');
+    other_limitInput.setValue(45);
+
+    let a1 = form.value;
+    let a2 = other_form.value;
+
+    expect(component.alertsAreSame(a1, a2)).toBeTrue;
+  });
+
+  it('alertsAreSame returns false for different alerts ', () => {
+    const form = component.newAlertForm;
+    const marketIdInput = form.controls.marketId;
+    const contractNameInput = form.controls.contractName;
+    const indicatorInput = form.controls.indicator;
+    const operatorInput = form.controls.operator;
+    const limitInput = form.controls.limit;
+
+    marketIdInput.setValue('1234');
+    contractNameInput.setValue('cName');
+    indicatorInput.setValue('buyprice');
+    operatorInput.setValue('=');
+    limitInput.setValue(45);
+
+    const other_form = component.newAlertForm;
+    const other_marketIdInput = other_form.controls.marketId;
+    const other_contractNameInput = other_form.controls.contractName;
+    const other_indicatorInput = other_form.controls.indicator;
+    const other_operatorInput = other_form.controls.operator;
+    const other_limitInput = other_form.controls.limit;
+
+    other_marketIdInput.setValue('1234');
+    other_contractNameInput.setValue('cName');
+    other_indicatorInput.setValue('buyprice');
+    other_operatorInput.setValue('=');
+    other_limitInput.setValue(99);
+
+    let a1 = form.value;
+    let a2 = other_form.value;
+
+    expect(component.alertsAreSame(a1, a2)).toBeFalse;
+  });
 
 });

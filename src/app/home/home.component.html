@@ -83,10 +83,9 @@
 
         </table>
         <!-- put this on the right of the table -->
-        <!-- god this formatting -->
         <button mat-raised-button (click)="removeTemporaryAlert()" [disabled]="!showAlertCreation"
           color="red">&times;</button>
-        <button mat-raised-button (click)="addNewAlert(newAlertForm.value)" color="primary">Add Alert</button>
+        <button mat-raised-button (click)="addNewAlert(newAlertForm.value)" [disabled]="newAlertForm.invalid" color="primary">Add Alert</button>
       </div>
 
 

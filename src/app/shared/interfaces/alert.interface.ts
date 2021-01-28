@@ -1,5 +1,3 @@
-import { Contract } from "./contract.interface";
-
 export interface Alert {
     marketName: string;
     contractName: string;
