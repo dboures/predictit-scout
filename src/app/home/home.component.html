@@ -4,15 +4,8 @@
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="newAlertForm">
-      <div *ngIf="marketErrorMessage.show" class= "alert alert-danger" role="alert">
-        <strong>Error: </strong> Market with id {{marketErrorMessage.marketId}} is closed or does not exist
-        <button type="button" class="close" (click)="closeMarketErrorMessage()" aria-label="Close">
-          <!-- <span aria-hidden="true">&times;</span> -->
-        </button>
-      </div>
       <div *ngIf=!showAlertCreation>
         <mat-form-field>
-          
           <input matInput placeholder="Market Id" formControlName="marketId" name="marketId" OnlyNumber="true" required>
           <mat-error *ngIf="(marketId.invalid && marketId.hasError('marketId'))">Invalid MarketId</mat-error>
         </mat-form-field>

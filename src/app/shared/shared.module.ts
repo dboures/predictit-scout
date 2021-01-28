@@ -19,7 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { InfoModalComponent } from './modals/info-modal/info-modal.component';
+import { InfoModalComponent } from './other/info-modal/info-modal.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({

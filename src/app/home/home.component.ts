@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Market } from '@app/shared/interfaces/market.interface';
 import { marketIdValidator } from '@app/shared/marketId/marketId.validator';
-import { InfoModalComponent } from '@app/shared/modals/info-modal/info-modal.component';
+import { InfoModalComponent } from '@app/shared/other/info-modal/info-modal.component';
 import { AlertService } from '@app/shared/services';
 import { MarketService } from '@app/shared/services/market/market.service';
 
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
 
   operators: String[] = ['>', '=', '<'];
 
-  constructor(private router: Router, private alertService: AlertService, private marketService: MarketService, public dialog: MatDialog) { }
+  constructor(private router: Router, private alertService: AlertService, private marketService: MarketService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadAlerts()
@@ -96,10 +97,9 @@ export class HomeComponent implements OnInit {
         if (data.isOpen) {
           this.market = data;
           this.showAlertCreation = true;
-          this.closeMarketErrorMessage();
         } else {
-          this.marketErrorMessage.show = true;
-          this.marketErrorMessage.marketId = marketId;
+          
+          this.openSnackBar('Market with id ' + marketId.toString() + ' is closed or does not exist', 'Ok' );
         }
       },
       error => {
@@ -119,7 +119,9 @@ export class HomeComponent implements OnInit {
     newAlert.marketName = this.market?.name ? this.market.name : '';
     if (!this.alerts.some(a => this.alertsAreSame(a,newAlert))) {
       this.alerts.push(newAlert);
-    } 
+    } else {
+      this.openSnackBar('Alert already exists', 'Ok' );
+    }
   }
 
   alertsAreSame(alert: Alert, newAlert: Alert) {
@@ -139,14 +141,17 @@ export class HomeComponent implements OnInit {
     this.showAlertCreation = false;
   }
 
-  closeMarketErrorMessage() {
-    this.marketErrorMessage.show = false;
-    this.marketErrorMessage.marketId = 0;
-  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(InfoModalComponent, {}
     );
+  }
+
+  openSnackBar(message: string, action: string ): void {
+    this.snackBar.open(message, action, {
+      duration: 5000,
+      verticalPosition: 'top'
+   });
   }
 
 }
