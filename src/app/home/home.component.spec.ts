@@ -1,7 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Contract } from '@app/shared/interfaces/contract.interface';
@@ -52,7 +54,7 @@ describe('HomeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, MatDialogModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, MatDialogModule, MatSnackBarModule],
       declarations: [HomeComponent],
       providers: [AlertService, MarketService]
     })
@@ -151,10 +153,9 @@ describe('HomeComponent', () => {
   //  TODO:
   // });
 
-  it('createAlert will open error message if market is closed, or could not find', () => {
+  it('createAlert will open error snackbar if market is closed, or could not find', () => {
     spyOn(marketService, 'getMarket').and.returnValue(of(closedMarket));
-
-    expect(component.marketErrorMessage.show).toBeFalse();
+    spyOn(component.snackBar, 'open');
     
     const form = component.newAlertForm;
     const marketIdInput = form.controls.marketId;
@@ -170,9 +171,16 @@ describe('HomeComponent', () => {
     limitInput.setValue(45);
 
     component.createAlert();
-    expect(component.marketErrorMessage.show).toBeTrue();
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.alert alert-danger'))).toBeDefined();
+    expect(component.snackBar.open).toHaveBeenCalled();
+  });
+
+  it('addAlert will open error snackbar if you try to add an alert that already exists', () => {
+    spyOn(component.snackBar, 'open');
+    component.alerts =  [sampleAlert];
+    component.addNewAlert(sampleAlert);
+    fixture.detectChanges();
+    expect(component.snackBar.open).toHaveBeenCalled();
   });
 
 

@@ -153,5 +153,4 @@ export class HomeComponent implements OnInit {
       verticalPosition: 'top'
    });
   }
-
 }
