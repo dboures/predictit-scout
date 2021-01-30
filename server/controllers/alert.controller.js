@@ -11,13 +11,11 @@ module.exports = {
 
 function loadAlerts(req, res) {
   User.aggregate([
-    {$project : { _id: 0, alerts:1}}
+    {$unwind: "$alerts"}, 
+    {$project : { _id: 0, alerts:1, email:1}}
     ],
-    function (res, err) {
-    if (err) {
-      console.log('ya fucked up'); //
-      console.log(err);
-    } else {
+    function (err, res) {
+    if (err) {} else {
       console.log('we did it');
       console.log(res); // [ { maxBalance: 98000 } ]  
     } 
