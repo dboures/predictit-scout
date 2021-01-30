@@ -10,6 +10,22 @@ module.exports = {
 
 
 function loadAlerts(req, res) {
+  User.aggregate([
+    {$project : { _id: 0, alerts:1}}
+    ],
+    function (res, err) {
+    if (err) {
+      console.log('ya fucked up'); //
+      console.log(err);
+    } else {
+      console.log('we did it');
+      console.log(res); // [ { maxBalance: 98000 } ]  
+    } 
+  });
+
+
+
+
   const userEmail = getAccountEmailFromHeader(req, res);
   User.findOne({ email: userEmail },
 
