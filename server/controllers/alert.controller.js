@@ -10,23 +10,9 @@ module.exports = {
 
 
 function loadAlerts(req, res) {
-  User.aggregate([
-    {$unwind: "$alerts"}, 
-    {$project : { _id: 0, alerts:1, email:1}}
-    ],
-    function (err, res) {
-    if (err) {} else {
-      console.log('we did it');
-      console.log(res); // [ { maxBalance: 98000 } ]  
-    } 
-  });
-
-
-
-
   const userEmail = getAccountEmailFromHeader(req, res);
-  User.findOne({ email: userEmail },
 
+  User.findOne({ email: userEmail },
     (err, user) => {
       if (err) return res.status(200).send(err)
       return res.status(200).send(user.alerts)
