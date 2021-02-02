@@ -80,6 +80,7 @@ export class HomeComponent implements OnInit {
     this.alertService.saveAlerts(this.alerts).subscribe(
       data => {
         this.alerts = data
+        this.openSnackBar('Alerts saved  successfully', 'Ok' );
       },
       error => {
         console.log(error);
@@ -116,6 +117,7 @@ export class HomeComponent implements OnInit {
   }
 
   addNewAlert(newAlert: Alert) {
+    newAlert.openMarket = true;
     newAlert.marketName = this.market?.name ? this.market.name : '';
     if (!this.alerts.some(a => this.alertsAreSame(a,newAlert))) {
       this.alerts.push(newAlert);

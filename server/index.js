@@ -2,7 +2,7 @@
 const config = require('./config/config');
 const app = require('./config/express');
 
-const notifs = require('./notifications/notifications');
+const notifications = require('./notifications/notifications');
 require('./config/mongoose');
 
 // module.parent check is required to support mocha watch
@@ -11,10 +11,11 @@ if (!module.parent) {
   app.listen(config.port, () => {
     console.info(`server started on port ${config.port} (${config.env})`);
 
+    //TODO: cleanup and investigate best practices
     let interval = 5000;
     setInterval(function() {
-    console.log("I am doing my 5 second check"); // can put notif js here
-    notifs.loadAllAlerts();
+    console.log("I am doing my 5 second check");
+    //notifications.handleAllNotifications();
     }, interval);
   });
 }
