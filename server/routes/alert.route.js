@@ -1,5 +1,4 @@
 const express = require('express');
-const asyncHandler = require('express-async-handler');
 const alertCtrl = require('../controllers/alert.controller');
 
 const router = express.Router();
