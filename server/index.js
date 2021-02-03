@@ -1,6 +1,7 @@
 // config should be imported before importing any other file
 const config = require('./config/config');
 const app = require('./config/express');
+const marketState = require('./state/state');
 
 const notifications = require('./notifications/notifications');
 require('./config/mongoose');
@@ -20,8 +21,9 @@ if (!module.parent) {
 
     setInterval(function() {
       console.log("Update state (minute)");
-      //state.commenceSuccdown();
-      }, 12 * interval);
+      marketState.syncMarketState();
+      //}, 12 * interval);
+      }, 1 * interval);
   });
 }
 

@@ -33,7 +33,7 @@ describe('HomeComponent', () => {
     indicator: 'buyprice',
     operator: '>',
     limit: 50,
-    constant: true
+    //constant: true
   };
 
   const sampleMarket: Market = {

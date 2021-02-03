@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
 
+//Will this just make another collection?
+
 const StateSchema = new mongoose.Schema({
   marketId : {
       type: Number,
-      required: true
+      required: true,
+      unique: true
   },
-  //rest of market state representation here
-  //can apparently just use a new collection rathre than a whole new DB, which is good news
-
-
+  contracts: {
+    type: Array,
+    default:[]
+  }
 
 
 }, {
@@ -16,4 +19,4 @@ const StateSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('State', StateSchema);

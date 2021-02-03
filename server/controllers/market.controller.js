@@ -3,7 +3,8 @@ const config = require('../config/config');
 const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 module.exports = {
-  getMarket
+  getMarket,
+  getState
 }
 
 
@@ -36,6 +37,25 @@ function getMarket(req, res) {
     }
   })
 }
+
+function getState(req, res) {
+
+  const marketId = req.params.id;
+  const base_url = "https://www.predictit.org/api/marketdata/markets/";
+  const url = base_url.concat(marketId)
+  console.log(url);
+  //
+  makeRequest(url)
+    .then(function (response) {
+      let stateObject = parseStateFromResponse(response); 
+      return stateObject;
+    })
+    .catch(function (err) {
+      console.log('Something went wrong', err);
+      return ;
+    });
+  
+  }
 
 
 
@@ -78,6 +98,40 @@ async function makeRequest(url) {
 };
 
 function parseMarketFromResponse(response) {
+  let market = JSON.parse(response);
+  //handle contracts
+  let contracts = market.contracts
+  // console.log(contracts[0])
+  let newContracts = [];
+  contracts.forEach(function (contract) {
+    // console.log(contract.id)
+    let newContract = {
+      "id": contract.id,
+      "name": contract.name,
+      "shortName": contract.shortName,
+      "indicator": ''
+    };
+    newContracts.push(newContract);
+  });
+  market.contracts = newContracts;
+
+  //handle everything else
+  delete market.timeStamp;
+  delete market.image;
+  delete market.url;
+  if (market.status === 'Open'){
+    market.isOpen = true;
+  } else {
+    market.isOpen = false;
+  }
+  delete market.status;
+  // console.log(market)
+
+  return market
+}
+
+
+function parseStateFromResponse(response) {
   let market = JSON.parse(response);
   //handle contracts
   let contracts = market.contracts
