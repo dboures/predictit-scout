@@ -38,16 +38,14 @@ function getMarket(req, res) {
   })
 }
 
-function getState(req, res) {
+function getState(marketId) {
 
-  const marketId = req.params.id;
   const base_url = "https://www.predictit.org/api/marketdata/markets/";
-  const url = base_url.concat(marketId)
+  const url = base_url.concat(marketId);
   console.log(url);
-  //
-  makeRequest(url)
+  let result = makeRequest(url) //TODO: cleanup
     .then(function (response) {
-      let stateObject = parseStateFromResponse(response); 
+      let stateObject = parseMarketFromResponse(response); //parseStateFromResponse
       return stateObject;
     })
     .catch(function (err) {
@@ -55,6 +53,7 @@ function getState(req, res) {
       return ;
     });
   
+    return result;
   }
 
 
