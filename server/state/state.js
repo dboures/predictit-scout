@@ -31,8 +31,6 @@ async function syncMarketState() {
                 { upsert: true },
                 (err, res) => {
                     if (err) { } else {
-                        console.log(ms.id);
-                        console.log('success');
                         return res
                     }
                   }

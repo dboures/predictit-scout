@@ -95,47 +95,25 @@ async function makeRequest(url) {
   });
 };
 
+
 function parseMarketFromResponse(response) {
   let market = JSON.parse(response);
-  //handle contracts
-  let contracts = market.contracts
-  // console.log(contracts[0])
-  let newContracts = [];
-  contracts.forEach(function (contract) {
-    // console.log(contract.id)
-    let newContract = {
-      "id": contract.id,
-      "name": contract.name,
-      "shortName": contract.shortName,
-      "indicator": ''
-    };
-    newContracts.push(newContract);
-  });
-  market.contracts = newContracts;
-
-  //handle everything else
-  delete market.timeStamp;
-  delete market.image;
-  delete market.url;
-  if (market.status === 'Open'){
-    market.isOpen = true;
-  } else {
-    market.isOpen = false;
-  }
-  delete market.status;
-
-  return market
+  market.contracts = getPartialContracts(market);
+  return cleanResponse(market)
 }
 
 
 function parseStateFromResponse(response) {
   let state = JSON.parse(response);
-  //handle contracts
+  state.contracts = getCompleteContracts(state);
+  return cleanResponse(state)
+  
+}
+
+function getCompleteContracts(state) {
   let contracts = state.contracts
-  // console.log(contracts[0])
   let newContracts = [];
   contracts.forEach(function (contract) {
-    // console.log(contract.id)
     let newContract = {
       "id": contract.id,
       "name": contract.name,
@@ -151,22 +129,36 @@ function parseStateFromResponse(response) {
     };
     newContracts.push(newContract);
   });
-  state.contracts = newContracts;
-
-  //handle everything else
-  delete state.timeStamp;
-  delete state.image;
-  delete state.url;
-  if (state.status === 'Open'){
-    state.isOpen = true;
-  } else {
-    state.isOpen = false;
-  }
-  delete state.status;
-
-  return state
+  return newContracts
 }
 
+function getPartialContracts(market) {
+  let contracts = market.contracts
+  let newContracts = [];
+  contracts.forEach(function (contract) {
+    let newContract = {
+      "id": contract.id,
+      "name": contract.name,
+      "shortName": contract.shortName,
+      "indicator": ''
+    };
+    newContracts.push(newContract);
+  });
+  return newContracts
+}
+
+function cleanResponse(response) {
+  delete response.timeStamp;
+  delete response.image;
+  delete response.url;
+  if (response.status === 'Open'){
+    response.isOpen = true;
+  } else {
+    response.isOpen = false;
+  }
+  delete response.status;
+  return response
+}
 
 
 
