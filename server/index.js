@@ -2,9 +2,7 @@
 const config = require('./config/config');
 const app = require('./config/express');
 const marketState = require('./state/state');
-
 const notifications = require('./notifications/notifications');
-require('./config/mongoose');
 
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912
@@ -16,14 +14,15 @@ if (!module.parent) {
     let interval = 5000;
     // setInterval(function() {
     // console.log("Handle notifications (15 seconds)");
-    // //notifications.handleAllNotifications();
-    // }, 3 *interval);
+    // notifications.handleAllNotifications();
+    // }, 3 * interval);
 
-    setInterval(function() {
-      console.log("Update state (minute)");
-      marketState.syncMarketState();
-      //}, 12 * interval);
-      }, 1 * interval);
+    // setInterval(function() {
+    //   console.log("Update state (minute)");
+    //   marketState.syncMarketState();
+    //   }, 1 * interval);
+
+
   });
 }
 
