@@ -1,19 +1,28 @@
 const mongoose = require('mongoose');
 
-//Will this just make another collection?
-
 const StateSchema = new mongoose.Schema({
-  marketId : {
+  id : {
       type: Number,
       required: true,
-      unique: true
+  },
+  name : {
+    type: String,
+    required: true,
+    unique:true
+  },
+  shortName: {
+    type: String,
+    required: true,
+    unique:true
+  },
+  isOpen: {
+    type: Boolean,
+    required: true
   },
   contracts: {
     type: Array,
     default:[]
   }
-
-
 }, {
   versionKey: false
 });

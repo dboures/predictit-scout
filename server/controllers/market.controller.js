@@ -42,10 +42,9 @@ function getState(marketId) {
 
   const base_url = "https://www.predictit.org/api/marketdata/markets/";
   const url = base_url.concat(marketId);
-  console.log(url);
-  let result = makeRequest(url) //TODO: cleanup
+  let result = makeRequest(url)
     .then(function (response) {
-      let stateObject = parseMarketFromResponse(response); //parseStateFromResponse
+      let stateObject = parseStateFromResponse(response);
       return stateObject;
     })
     .catch(function (err) {
@@ -124,16 +123,15 @@ function parseMarketFromResponse(response) {
     market.isOpen = false;
   }
   delete market.status;
-  // console.log(market)
 
   return market
 }
 
 
 function parseStateFromResponse(response) {
-  let market = JSON.parse(response);
+  let state = JSON.parse(response);
   //handle contracts
-  let contracts = market.contracts
+  let contracts = state.contracts
   // console.log(contracts[0])
   let newContracts = [];
   contracts.forEach(function (contract) {
@@ -142,25 +140,31 @@ function parseStateFromResponse(response) {
       "id": contract.id,
       "name": contract.name,
       "shortName": contract.shortName,
-      "indicator": ''
+      "status": contract.status,
+      "lastTradePrice": contract.lastTradePrice,
+      "bestBuyYesCost": contract.bestBuyYesCost,
+      "bestBuyNoCost": contract.bestBuyNoCost,
+      "bestSellYesCost": contract.bestSellYesCost,
+      "bestSellNoCost": contract.bestSellNoCost,
+      "lastClosePrice": contract.lastClosePrice,
+      
     };
     newContracts.push(newContract);
   });
-  market.contracts = newContracts;
+  state.contracts = newContracts;
 
   //handle everything else
-  delete market.timeStamp;
-  delete market.image;
-  delete market.url;
-  if (market.status === 'Open'){
-    market.isOpen = true;
+  delete state.timeStamp;
+  delete state.image;
+  delete state.url;
+  if (state.status === 'Open'){
+    state.isOpen = true;
   } else {
-    market.isOpen = false;
+    state.isOpen = false;
   }
-  delete market.status;
-  // console.log(market)
+  delete state.status;
 
-  return market
+  return state
 }
 
 

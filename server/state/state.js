@@ -1,5 +1,6 @@
 //const State = require('../models/State.model');
 const User = require('../models/user.model');
+const State = require('../models/state.model');
 const marketCtrl = require('../controllers/market.controller');
 
 
@@ -15,26 +16,31 @@ async function syncMarketState() {
         }
     );
 
-
-    // marketIds.forEach( async (marketId) => {
-    //     let x = await marketCtrl.getState(+marketId);
-    //     console.log(x);
-    // })
-
-    let x = await Promise.all( //TODO: better naming
+    let marketStates = await Promise.all(
         marketIds.map(async marketId => {
-            let state = await marketCtrl.getState(+marketId);
-            console.log(state);
-            return state;
+            let marketState = await marketCtrl.getState(+marketId);
+            return marketState;
         }));
-    console.log(x);
+    
 
-    // let films = await Promise.all(
-    // characterResponseJson.films.map(async filmUrl => {
-    //     let filmResponse = await fetch(filmUrl)
-    //     return filmResponse.json()
-    // })
-
+    let syncedStates = await Promise.all(
+        marketStates.map(async ms => {
+            let syncedState = await State.findOneAndReplace(
+                { id: ms.id},
+                ms,
+                { upsert: true },
+                (err, res) => {
+                    if (err) { } else {
+                        console.log(ms.id);
+                        console.log('success');
+                        return res
+                    }
+                  }
+            ).catch((e) => {
+                console.log(e); //TODO: what happens when websited log to console?
+            })
+            return syncedState;
+        }));
 }
     // upsert market maybe
     // for marketId in marketIds:
