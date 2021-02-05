@@ -22,7 +22,7 @@ function loadAlerts(req, res) {
 
 function saveAlerts(req, res) {
   const userEmail = getAccountEmailFromHeader(req, res);
-
+  //TODO: DeprecationWarning: Mongoose: `findOneAndUpdate()` and `findOneAndDelete()` without the `useFindAndModify` option set to false are deprecated. See: https://mongoosejs.com/docs/deprecations.html#findandmodify
   User.findOneAndUpdate(
     { email: userEmail },
     { alerts: req.body },

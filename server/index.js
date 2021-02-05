@@ -3,6 +3,7 @@ const config = require('./config/config');
 const app = require('./config/express');
 const marketState = require('./state/state');
 const notifications = require('./notifications/notifications');
+require('./config/mongoose');
 
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912
