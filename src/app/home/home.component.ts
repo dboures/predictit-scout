@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
   newAlertForm = new FormGroup({
     marketId: new FormControl('', [Validators.required, marketIdValidator()]),
     contractName: new FormControl('', [Validators.required]),
+    contractId: new FormControl('', [Validators.required]),
     indicator: new FormControl('', [Validators.required]),
     operator: new FormControl('', [Validators.required]),
     limit: new FormControl('', [Validators.required, Validators.min(1), Validators.max(99)]),
@@ -53,6 +54,10 @@ export class HomeComponent implements OnInit {
     return this.newAlertForm.get('contractName')!;
   }
 
+  get contractId(): AbstractControl {
+    return this.newAlertForm.get('contractId')!;
+  }
+
   get indicator(): AbstractControl {
     return this.newAlertForm.get('indicator')!;
   }
@@ -63,6 +68,13 @@ export class HomeComponent implements OnInit {
 
   get limit(): AbstractControl {
     return this.newAlertForm.get('limit')!;
+  }
+
+  setFormContractName() { // TODO: Test this
+    let contract = this.market?.contracts.find(contract => {
+      return contract.id === this.newAlertForm.get('contractId')?.value
+    })
+    this.newAlertForm.patchValue({ 'contractName' : contract?.name});
   }
 
   loadAlerts() {
@@ -92,7 +104,7 @@ export class HomeComponent implements OnInit {
     if (this.newAlertForm.get('marketId')?.invalid) {
       return
     }
-    let marketId = +this.newAlertForm.get('marketId')?.value;
+    let marketId = this.newAlertForm.get('marketId')?.value;
     this.marketService.getMarket(marketId).subscribe(
       data => {
         if (data.isOpen) {
@@ -117,8 +129,11 @@ export class HomeComponent implements OnInit {
   }
 
   addNewAlert(newAlert: Alert) {
+    //TODO: testing to make robust
     newAlert.openMarket = true;
     newAlert.marketName = this.market?.name ? this.market.name : '';
+    newAlert.marketId = +newAlert.marketId;
+    newAlert.limit = +newAlert.limit;
     if (!this.alerts.some(a => this.alertsAreSame(a,newAlert))) {
       this.alerts.push(newAlert);
     } else {
@@ -127,15 +142,15 @@ export class HomeComponent implements OnInit {
   }
 
   alertsAreSame(alert: Alert, newAlert: Alert) {
-    let isSame = alert.marketName === newAlert.marketName 
+    let isSame = alert.marketName === newAlert.marketName
               && alert.contractName == newAlert.contractName 
+              && alert.contractId == newAlert.contractId 
               && alert.indicator === newAlert.indicator 
               && alert.operator === newAlert.operator 
               && alert.limit === newAlert.limit;
 
     return isSame
   }
-
 
   removeTemporaryAlert() {
 

@@ -19,14 +19,10 @@ function getMarket(req, res) {
       res.status(200).send(err.message)
     } else {
       const marketId = req.params.id;
-      console.log(marketId);
       const base_url = "https://www.predictit.org/api/marketdata/markets/";
       const url = base_url.concat(marketId)
-      console.log(url);
-      //
       makeRequest(url)
         .then(function (response) {
-          // console.log(response);
           let marketObject = parseMarketFromResponse(response); 
           return res.status(200).send(marketObject);
         })

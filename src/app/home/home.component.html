@@ -41,8 +41,8 @@
           <tr>
             <td>
               <mat-form-field>
-                <select matNativeControl formControlName="contractName" name="conrtactName">
-                  <option *ngFor="let contract of market.contracts" [ngValue]="contract.shortName">
+                <select matNativeControl formControlName="contractId" name="contractId" (change)="setFormContractName()">
+                  <option *ngFor="let contract of market.contracts" [ngValue]="contract.id">
                     {{contract.shortName}}
                   </option>
                 </select>
