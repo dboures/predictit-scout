@@ -1,13 +1,52 @@
+const stateModel = require('../models/state.model');
 const User = require('../models/user.model');
+const State = require('../models/state.model');
 
 module.exports = {
   handleAllNotifications
-  // ,
-  // loadAllAlerts
 }
 
-function handleAllNotifications(){
-console.log('handle');
+async function handleAllNotifications(){
+  console.log('handle');
+
+  let currentMarkets = await getCurrentMarkets();
+  let userAlerts = await getUserAlerts();
+  
+  userAlerts.forEach(alert => {
+    console.log(alert);
+    createNotif/update(alert)
+  });
+}
+
+function getCurrentMarkets() {
+  return State.find({}, 
+    function (err, res) {
+      if (err) { return [] }
+      else { return res }
+      }
+    );
+}
+
+function getUserAlerts() {
+  return User.aggregate([
+    {$unwind: "$alerts"},
+    {$project : { _id: 0, alerts:1, email:1}}],
+    function (err, res) {
+      if (err) { return [] }
+      else { return res }
+      }
+    );
+}
+
+function createNotification(alert, currentMarkets) {
+  //match the alert to the specific market
+
+  // check if current indicator value is operator the limit,
+  // if so, create a notification,
+  //otherwise pass
+
+  //also if the market has close, change the user's contract market isOpen bool? -> then maybe we only want to pull ones that are open
+
 }
 
 // function loadAllAlerts() {
@@ -23,10 +62,7 @@ console.log('handle');
 // }
 
 //getting closer
-// db.getCollection('users').aggregate(
-//   {$project : { _id: 0, alerts:1, email:1}},
-//   {$group : { "_id": "$email", alerts:{$addToSet:"$alerts"} } }
-//   )
+// db.getCollection('users')
 
 
 //the handle notifications workflow sketch

@@ -13,10 +13,10 @@ if (!module.parent) {
 
     //TODO: cleanup and investigate best practices
     let interval = 5000;
-    // setInterval(function() {
-    // console.log("Handle notifications (15 seconds)");
-    // notifications.handleAllNotifications();
-    // }, 3 * interval);
+    setInterval(function() {
+    console.log("Handle notifications (15 seconds)");
+    notifications.handleAllNotifications();
+    }, 3 * interval);
 
     // setInterval(function() {
     //   console.log("Update state (minute)");

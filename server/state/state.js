@@ -8,13 +8,10 @@ module.exports = {
 }
 
 async function syncMarketState() {
-    marketIds = await User.distinct("alerts.marketId", { "alerts.openMarket": true },
-        function (err, res) {
-            if (err) { return [] }
-            else { return res }
-        }
-    );
+    //get markets we care about from users
+    let marketIds = await getMarketIds();
 
+    //obtain updated market state information from Predictit
     let marketStates = await Promise.all(
         marketIds.map(async marketId => {
             let marketState = await marketCtrl.getState(+marketId);
@@ -22,7 +19,7 @@ async function syncMarketState() {
             })
         );
 
-
+    //update market states in the DB , TODO: maybe refactor?
     let syncedStates = await Promise.all(
         marketStates.map(async ms => {
             if (ms === undefined) {
@@ -41,5 +38,14 @@ async function syncMarketState() {
                 return syncedState;
             }
         })
+    );
+}
+
+function getMarketIds() {
+    return User.distinct("alerts.marketId", { "alerts.openMarket": true },
+    function (err, res) {
+        if (err) { return [] }
+        else { return res }
+        }   
     );
 }
