@@ -13,12 +13,12 @@ async function handleAllNotifications(){
   let userAlerts = await getUserAlerts();
   
   userAlerts.forEach(alert => {
-    createNotification(alert, currentMarkets);
+    matchAlertAndMarket(alert, currentMarkets);
   });
 }
 
 function getCurrentMarkets() {
-  return State.find({}, 
+  return State.find({},{_id:0}, 
     function (err, res) {
       if (err) { return [] }
       else { return res }
@@ -43,52 +43,50 @@ function getUserAlerts() {
     );
 }
 
-function createNotification(alert, currentMarkets) {
+function matchAlertAndMarket(alert, currentMarkets) {
   //match the alert to the specific market
 
-  // console.log(alert.marketId);
-  // console.log(currentMarkets);
-  market = currentMarkets.filter(market => market.id == alert.marketId); // still gotta unpack this a bit
+  console.log(alert.marketId);
+  let market = currentMarkets.find(market => market.id === alert.marketId);
+  let contract = market.contracts.find(contract => Reflect.get(contract, 'id') === alert.contractId);
+    if (contract === undefined){
+      return
+    }
+    let marketVal = Reflect.get(contract, camelCase(alert.indicator));
 
-  console.log(alert);
-  console.log(market);
+    console.log(marketVal);
+    console.log(alert.operator);
+    console.log(alert.limit);
 
-  // check if current indicator value is operator the limit,
-  // if so, create a notification,
-  //otherwise pass
+  if ( alert.operator === '<') {
+    if (marketVal < alert.limit){
+      console.log('less than notif')
+      //createNotification(alert);
+    }
+  }
+  else if ( alert.operator === '>') { // TODO: test
+    if (marketVal > alert.limit){
+      console.log('gtr than notif')
+      //createNotification(alert);
+    }
+  }
+  else if ( alert.operator === '=') { // TODO: test
+    if (marketVal === alert.limit){
+      console.log('equals Notif')
+      //createNotification(alert);
+    }
+  }
 
-  //also if the market has closed without the alert being sent, send a closed market alert
+  //TODO: also if the market has closed without the alert being sent, send a closed market alert
 
 }
 
-// function loadAllAlerts() {
-//     User.aggregate([
-//       {$unwind: "$alerts"}, 
-//       {$project : { _id: 0, alerts:1, email:1}}
-//       ],
-//       function (err, res) {
-//       if (err) {} else {
-//         console.log(res); 
-//       } 
-//     });
-// }
+function camelCase(string) {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+}
 
-//getting closer
-// db.getCollection('users')
-
-
-//the handle notifications workflow sketch
-
-
-//making sure that the DB state reflects PI will be taken care of elsewhere
-
-
-//get all users: User.distinct("email")
-
-//for each user
-//get the user's market
-//compare it to state
-// if criteria is met, create a notification, add the notif to the queue
-
+function createNotification(alert) {
+  console.log('gonna create then send text');
+}
 
 //send all notifications

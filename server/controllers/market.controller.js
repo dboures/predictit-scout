@@ -115,12 +115,12 @@ function getCompleteContracts(state) {
       "name": contract.name,
       "shortName": contract.shortName,
       "status": contract.status,
-      "lastTradePrice": contract.lastTradePrice,
-      "bestBuyYesCost": contract.bestBuyYesCost,
-      "bestBuyNoCost": contract.bestBuyNoCost,
-      "bestSellYesCost": contract.bestSellYesCost,
-      "bestSellNoCost": contract.bestSellNoCost,
-      "lastClosePrice": contract.lastClosePrice,
+      "lastTradePrice": contract.lastTradePrice * 100,
+      "bestBuyYesCost": contract.bestBuyYesCost * 100,
+      "bestBuyNoCost": contract.bestBuyNoCost * 100,
+      "bestSellYesCost": contract.bestSellYesCost * 100,
+      "bestSellNoCost": contract.bestSellNoCost * 100,
+      "lastClosePrice": contract.lastClosePrice * 100,
       
     };
     newContracts.push(newContract);
