@@ -6,6 +6,6 @@ export interface Alert {
     indicator: string;
     operator: string;
     limit: number;
-    // constant: boolean;
     openMarket: boolean;
+    sent?:boolean;
   }

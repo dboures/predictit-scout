@@ -13,8 +13,7 @@ async function handleAllNotifications(){
   let userAlerts = await getUserAlerts();
   
   userAlerts.forEach(alert => {
-    console.log(alert);
-    createNotif/update(alert)
+    createNotification(alert, currentMarkets);
   });
 }
 
@@ -29,8 +28,14 @@ function getCurrentMarkets() {
 
 function getUserAlerts() {
   return User.aggregate([
-    {$unwind: "$alerts"},
-    {$project : { _id: 0, alerts:1, email:1}}],
+    {$project : { alerts:'$alerts',_id: 0, alerts:1, email:1 }},
+    {$set : {"alerts.email": "$email" }},
+    {$replaceWith : {arr :"$alerts"}},
+    {$group : { "_id": null, result:{$push:"$arr"} } },
+    { $unwind : "$result" },
+    { $unwind : "$result" },
+    {$replaceWith : "$result"}
+    ],
     function (err, res) {
       if (err) { return [] }
       else { return res }
@@ -41,11 +46,18 @@ function getUserAlerts() {
 function createNotification(alert, currentMarkets) {
   //match the alert to the specific market
 
+  // console.log(alert.marketId);
+  // console.log(currentMarkets);
+  market = currentMarkets.filter(market => market.id == alert.marketId); // still gotta unpack this a bit
+
+  console.log(alert);
+  console.log(market);
+
   // check if current indicator value is operator the limit,
   // if so, create a notification,
   //otherwise pass
 
-  //also if the market has close, change the user's contract market isOpen bool? -> then maybe we only want to pull ones that are open
+  //also if the market has closed without the alert being sent, send a closed market alert
 
 }
 
