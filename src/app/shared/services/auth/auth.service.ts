@@ -34,6 +34,7 @@ export class AuthService {
   register(
     fullname: string,
     email: string,
+    carrier: string,
     phone: string,
     password: string,
     repeatPassword: string
@@ -42,6 +43,7 @@ export class AuthService {
       .post<AuthResponse>('/api/auth/register', {
         fullname,
         email,
+        carrier,
         phone,
         password,
         repeatPassword,

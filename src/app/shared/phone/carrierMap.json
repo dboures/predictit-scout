@@ -1,0 +1,46 @@
+[
+    {
+        "name": "AT&T",
+        "domain": "@txt.att.net"
+    },
+    {
+        "name": "Boost Mobile",
+        "domain": "@sms.myboostmobile.com"
+    },
+    {
+        "name": "Cricket Wireless",
+        "domain": "@mms.cricketwirelss.net"
+    },
+    {
+        "name": "Google Project Fi",
+        "domain": "@msg.fi.google.com"
+    },
+    {
+        "name": "Republic Wireless",
+        "domain": "@text.republicwireless.com"
+    },
+    {
+        "name": "Sprint",
+        "domain": "@messaging.sprintpcs.com"
+    },
+    {
+        "name": "T-Mobile",
+        "domain": "@tmomail.net"
+    },
+    {
+        "name": "Ting",
+        "domain": "@message.ting.com"
+    },
+    {
+        "name": "U.S. Cellular",
+        "domain": "@email.uscc.net"
+    },
+    {
+        "name": "Verizon",
+        "domain": "@vtext.com"
+    },
+    {
+        "name": "Virgin Mobile",
+        "domain": "@vmobl.com"
+    }
+]

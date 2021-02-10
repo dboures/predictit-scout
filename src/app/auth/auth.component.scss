@@ -61,19 +61,3 @@ div {
 .phone {
   position: relative;
 }
-
-.phone-number {
-  max-width: 10vw;
-  min-width: 160px;
-  overflow: hidden;
-  position: absolute;
-  left: 50px;
-}
-
-.phone-extension {
-  position: absolute;
-  max-width: 5vw;
-  min-width: 60px;
-  left: -15px;
-  top: 20px;
-}

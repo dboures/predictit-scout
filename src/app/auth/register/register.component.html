@@ -23,9 +23,10 @@
         <tr>
           <td>
             <mat-form-field class="standard-field">
-              <mat-select [(ngModel)]="this.countryCode" [ngModelOptions]="{standalone: true}">
-                <mat-option *ngFor="let country of phoneCountryMap.default" [value]="country.dial_code">
-                  {{country.name}}
+              <mat-label>Phone Carrier</mat-label>
+              <mat-select [formControl]="carrier">
+                <mat-option *ngFor="let carrier of carrierMap.default" [value]="carrier.domain">
+                  {{carrier.name}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -33,13 +34,11 @@
         </tr>
         <tr>     
           <td class="phone">
-            <span class="phone-extension">{{this.countryCode}}</span>
-            <mat-form-field class="phone-number">
+            <mat-form-field class="standard-field">
           <input matInput placeholder="Phone Number" formControlName="phone" name="phone" required>
             </mat-form-field>
           </td>
         </tr>
-        <tr><div></div></tr>
         <tr>
           <td>
             <mat-form-field class="standard-field">
