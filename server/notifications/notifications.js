@@ -1,10 +1,12 @@
+const config = require('../config/config');
 const stateModel = require('../models/state.model');
 const User = require('../models/user.model');
 const State = require('../models/state.model');
 const fetch = require("node-fetch");
 
 module.exports = {
-  handleAllNotifications
+  handleAllNotifications,
+  sendNotification
 }
 
 async function handleAllNotifications(){
@@ -30,7 +32,7 @@ function getCurrentMarkets() {
 function getUserAlerts() {
   return User.aggregate([
     {$project : { alerts:'$alerts',_id: 0, alerts:1, email:1 }},
-    {$set : {"alerts.email": "$email" }},
+    {$set : {"alerts.twitterHandle": "$twitterHandle" }}, // TODO: does this work
     {$replaceWith : {arr :"$alerts"}},
     {$group : { "_id": null, result:{$push:"$arr"} } },
     { $unwind : "$result" },
@@ -81,22 +83,49 @@ function camelCase(string) {
   return string.charAt(0).toLowerCase() + string.slice(1);
 }
 
-function sendNotification(alert) {
+async function sendNotification(alert) {
 
   //get twitter user id 
-  fetch('https://api.twitter.com/1.1/users/show.json?screen_name=twitterdev', {
-    method: 'GET',
-    headers: {
-    'Content-Type': 'text/plain',
-    'X-My-Custom-Header': 'value-v',
-    'Authorization': 'Bearer ' + config.twitterBearer, //'Bearer ' + token,
-    }
-  }).then(response => response.json()
-  ).then(data => console.log(data.id));
+  let twitterId = await getTwitterId(alert.twitterHandle);
+
+  console.log('after await');
+  console.log(twitterId);
 
 
   // send the notification
 
 }
+
+async function getTwitterId(twitterHandle) {
+  //return fetch('https://api.twitter.com/1.1/users/show.json?screen_name=' + twitterHandle, {
+  try {
+      const response = await fetch('https://api.twitter.com/1.1/users/show.json?screen_name=twitterdev', {
+        method: 'GET',
+        headers: {
+        'Content-Type': 'text/plain',
+        'X-My-Custom-Header': 'value-v',
+        'Authorization': 'Bearer ' + config.twitterBearer, //'Bearer ' + token,
+        }
+      });
+      const data = await response.json();
+      return data.id;
+    } catch (error) {
+      console.error(error);
+      }
+  }
+
+
+
+  
+  
+//   ).then((response) => { 
+//     return response.json().then((data) => {
+//       return data;
+//     })
+//     .then((data) => { 
+//       console.log('inside');
+//       console.log(data.id);
+//       return data.id});
+// }
 
 //send all notifications
