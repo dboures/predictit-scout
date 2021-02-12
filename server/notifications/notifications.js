@@ -46,7 +46,6 @@ function getUserAlerts() {
 function matchAlertAndMarket(alert, currentMarkets) {
   //match the alert to the specific market
 
-  console.log(alert.marketId);
   let market = currentMarkets.find(market => market.id === alert.marketId);
   let contract = market.contracts.find(contract => Reflect.get(contract, 'id') === alert.contractId);
     if (contract === undefined){
@@ -54,26 +53,22 @@ function matchAlertAndMarket(alert, currentMarkets) {
     }
     let marketVal = Reflect.get(contract, camelCase(alert.indicator));
 
-    console.log(marketVal);
-    console.log(alert.operator);
-    console.log(alert.limit);
-
   if ( alert.operator === '<') {
     if (marketVal < alert.limit){
       console.log('less than notif')
-      //createNotification(alert);
+      sendNotification(alert);
     }
   }
-  else if ( alert.operator === '>') { // TODO: test
+  else if ( alert.operator === '>') {
     if (marketVal > alert.limit){
       console.log('gtr than notif')
-      //createNotification(alert);
+      sendNotification(alert);
     }
   }
-  else if ( alert.operator === '=') { // TODO: test
+  else if ( alert.operator === '=') {
     if (marketVal === alert.limit){
       console.log('equals Notif')
-      //createNotification(alert);
+      sendNotification(alert);
     }
   }
 
@@ -85,8 +80,25 @@ function camelCase(string) {
   return string.charAt(0).toLowerCase() + string.slice(1);
 }
 
-function createNotification(alert) {
+function sendNotification(alert) {
   console.log('gonna create then send text');
+
+
+  //curl --request GET --url 'https://api.twitter.com/1.1/users/show.json?screen_name=twitterdev' --header 'authorization: Bearer AAAAAAAAAAAAAAAAAAAAACbJMgEAAAAAv1anfBevJkBu5GUr4Lw5Uo0sne4%3D8vY8PnigQ3pmuXwUs08pPHG0wTTQ32SqqzBOVAUVY3mtoSd9u7'
+  //get twitter user id -> 
+  fetch('https://api.twitter.com/1.1/users/show.json?screen_name=twitterdev', {
+    method: 'GET',
+    headers: {
+    'Content-Type': 'text/plain',
+    'X-My-Custom-Header': 'value-v',
+    'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAACbJMgEAAAAAv1anfBevJkBu5GUr4Lw5Uo0sne4%3D8vY8PnigQ3pmuXwUs08pPHG0wTTQ32SqqzBOVAUVY3mtoSd9u7', //'Bearer ' + token,
+    }
+  }).then(response => response.json()
+  ).then(data => console.log(data));
+
+
+  // send the notification
+
 }
 
 //send all notifications

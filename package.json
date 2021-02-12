@@ -44,11 +44,13 @@
     "method-override": "^2.3.10",
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
+    "node-fetch": "^2.6.1",
     "nodemon": "^1.17.5",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "rxjs": "^6.5.5",
+    "save": "^2.4.0",
     "swagger-ui-express": "^3.0.9",
     "xmlhttprequest": "^1.8.0",
     "zone.js": "~0.10.3"
