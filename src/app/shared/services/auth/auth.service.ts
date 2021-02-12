@@ -19,9 +19,9 @@ export class AuthService {
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorage) {}
 
-  login(email: string, password: string): Observable<User> {
+  login(twitterHandle: string, password: string): Observable<User> {
     return this.http
-      .post<AuthResponse>('/api/auth/login', { email, password })
+      .post<AuthResponse>('/api/auth/login', { twitterHandle, password })
       .pipe(
         tap(({ token, user }) => {
           this.setUser(user);
@@ -32,19 +32,13 @@ export class AuthService {
   }
 
   register(
-    fullname: string,
-    email: string,
-    carrier: string,
-    phone: string,
+    twitterHandle: string,
     password: string,
     repeatPassword: string
   ): Observable<User> {
     return this.http
       .post<AuthResponse>('/api/auth/register', {
-        fullname,
-        email,
-        carrier,
-        phone,
+        twitterHandle,
         password,
         repeatPassword,
       })

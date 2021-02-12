@@ -1,6 +1,6 @@
 export interface User {
   _id: string;
-  fullname: string;
+  twitterHandle: string;
   createdAt: string;
   roles: string[];
   isAdmin: boolean;

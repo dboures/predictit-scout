@@ -10,18 +10,18 @@ import { AuthService } from '@app/shared/services';
   styleUrls: ['../auth.component.scss'],
 })
 export class LoginComponent {
-  email: string | null = null;
+  twitterHandle: string | null = null;
   password: string | null = null;
 
   constructor(private router: Router, private authService: AuthService, public snackBar: MatSnackBar) {}
 
   login(): void {
-    this.authService.login(this.email!, this.password!).subscribe(
+    this.authService.login(this.twitterHandle!, this.password!).subscribe(
       data => {
         this.router.navigateByUrl('/');
       },
       error => {
-        this.openSnackBar('Error logging in, please check your email/password and try again', 'Ok' );
+        this.openSnackBar('Error logging in, please check your Twitter handle/password and try again', 'Ok' );
       });
   }
 

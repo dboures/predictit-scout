@@ -9,9 +9,6 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '@app/shared/services';
-import { phoneValidator } from '@app/shared/phone/phone.validator';
-import { PhoneNumberUtil, PhoneNumberFormat } from 'google-libphonenumber';
-import * as carrierMapJSON from '@app/shared/phone/carrierMap.json';
 
 @Component({
   selector: 'app-register',
@@ -19,10 +16,6 @@ import * as carrierMapJSON from '@app/shared/phone/carrierMap.json';
   styleUrls: ['../auth.component.scss'],
 })
 export class RegisterComponent {
-  phoneNumberUtil = PhoneNumberUtil.getInstance();
-  carrierMap = carrierMapJSON;
-  countryCode: string = '+1';
-  carrierName: string = 'AT&T';
   constructor(private router: Router, private authService: AuthService) { }
 
   passwordsMatchValidator(control: FormControl): ValidationErrors | null {
@@ -35,28 +28,13 @@ export class RegisterComponent {
   }
 
   userForm = new FormGroup({
-    fullname: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl('', [Validators.required, phoneValidator(this.countryCode)]),
-    carrier: new FormControl('', [Validators.required]),
+    twitterHandle: new FormControl('', [Validators.required, Validators.maxLength(15)]),
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required, this.passwordsMatchValidator]),
   });
 
-  get fullname(): AbstractControl {
-    return this.userForm.get('fullname')!;
-  }
-
-  get email(): AbstractControl {
-    return this.userForm.get('email')!;
-  }
-
-  get carrier(): AbstractControl {
-    return this.userForm.get('carrier')!;
-  }
-
-  get phone(): AbstractControl {
-    return this.userForm.get('phone')!;
+  get twitterHandle(): AbstractControl {
+    return this.userForm.get('twitterHandle')!;
   }
 
   get password(): AbstractControl {
@@ -72,11 +50,9 @@ export class RegisterComponent {
       return;
     }
 
-    const { fullname, email, carrier, phone, password, repeatPassword } = this.userForm.getRawValue();
-    const number = this.phoneNumberUtil.parse(this.countryCode.concat(phone), "");
-    const cleanPhone = this.phoneNumberUtil.format(number, PhoneNumberFormat.E164);
+    const { twitterHandle, password, repeatPassword } = this.userForm.getRawValue();
 
-    this.authService.register(fullname, email, carrier, cleanPhone, password, repeatPassword).subscribe(data => {
+    this.authService.register(twitterHandle, password, repeatPassword).subscribe(data => {
       this.router.navigate(['']);
     });
   }
