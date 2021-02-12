@@ -1,6 +1,7 @@
 const stateModel = require('../models/state.model');
 const User = require('../models/user.model');
 const State = require('../models/state.model');
+const fetch = require("node-fetch");
 
 module.exports = {
   handleAllNotifications
@@ -81,20 +82,17 @@ function camelCase(string) {
 }
 
 function sendNotification(alert) {
-  console.log('gonna create then send text');
 
-
-  //curl --request GET --url 'https://api.twitter.com/1.1/users/show.json?screen_name=twitterdev' --header 'authorization: Bearer AAAAAAAAAAAAAAAAAAAAACbJMgEAAAAAv1anfBevJkBu5GUr4Lw5Uo0sne4%3D8vY8PnigQ3pmuXwUs08pPHG0wTTQ32SqqzBOVAUVY3mtoSd9u7'
-  //get twitter user id -> 
+  //get twitter user id 
   fetch('https://api.twitter.com/1.1/users/show.json?screen_name=twitterdev', {
     method: 'GET',
     headers: {
     'Content-Type': 'text/plain',
     'X-My-Custom-Header': 'value-v',
-    'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAACbJMgEAAAAAv1anfBevJkBu5GUr4Lw5Uo0sne4%3D8vY8PnigQ3pmuXwUs08pPHG0wTTQ32SqqzBOVAUVY3mtoSd9u7', //'Bearer ' + token,
+    'Authorization': 'Bearer ' + config.twitterBearer, //'Bearer ' + token,
     }
   }).then(response => response.json()
-  ).then(data => console.log(data));
+  ).then(data => console.log(data.id));
 
 
   // send the notification

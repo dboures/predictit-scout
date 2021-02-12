@@ -18,6 +18,8 @@ const envVarsSchema = Joi.object({
     }),
   JWT_SECRET: Joi.string().required()
     .description('JWT Secret required to sign'),
+  TWITTER_BEARER: Joi.string().required()
+    .description('Twitter API Bearer token'),
   MONGO_HOST: Joi.string().required()
     .description('Mongo DB host url'),
   MONGO_PORT: Joi.number()
@@ -36,6 +38,7 @@ const config = {
   mongooseDebug: envVars.MONGOOSE_DEBUG,
   jwtSecret: envVars.JWT_SECRET,
   frontend: envVars.MEAN_FRONTEND || 'angular',
+  twitterBearer: envVars.TWITTER_BEARER,
   mongo: {
     host: envVars.MONGO_HOST,
     port: envVars.MONGO_PORT
