@@ -17,9 +17,7 @@ module.exports = {
 }
 
 async function insert(user) {
-  console.log(user);
   user.twitterId_str = await getTwitterId(user.twitterHandle);
-  console.log(user);
   user = await Joi.validate(user, userSchema, { abortEarly: false });
   user.hashedPassword = bcrypt.hashSync(user.password, 10);
   delete user.password;
