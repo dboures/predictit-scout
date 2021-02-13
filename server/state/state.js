@@ -19,7 +19,7 @@ async function syncMarketState() {
             })
         );
 
-    //update market states in the DB , TODO: if we pull a market that is closed, all users should have it updated
+    //update market states in the DB , 
     let syncedStates = await Promise.all(
         marketStates.map(async ms => {
             if (ms === undefined) {
@@ -39,6 +39,8 @@ async function syncMarketState() {
             }
         })
     );
+
+    //TODO: if any synced states closed (if we pull a market that is closed) all users should have it updated as closed
 }
 
 function getMarketIds() {
