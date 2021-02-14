@@ -2,7 +2,7 @@ const config = require('../config/config');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const User = require('../models/user.model');
-const fetch = require("node-fetch");
+const Twit = require('twit')
 
 const userSchema = Joi.object({
   twitterHandle: Joi.string().required(),
@@ -26,18 +26,21 @@ async function insert(user) {
 
 
 async function getTwitterId(twitterHandle) {
-  try {
-      const response = await fetch('https://api.twitter.com/1.1/users/show.json?screen_name=' + twitterHandle, {
-        method: 'GET',
-        headers: {
-        'Content-Type': 'text/plain',
-        'X-My-Custom-Header': 'value-v',
-        'Authorization': 'Bearer ' + config.twitterBearer,
-        }
-      });
-      const data = await response.json();
-      return data.id_str; //ids can be loner than 17 places which is higher than javascripts number precision
-    } catch (error) {
-      console.error(error);
+
+  //refactor so im not constantly making new twits
+  let T = new Twit({
+    consumer_key: config.twitterConsumerKey,
+    consumer_secret: config.twitterConsumerKeySecret,
+    access_token: config.twitterAccessToken,
+    access_token_secret: config.twitterAccessTokenSecret,
+  });
+
+  T.get('users/show', { screen_name: 'predictit_scout' }, // twitterHandle
+      function(err, data, response) {
+      if (err) {
+        console.error(err);
+      } else {
+        return data.id_str;
       }
+    });
   }
