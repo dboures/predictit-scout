@@ -26,37 +26,16 @@ async function insert(user) {
 }
 
 
-async function getTwitterId(twitterHandle) { // TODO: don't use Twit, and remove the try catch blocks
-  try {
-    const response = await fetch('https://api.twitter.com/1.1/users/show.json?screen_name=' + twitterHandle, {
+async function getTwitterId(twitterHandle) {
+  const data = await fetch('https://api.twitter.com/1.1/users/show.json?screen_name=' + twitterHandle, {
       method: 'GET',
       headers: {
       'Content-Type': 'text/plain',
       'X-My-Custom-Header': 'value-v',
       'Authorization': 'Bearer ' + config.twitterBearer,
-      }
-    });
-    const data = await response.json();
-    return data.id_str; //ids can be loner than 17 places which is higher than javascripts number precision
-  } catch (error) {
-    console.error(error);
-  }
+      }})
+      .then(response => response.json());
+    return data.id_str; //ids can be longer than 17 places which is higher than javascripts number precision
+  
+}
 
-  //refactor so im not constantly making new twits
-  let T = new Twit({
-    consumer_key: config.twitterConsumerKey,
-    consumer_secret: config.twitterConsumerKeySecret,
-    access_token: config.twitterAccessToken,
-    access_token_secret: config.twitterAccessTokenSecret,
-  });
-
-  T.get('users/show', { screen_name: 'predictit_scout' }, // TODO: twitterHandle
-      function(err, data, response) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log(response);
-        return data.id_str;
-      }
-    });
-  }
