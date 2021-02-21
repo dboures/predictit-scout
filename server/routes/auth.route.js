@@ -10,6 +10,7 @@ module.exports = router;
 
 router.post('/register', asyncHandler(register), login);
 router.post('/login', passport.authenticate('local', { session: false }), login);
+router.post('/resetLink',  function (req, res) { authCtrl.sendResetLink(req, res) });
 router.get('/me', passport.authenticate('jwt', { session: false }), login);
 
 

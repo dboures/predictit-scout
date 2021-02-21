@@ -27,6 +27,12 @@
   </mat-card-actions>
 </mat-card>
 <mat-card class="bottom-card">
+  <span> Forgot password?<br />
+    <a [routerLink]="['/auth/reset-password']">Reset Password</a>
+  </span>
+</mat-card>
+
+<mat-card class="bottom-card">
   <span> Don't have an account?<br />
     <a [routerLink]="['/auth/register']">Register</a>
   </span>

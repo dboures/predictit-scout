@@ -51,6 +51,11 @@ export class AuthService {
       );
   }
 
+  sendResetLink(twitterHandle: string): Observable<any> {
+    return this.http
+      .post<any>('/api/auth/resetLink', { twitterHandle }); //Todo: not sure what I'm returning
+  }
+
   setUser(user: User | null): void {
     if (user) {
       user.isAdmin = user.roles.includes('admin');
