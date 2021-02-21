@@ -102,7 +102,7 @@ function parseMarketFromResponse(response) {
 function parseStateFromResponse(response) {
   let state = JSON.parse(response);
   state.contracts = getCompleteContracts(state);
-  return cleanResponse(state)
+  return cleanResponse(state, false)
   
 }
 
@@ -143,10 +143,12 @@ function getPartialContracts(market) {
   return newContracts
 }
 
-function cleanResponse(response) {
+function cleanResponse(response, deleteUrl = true) {
   delete response.timeStamp;
   delete response.image;
-  delete response.url;
+  if (deleteUrl){
+    delete response.url;
+  }
   if (response.status === 'Open'){
     response.isOpen = true;
   } else {

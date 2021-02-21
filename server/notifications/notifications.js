@@ -55,6 +55,7 @@ function findAlertstoSend(userAlerts, currentMarkets) {
   let alertsToSend = [];
   userAlerts.forEach(alert => {
     let market = currentMarkets.find(market => market.id === alert.marketId);
+    alert.url = market.url;
     if (market === undefined){
       return
     }
@@ -123,6 +124,7 @@ function sendNotifications(alerts) {
        oauth_version : '1.0',
      }
  
+
      let signature = oauthSignature.generate(httpMethod, url, parameters, config.twitterConsumerKeySecret, config.twitterAccessTokenSecret);
  
      var myHeaders = new fetch.Headers();
@@ -130,8 +132,8 @@ function sendNotifications(alerts) {
                        ",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=" + timestamp + ",oauth_nonce=" + nonce + ",oauth_version=\"1.0\",oauth_signature=" + signature);
      myHeaders.append("Content-Type", "application/json");
 
-     message = "Hello " + alert.twitterHandle + ",\n\nContract: " + alert.contractName + "\n\n in Market: " + alert.marketName + "\n\n has triggered the following condition:\n\n" +
-      alert.indicator + " " + alert.operator + " " + alert.limit + "\n\nHappy Trading!" // TODO: make this a bit better, def insert link
+     message = "Hello " + alert.twitterHandle + ",\n\nOne of your alerts has been activated:\n\n" +  "Market:\n" + alert.marketName +  "\n\nContract:\n" + alert.contractName + "\n\nCondition:\n" +
+      alert.indicator + " " + alert.operator + " " + alert.limit + "\n\nAccess the market here: " + alert.url +  "\n\nHappy Trading!";
      
      var message_body = JSON.stringify({"event":{"type":"message_create","message_create":{"target":{"recipient_id":alert.twitterId_str},"message_data":{"text":message}}}});
      

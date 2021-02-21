@@ -15,6 +15,10 @@ const StateSchema = new mongoose.Schema({
     required: true,
     unique:true
   },
+  url: {
+    type: String,
+    required: true
+  },
   isOpen: {
     type: Boolean,
     required: true
