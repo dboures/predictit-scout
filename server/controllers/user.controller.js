@@ -34,7 +34,8 @@ async function getTwitterId(twitterHandle) {
       'X-My-Custom-Header': 'value-v',
       'Authorization': 'Bearer ' + config.twitterBearer,
       }})
-      .then(response => response.json());
+      .then(response => response.json())
+      .catch(error => console.log('error', error));
     return data.id_str; //ids can be longer than 17 places which is higher than javascripts number precision
   
 }

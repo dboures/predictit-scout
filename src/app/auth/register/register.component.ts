@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 
 import { AuthService } from '@app/shared/services';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ import { AuthService } from '@app/shared/services';
   styleUrls: ['../auth.component.scss'],
 })
 export class RegisterComponent {
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, public snackBar: MatSnackBar) { }
 
   passwordsMatchValidator(control: FormControl): ValidationErrors | null {
     const password = control.root.get('password');
@@ -54,6 +55,14 @@ export class RegisterComponent {
 
     this.authService.register(twitterHandle, password, repeatPassword).subscribe(data => {
       this.router.navigate(['']);
+    },
+    error => {
+      if (error.status === 500){
+        this.snackBar.open('Twitter username is already registered', 'Ok', {
+          duration: 5000,
+          verticalPosition: 'top'
+       });
+      }
     });
   }
 }
