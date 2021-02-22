@@ -55,12 +55,12 @@ function findAlertstoSend(userAlerts, currentMarkets) {
   let alertsToSend = [];
   userAlerts.forEach(alert => {
     let market = currentMarkets.find(market => market.id === alert.marketId);
-    alert.url = market.url;
     if (market === undefined){
       return
     }
+    alert.url = market.url;
     if (!market.isOpen){
-      alert.openMarket = false;
+      closeAlert(alert);
       return 
     }
 
@@ -111,6 +111,17 @@ function sendNotifications(alerts) {
       })
       .catch(error => console.log('error', error)); 
   });
+}
+
+function closeAlert(alert) {
+  User.updateOne(
+    { "twitterHandle": alert.twitterHandle},
+    { $set: { [`alerts.${alert.ind}.openMarket`]: false }},
+    (error, result) => {
+      if (error) {
+        console.log(error);
+      }
+    });
 }
 
 
