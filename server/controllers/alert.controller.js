@@ -45,7 +45,6 @@ function getTwitterHandleFromHeader(req, res) {
     if (err) {
       res.status(200).send(err.message)
     } else {
-      console.log(verifiedJwt);
       userHandle = verifiedJwt.twitterHandle;
     }
   })

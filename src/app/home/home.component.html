@@ -106,7 +106,9 @@
         <th>
         </th>
       </tr>
-      <tr *ngFor="let alert of alerts">
+      <tr *ngFor="let alert of alerts" [ngClass] = "{'active': alert.openMarket && !alert.sent,
+                                                      'sent': alert.openMarket && alert.sent,
+                                                      'closed': !alert.openMarket}">
         <td>
           {{alert.marketName}}
         </td>

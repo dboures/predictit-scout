@@ -27,3 +27,15 @@ table {
 .input-center {
   text-align: center;
 }
+
+.active {
+  background-color: orange;
+}
+
+.closed {
+  background-color: grey;
+}
+
+.sent {
+  background-color: green; // TODO: change colors
+}

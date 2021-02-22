@@ -21,8 +21,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { InfoModalComponent } from './other/info-modal/info-modal.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
+  imports: [RouterModule],
   exports: [
     FormsModule,
     ReactiveFormsModule,

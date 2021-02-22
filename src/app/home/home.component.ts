@@ -131,6 +131,7 @@ export class HomeComponent implements OnInit {
   addNewAlert(newAlert: Alert) {
     //TODO: testing to make robust
     newAlert.openMarket = true;
+    newAlert.sent = false;
     newAlert.marketName = this.market?.name ? this.market.name : '';
     newAlert.marketId = +newAlert.marketId;
     newAlert.limit = +newAlert.limit;

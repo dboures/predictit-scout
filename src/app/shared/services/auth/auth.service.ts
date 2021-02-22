@@ -57,7 +57,7 @@ export class AuthService {
     repeatPassword: string
   ): Observable<any> {
     return this.http
-      .post<any>('/api/auth/reset', {
+      .put<any>('/api/auth/reset', {
         changekey,
         password,
         repeatPassword,

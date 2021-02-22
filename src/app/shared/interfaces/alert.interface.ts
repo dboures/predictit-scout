@@ -7,5 +7,5 @@ export interface Alert {
     operator: string;
     limit: number;
     openMarket: boolean;
-    sent?:boolean;
+    sent:boolean;
   }
