@@ -26,18 +26,16 @@ async function insert(user) {
   return await new User(user).save();
 }
 
-async function resetPassword(resetObj) {
-  let [old_hash, id_str] = resetObj.changekey.split("-");
-    const user = await User.updateOne(
+function resetPassword(req, res) {
+  let [old_hash, id_str] = req.body.changekey.split("-");
+    User.updateOne(
       { hashedPassword: old_hash, twitterId_str: id_str },
-      { $set: { hashedPassword: bcrypt.hashSync(resetObj.password, 10) }},
-      { new: true },
-      (err, user) => {
-        if (err) {
-          return res.status(500).send(err);
-        }
+      { $set: { hashedPassword: bcrypt.hashSync(req.body.password, 10) }},
+      (err, result) => {
+        if (err) return res.status(200).send(err)
+        console.log(result);
+        return res.status(200).send(result)
       });
-    return user;
 }
 
 

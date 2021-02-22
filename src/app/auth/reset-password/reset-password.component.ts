@@ -61,14 +61,13 @@ export class ResetPasswordComponent {
     const { changekey, password, repeatPassword } = this.userForm.getRawValue();
 
     this.authService.reset(changekey, password, repeatPassword).subscribe(data => {
-      if(data === undefined) {
-        console.log('pass');
-      }
-      else{
+      if(data.n){
         this.snackBar.open('Password successfully reset', 'Ok', {
           duration: 5000,
           verticalPosition: 'top'
         });
+      } else {
+        this.openSnackBar('Error setting new password, please try again', 'Ok' );
       }
     },
     error => {
