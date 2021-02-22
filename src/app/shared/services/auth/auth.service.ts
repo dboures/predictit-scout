@@ -51,9 +51,22 @@ export class AuthService {
       );
   }
 
-  sendResetLink(twitterHandle: string): Observable<any> {
+  reset(
+    changekey: string,
+    password: string,
+    repeatPassword: string
+  ): Observable<any> {
     return this.http
-      .post<any>('/api/auth/resetLink', { twitterHandle }); //Todo: not sure what I'm returning
+      .post<any>('/api/auth/reset', {
+        changekey,
+        password,
+        repeatPassword,
+      });
+  }
+
+  sendResetKey(twitterHandle: string): Observable<any> {
+    return this.http
+      .post<any>('/api/auth/resetKey', { twitterHandle }); //Todo: not sure what I'm returning
   }
 
   setUser(user: User | null): void {

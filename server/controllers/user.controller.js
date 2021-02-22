@@ -14,7 +14,8 @@ const userSchema = Joi.object({
 
 
 module.exports = {
-  insert
+  insert,
+  resetPassword
 }
 
 async function insert(user) {
@@ -23,6 +24,20 @@ async function insert(user) {
   user.hashedPassword = bcrypt.hashSync(user.password, 10);
   delete user.password;
   return await new User(user).save();
+}
+
+async function resetPassword(resetObj) {
+  let [old_hash, id_str] = resetObj.changekey.split("-");
+    const user = await User.updateOne(
+      { hashedPassword: old_hash, twitterId_str: id_str },
+      { $set: { hashedPassword: bcrypt.hashSync(resetObj.password, 10) }},
+      { new: true },
+      (err, user) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+      });
+    return user;
 }
 
 

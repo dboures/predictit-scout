@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
+const User = require('../models/user.model');
 
 
 module.exports = {
-  generateToken,
-  sendResetLink
+  generateToken
 }
 
 
@@ -13,8 +13,3 @@ function generateToken(user) {
   return jwt.sign(payload, config.jwtSecret);
 }
 
-function sendResetLink(req, res) {
-  console.log('in reset link');
-  console.log(req);
-  res.json({'goo': 'ga'});
-}

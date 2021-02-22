@@ -19,4 +19,9 @@ export class HeaderComponent {
     this.authService.signOut();
     this.router.navigateByUrl('/auth/login');
   }
+
+  gotoAlerts(): void {
+    this.router.navigateByUrl('/');
+  }
+
 }

@@ -6,8 +6,11 @@ const crypto = require('crypto')
 const oauthSignature = require("oauth-signature");
 
 module.exports = {
-  handleAllNotifications
+  handleAllNotifications,
+  sendResetKey
 }
+
+const messageUrl = "https://api.twitter.com/1.1/direct_messages/events/new.json";
 
 async function handleAllNotifications(){
   console.log('handle');
@@ -59,6 +62,11 @@ function findAlertstoSend(userAlerts, currentMarkets) {
     if (market === undefined){
       return
     }
+    if (!market.isOpen){
+      alert.openMarket = false;
+      return 
+    }
+
     let contract = market.contracts.find(contract => Reflect.get(contract, 'id') === alert.contractId);
       if (contract === undefined){
         return
@@ -84,29 +92,64 @@ function findAlertstoSend(userAlerts, currentMarkets) {
   return alertsToSend;
 }
 
-  //TODO: also if the market has closed without the alert being sent, send a closed market alert
-
-
 function camelCase(string) {
   return string.charAt(0).toLowerCase() + string.slice(1);
 }
 
 
-function sendNotifications(alerts) {
-  let url = "https://api.twitter.com/1.1/direct_messages/events/new.json";
- 
+function sendNotifications(alerts) { 
   alerts.forEach(alert => {
-    requestOptions = generateMessageRequest(url, alert);
+    requestOptions = generateMessageRequest(alert);
 
-    fetch(url, requestOptions)
-      .then(response => response.text())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    console.log('sent');
+    // fetch(url, requestOptions)
+    //   .then(response => response.text())
+    //   .then(result => console.log(result))
+    //   .catch(error => console.log('error', error));
   });
+
+  //TODO: update alert as sent in DB
 }
 
 
-  function generateMessageRequest(url, alert) {
+async function sendResetKey(req, res) {
+  handle = req.body.twitterHandle;
+  if (handle === undefined){
+    return
+  }
+
+  user = await getUser(handle);
+
+  //create the secret
+  let secret = user.hashedPassword + '-' + user.twitterId_str;
+
+  //send the secret to that user's twitter
+  requestOptions = generateMessageRequest(user, secret);
+
+  fetch(messageUrl, requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log(result);
+      return res.status(200).send();
+    })
+    .catch(error => {
+      console.log('error', error);
+      return res.status(500).send();
+  });
+}
+
+async function getUser(handle){
+  const user = await User.findOne({ twitterHandle: handle },
+    (err, user) => {
+      if (err) {
+        return res.status(200).send(err);
+      }
+    });
+    return user
+}
+
+
+  function generateMessageRequest(obj, reset = '') {
      //db - 1360038203667922945 - pi_scout-  1359741091092828162 - ed - 599018036
      let httpMethod = "POST";
  
@@ -124,18 +167,22 @@ function sendNotifications(alerts) {
        oauth_version : '1.0',
      }
  
-
-     let signature = oauthSignature.generate(httpMethod, url, parameters, config.twitterConsumerKeySecret, config.twitterAccessTokenSecret);
+     let signature = oauthSignature.generate(httpMethod, messageUrl, parameters, config.twitterConsumerKeySecret, config.twitterAccessTokenSecret);
  
      var myHeaders = new fetch.Headers();
      myHeaders.append("Authorization", "OAuth oauth_consumer_key=" + config.twitterConsumerKey + ",oauth_token=" +  config.twitterAccessToken + 
                        ",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=" + timestamp + ",oauth_nonce=" + nonce + ",oauth_version=\"1.0\",oauth_signature=" + signature);
      myHeaders.append("Content-Type", "application/json");
 
-     message = "Hello " + alert.twitterHandle + ",\n\nOne of your alerts has been activated:\n\n" +  "Market:\n" + alert.marketName +  "\n\nContract:\n" + alert.contractName + "\n\nCondition:\n" +
-      alert.indicator + " " + alert.operator + " " + alert.limit + "\n\nAccess the market here: " + alert.url +  "\n\nHappy Trading!";
+     if (reset.length > 0){
+      message = "A password reset has been requested. Please use the following key to reset your password:\n\n" + reset;
+     }
+     else {
+      message = "Hello " + obj.twitterHandle + ",\n\nOne of your alerts has been activated:\n\n" +  "Market:\n" + obj.marketName +  "\n\nContract:\n" + obj.contractName + "\n\nCondition:\n" +
+      obj.indicator + " " + obj.operator + " " + obj.limit + "\n\nAccess the market here: " + obj.url +  "\n\nHappy Trading!";
+     }
      
-     var message_body = JSON.stringify({"event":{"type":"message_create","message_create":{"target":{"recipient_id":alert.twitterId_str},"message_data":{"text":message}}}});
+     var message_body = JSON.stringify({"event":{"type":"message_create","message_create":{"target":{"recipient_id":obj.twitterId_str},"message_data":{"text":message}}}});
      
      var requestOptions = {
        method: httpMethod,
