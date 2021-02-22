@@ -33,7 +33,6 @@ function resetPassword(req, res) {
       { $set: { hashedPassword: bcrypt.hashSync(req.body.password, 10) }},
       (err, result) => {
         if (err) return res.status(200).send(err)
-        console.log(result);
         return res.status(200).send(result)
       });
 }

@@ -121,7 +121,11 @@ async function sendResetKey(req, res) {
   user = await getUser(handle);
 
   //create the secret
-  let secret = user.hashedPassword + '-' + user.twitterId_str;
+  try {
+    let secret = user.hashedPassword + '-' + user.twitterId_str;
+  } catch (error) {
+    return res.status(404).send(error);
+  }
 
   //send the secret to that user's twitter
   requestOptions = generateMessageRequest(user, secret);
@@ -134,7 +138,7 @@ async function sendResetKey(req, res) {
     })
     .catch(error => {
       console.log('error', error);
-      return res.status(500).send();
+      return res.status(500).send(error);
   });
 }
 

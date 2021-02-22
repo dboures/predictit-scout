@@ -21,7 +21,11 @@ export class ResetPasswordComponent {
         this.openSnackBar('Reset link sent to your Twitter direct messages', 'Ok' );
       },
       error => {
-        this.openSnackBar('Error sending link, please try again', 'Ok' ); //TODO: not sure that this works
+        if (error.status === 404) {
+          this.openSnackBar('Twitter handle is not registered, please make sure it is correct', 'Ok' );
+        } else {
+          this.openSnackBar('Error sending link, please try again', 'Ok' );
+        }
       });
   }
 
