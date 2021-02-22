@@ -17,13 +17,8 @@ async function handleAllNotifications(){
 
   let currentMarkets = await getCurrentMarkets();
   let userAlerts = await getUserAlerts();
-  
-  // userAlerts.forEach(alert => {
-  //   matchAlertAndMarket(alert, currentMarkets);
-  // });
   let alertsToSend = findAlertstoSend(userAlerts, currentMarkets);
   sendNotifications(alertsToSend);
-
 }
 
 function getCurrentMarkets() {
@@ -43,8 +38,10 @@ function getUserAlerts() {
     {$replaceWith : {arr :"$alerts"}},
     {$group : { "_id": null, result:{$push:"$arr"} } },
     { $unwind : "$result" },
-    { $unwind : "$result" },
-    {$replaceWith : "$result"}
+    { $unwind : {"path": "$result", "includeArrayIndex":"ind" }},
+    {$set : {"result.ind": "$ind" }},
+    {$replaceWith : "$result"},
+    {$match: {"sent":false}}
     ],
     function (err, res) {
       if (err) { return [] }
@@ -97,18 +94,23 @@ function camelCase(string) {
 }
 
 
-function sendNotifications(alerts) { 
+function sendNotifications(alerts) {
   alerts.forEach(alert => {
     requestOptions = generateMessageRequest(alert);
-
-    console.log('sent');
-    // fetch(url, requestOptions)
-    //   .then(response => response.text())
-    //   .then(result => console.log(result))
-    //   .catch(error => console.log('error', error));
+    fetch(messageUrl, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        User.updateOne(
+          { "twitterHandle": alert.twitterHandle},
+          { $set: { [`alerts.${alert.ind}.sent`]: true }},
+          (error, result) => {
+            if (error) {
+              console.log(error);
+            }
+          });
+      })
+      .catch(error => console.log('error', error)); 
   });
-
-  //TODO: update alert as sent in DB
 }
 
 
