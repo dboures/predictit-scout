@@ -34,14 +34,11 @@
             <th>
               Value
             </th>
-            <th>
-              Continuous??
-            </th>
           </tr>
           <tr>
             <td>
               <mat-form-field>
-                <select matNativeControl formControlName="contractId" name="contractId" (change)="setFormContractName()">
+                <select matNativeControl formControlName="contractId" name="contractId" (change)="setFormContractName()" class="input-center">
                   <option *ngFor="let contract of market.contracts" [ngValue]="contract.id">
                     {{contract.shortName}}
                   </option>
@@ -49,28 +46,29 @@
               </mat-form-field>
             </td>
             <td>
-              <select matNativeControl formControlName="indicator" name="indicator">
-                <option *ngFor="let indicator of indicators" [ngValue] ="indicator">
+              <mat-form-field>
+              <select matNativeControl formControlName="indicator" name="indicator" class="input-center">
+                <option *ngFor="let indicator of indicators" [ngValue]="indicator">
                   {{indicator}}
                   <!-- TODO: Where is the arrow? -->
                 </option>
               </select>
+            </mat-form-field>
             </td>
             <td>
-              <select matNativeControl formControlName="operator" name="operator">
-                <option *ngFor="let operator of operators">
+              <mat-form-field>
+              <select matNativeControl formControlName="operator" name="operator" class="input-center">
+                <option *ngFor="let operator of operators" [ngValue]="operator">
                   {{operator}}
                   <!-- TODO: Where is the arrow? -->
                 </option>
               </select>
+            </mat-form-field>
             </td>
             <td>
               <mat-form-field class="input-center">
                 <input matInput placeholder="(1-99)" formControlName="limit" name="limit" OnlyNumber="true" class="input-center">
               </mat-form-field>
-            </td>
-            <td>
-              constant alert or nah?
             </td>
           </tr>
 
@@ -101,9 +99,6 @@
           Limit
         </th>
         <th>
-          Continuous??
-        </th>
-        <th>
         </th>
       </tr>
       <tr *ngFor="let alert of alerts" [ngClass] = "{'active': alert.openMarket && !alert.sent,
@@ -123,9 +118,6 @@
         </td>
         <td>
           {{alert.limit}}
-        </td>
-        <td>
-          {{alert.constant}}
         </td>
         <td>
           <button mat-raised-button (click)="removeAlert(alert)" color="primary">X</button>
