@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { RegisterComponent } from './register.component';
 import { AuthService } from '@app/shared/services';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Overlay } from '@angular/cdk/overlay';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -13,7 +15,7 @@ describe('RegisterComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientTestingModule],
       declarations: [RegisterComponent],
-      providers: [AuthService],
+      providers: [AuthService, MatSnackBar, Overlay],
     })
       .compileComponents();
   }));

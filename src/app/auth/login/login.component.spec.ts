@@ -2,20 +2,24 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LoginComponent } from './login.component';
-import { of, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { AuthService } from '@app/shared/services';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Overlay } from '@angular/cdk/overlay';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
+  let snackBar: MatSnackBar;
 
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [RouterTestingModule, HttpClientTestingModule],
+        imports: [RouterTestingModule, HttpClientTestingModule, BrowserAnimationsModule],
         declarations: [LoginComponent],
-        providers: [AuthService],
+        providers: [AuthService, MatSnackBar, Overlay],
       }).compileComponents();
     })
   );
@@ -25,6 +29,7 @@ describe('LoginComponent', () => {
     component = fixture.componentInstance;
 
     authService = TestBed.get(AuthService);
+    snackBar = TestBed.get(MatSnackBar);
 
     fixture.detectChanges();
   });
@@ -33,9 +38,9 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have empty email and password to start', () => {
-    const email = component.email;
-    expect(email).toBeFalsy();
+  it('should have empty handle and password to start', () => {
+    const handle = component.twitterHandle;
+    expect(handle).toBeFalsy();
 
     const password = component.password;
     expect(password).toBeFalsy();
@@ -52,15 +57,12 @@ describe('LoginComponent', () => {
     expect(authService.login).toHaveBeenCalled();
   });
 
-  it('should alert user when login fails', () => {
+  it('should alert user by opening snackbar when login fails', () => {
     spyOn(authService, 'login').and.returnValue(throwError({ status: 400 }));
-    const showLoginError = component.showLoginError;
-    expect(showLoginError).toBeFalsy();
-
+    spyOn(snackBar, 'open').and.stub();
+    
     component.login();
 
-    const updatedLoginError = component.showLoginError;
-    expect(authService.login).toHaveBeenCalled();
-    expect(updatedLoginError).toBeTruthy();
+    expect(snackBar.open).toHaveBeenCalled();
   });
 });

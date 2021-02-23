@@ -15,6 +15,24 @@ export class ResetPasswordComponent {
 
   constructor(private router: Router, private authService: AuthService, public snackBar: MatSnackBar) {}
 
+  passwordChangeForm = new FormGroup({
+    changekey: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    repeatPassword: new FormControl('', [Validators.required, this.passwordsMatchValidator]),
+  });
+
+  get changekey(): AbstractControl {
+    return this.passwordChangeForm.get('changekey')!;
+  }
+
+  get password(): AbstractControl {
+    return this.passwordChangeForm.get('password')!;
+  }
+
+  get repeatPassword(): AbstractControl {
+    return this.passwordChangeForm.get('repeatPassword')!;
+  }
+
   sendResetLink(): void {
     this.authService.sendResetKey(this.twitterHandle!).subscribe(
       data => {
@@ -29,7 +47,6 @@ export class ResetPasswordComponent {
       });
   }
 
-
   passwordsMatchValidator(control: FormControl): ValidationErrors | null {
     const password = control.root.get('password');
     return password && control.value !== password.value
@@ -39,30 +56,12 @@ export class ResetPasswordComponent {
       : null;
   }
 
-  userForm = new FormGroup({
-    changekey: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    repeatPassword: new FormControl('', [Validators.required, this.passwordsMatchValidator]),
-  });
-
-  get changekey(): AbstractControl {
-    return this.userForm.get('changekey')!;
-  }
-
-  get password(): AbstractControl {
-    return this.userForm.get('password')!;
-  }
-
-  get repeatPassword(): AbstractControl {
-    return this.userForm.get('repeatPassword')!;
-  }
-
   reset(): void {
-    if (this.userForm.invalid) {
+    if (this.passwordChangeForm.invalid) {
       return;
     }
 
-    const { changekey, password, repeatPassword } = this.userForm.getRawValue();
+    const { changekey, password, repeatPassword } = this.passwordChangeForm.getRawValue();
 
     this.authService.reset(changekey, password, repeatPassword).subscribe(data => {
       if(data.n){

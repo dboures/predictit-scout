@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -28,6 +28,10 @@ describe('HomeComponent', () => {
   };
 
   const sampleAlert: Alert = {
+    marketId:5,
+    contractId:7,
+    openMarket:true,
+    sent:false,
     marketName: 'this is a market',
     contractName: 'that one contract',
     indicator: 'buyprice',
@@ -54,9 +58,9 @@ describe('HomeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule, MatDialogModule, MatSnackBarModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, MatDialogModule, BrowserAnimationsModule ],
       declarations: [HomeComponent],
-      providers: [AlertService, MarketService]
+      providers: [MatSnackBar,AlertService, MarketService]
     })
       .compileComponents();
   }));
