@@ -46,9 +46,6 @@ describe('LoginComponent', () => {
     expect(password).toBeFalsy();
   });
 
-  // it('should reject malformed email and passwords', () => {
-  // });
-
   it('should call authservice login when component login is called', () => {
     spyOn(authService, 'login').and.returnValue(throwError({ status: 400 }));
 

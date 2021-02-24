@@ -5,11 +5,13 @@ import { RegisterComponent } from './register.component';
 import { AuthService } from '@app/shared/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Overlay } from '@angular/cdk/overlay';
+import { throwError } from 'rxjs';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   let authService: AuthService;
+  let snackBar: MatSnackBar;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -24,6 +26,7 @@ describe('RegisterComponent', () => {
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     authService = TestBed.get(AuthService);
+    snackBar = TestBed.get(MatSnackBar);
     fixture.detectChanges();
   });
 
@@ -36,56 +39,28 @@ describe('RegisterComponent', () => {
     expect(form.valid).toBeFalsy();
   });
 
-  it('should reject forms with incorrect email', () => {
+  it('should reject forms with unmatched passwords', () => {
     const form = component.userForm;
+    const handle = form.controls.twitterHandle;
+    const password = form.controls.password;
+    const repeatPassword = form.controls.repeatPassword;
 
-    const nameInput = form.controls.fullname;
-    const emailInput = form.controls.email;
-    const phoneInput = form.controls.phone;
-    const passwordInput = form.controls.password;
-    const repeatPasswordInput = form.controls.repeatPassword;
-
-    nameInput.setValue('John Peter');
-    emailInput.setValue('jpeteratgmail.com');
-    phoneInput.setValue('2125075591');
-    passwordInput.setValue('verysecret');
-    repeatPasswordInput.setValue('verysecret');
+    handle.setValue('twitter_user');
+    password.setValue('pass');
+    repeatPassword.setValue('not_pass');
 
     expect(form.valid).toBeFalsy();
   });
-
-  it('should reject forms with incorrect phone number', () => {
-    const form = component.userForm;
-
-    const nameInput = form.controls.fullname;
-    const emailInput = form.controls.email;
-    const phoneInput = form.controls.phone;
-    const passwordInput = form.controls.password;
-    const repeatPasswordInput = form.controls.repeatPassword;
-
-    nameInput.setValue('John Peter');
-    emailInput.setValue('jpeter@gmail.com');
-    phoneInput.setValue('212-5k7-5591');
-    passwordInput.setValue('verysecret');
-    repeatPasswordInput.setValue('verysecret');
-
-    expect(form.valid).toBeFalsy();
-  });
-
+  
   it('should accept complete and correct forms', () => {
     const form = component.userForm;
+    const handle = form.controls.twitterHandle;
+    const password = form.controls.password;
+    const repeatPassword = form.controls.repeatPassword;
 
-    const nameInput = form.controls.fullname;
-    const emailInput = form.controls.email;
-    const phoneInput = form.controls.phone;
-    const passwordInput = form.controls.password;
-    const repeatPasswordInput = form.controls.repeatPassword;
-
-    nameInput.setValue('John Peter');
-    emailInput.setValue('jpeter@gmail.com');
-    phoneInput.setValue('212-507-5591');
-    passwordInput.setValue('verysecret');
-    repeatPasswordInput.setValue('verysecret');
+    handle.setValue('twitter_user');
+    password.setValue('pass');
+    repeatPassword.setValue('pass');
 
     expect(form.valid).toBeTruthy();
   });
@@ -93,22 +68,34 @@ describe('RegisterComponent', () => {
   it('will not call authservice if an incorrect form is registered', () => {
     spyOn(authService, 'register').and.stub();
     const form = component.userForm;
+    const handle = form.controls.twitterHandle;
+    const password = form.controls.password;
+    const repeatPassword = form.controls.repeatPassword;
 
-    const nameInput = form.controls.fullname;
-    const emailInput = form.controls.email;
-    const phoneInput = form.controls.phone;
-    const passwordInput = form.controls.password;
-    const repeatPasswordInput = form.controls.repeatPassword;
-
-    nameInput.setValue('John Peter');
-    emailInput.setValue('jpeter@gmail.com');
-    phoneInput.setValue('212-5k7-5591');
-    passwordInput.setValue('verysecret');
-    repeatPasswordInput.setValue('verysecret');
+    handle.setValue('twitter_user_lonnger_than_possible_handle');
+    password.setValue('pass');
+    repeatPassword.setValue('pass');
 
     component.register()
 
     expect(authService.register).not.toHaveBeenCalled();
+  });
+
+  it('will open snackbar alert if user is already registered', () => {
+    spyOn(authService, 'register').and.returnValue(throwError({ status: 500 }));
+    spyOn(snackBar, 'open').and.stub();
+    const form = component.userForm;
+    const handle = form.controls.twitterHandle;
+    const password = form.controls.password;
+    const repeatPassword = form.controls.repeatPassword;
+
+    handle.setValue('twitter_user');
+    password.setValue('pass');
+    repeatPassword.setValue('pass');
+
+    component.register()
+
+    expect(snackBar.open).toHaveBeenCalledWith('Twitter username is already registered', 'Ok', {duration:5000, verticalPosition: 'top'} );
   });
 
 });

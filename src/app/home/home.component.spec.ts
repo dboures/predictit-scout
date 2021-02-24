@@ -10,7 +10,7 @@ import { Contract } from '@app/shared/interfaces/contract.interface';
 import { Market } from '@app/shared/interfaces/market.interface';
 import { AlertService } from '@app/shared/services';
 import { MarketService } from '@app/shared/services/market/market.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { HomeComponent } from './home.component';
 
@@ -28,20 +28,19 @@ describe('HomeComponent', () => {
   };
 
   const sampleAlert: Alert = {
-    marketId:5,
-    contractId:7,
+    marketId:55,
+    contractId:1234,
     openMarket:true,
     sent:false,
     marketName: 'this is a market',
     contractName: 'that one contract',
     indicator: 'buyprice',
     operator: '>',
-    limit: 50,
-    //constant: true
+    limit: 50
   };
 
   const sampleMarket: Market = {
-    id: 1234,
+    id: 55,
     name: 'dummy market',
     shortName: 'dm',
     contracts: [sampleContract],
@@ -84,11 +83,29 @@ describe('HomeComponent', () => {
     expect(alertService.loadAlerts).toHaveBeenCalled();
   });
 
+  it('loadAlerts opens a snackbar if there is an error', () => {
+    spyOn(alertService, 'loadAlerts').and.returnValue(throwError({ status: 500 }));
+    spyOn(component.snackBar, 'open').and.stub();
+    component.loadAlerts()
+
+    expect(alertService.loadAlerts).toHaveBeenCalled();
+    expect(component.snackBar.open).toHaveBeenCalledWith('Issue loading alerts, please try again','Ok', {duration:5000, verticalPosition: 'top'} );
+  });
+
   it('saveAlerts calls the alertService', () => {
     spyOn(alertService, 'saveAlerts').and.returnValue(of([sampleAlert]));
     component.saveAlerts()
 
     expect(alertService.saveAlerts).toHaveBeenCalled();
+  });
+
+  it('saveAlerts opens a snackbar if there is an error', () => {
+    spyOn(alertService, 'saveAlerts').and.returnValue(throwError({ status: 500 }));
+    spyOn(component.snackBar, 'open').and.stub();
+    component.saveAlerts()
+
+    expect(alertService.saveAlerts).toHaveBeenCalled();
+    expect(component.snackBar.open).toHaveBeenCalledWith('Issue saving alerts, please try again','Ok', {duration:5000, verticalPosition: 'top'} );
   });
 
   it('createAlert calls the marketService', () => {
@@ -153,10 +170,6 @@ describe('HomeComponent', () => {
     expect(fixture.debugElement.query(By.css('.alert-creation'))).toBeDefined();
   });
 
-  // it('createAlert will open error popup if marketService is not called', () => {
-  //  TODO:
-  // });
-
   it('createAlert will open error snackbar if market is closed, or could not find', () => {
     spyOn(marketService, 'getMarket').and.returnValue(of(closedMarket));
     spyOn(component.snackBar, 'open');
@@ -179,16 +192,54 @@ describe('HomeComponent', () => {
     expect(component.snackBar.open).toHaveBeenCalled();
   });
 
-  it('addAlert will open error snackbar if you try to add an alert that already exists', () => {
+  it('addnewAlert will return if you try to add an alert that already exists', () => {
+    component.alerts =  [sampleAlert];
+    const old_len = component.alerts.length;
+    component.addNewAlert(sampleAlert);
+    fixture.detectChanges();
+
+    expect(old_len).toEqual(component.alerts.length);
+  });
+
+  it('addnewAlert will add new alerts', () => {
+    const newAlert: Alert = {
+      marketId:13,
+      contractId:7896,
+      openMarket:true,
+      sent:false,
+      marketName: 'this is a different market',
+      contractName: 'and a diff contract',
+      indicator: 'buyprice',
+      operator: '=',
+      limit: 42
+    };
+
+    component.alerts =  [sampleAlert];
+    const old_len = component.alerts.length;
+    component.addNewAlert(newAlert);
+    fixture.detectChanges();
+
+    expect(old_len).toBeLessThan(component.alerts.length);
+    expect(component.alerts.length).toBe(2);
+  });
+
+  it('removeAlert will remove an alert', () => {
+    component.alerts =  [sampleAlert];
+    const old_len = component.alerts.length;
+    component.removeAlert(sampleAlert);
+    fixture.detectChanges();
+
+    expect(old_len).toBeGreaterThan(component.alerts.length);
+    expect(component.alerts.length).toBe(0);
+  });
+
+  it('addnewAlert will open error snackbar if you try to add an alert that already exists', () => {
     spyOn(component.snackBar, 'open');
     component.alerts =  [sampleAlert];
     component.addNewAlert(sampleAlert);
     fixture.detectChanges();
     expect(component.snackBar.open).toHaveBeenCalled();
   });
-
-
-
 
   it('alertsAreSame returns true for the same alerts ', () => {
     const form = component.newAlertForm;
@@ -254,6 +305,32 @@ describe('HomeComponent', () => {
     let a2 = other_form.value;
 
     expect(component.alertsAreSame(a1, a2)).toBeFalse;
+  });
+
+  it('setFormContractName sets the forms contract name', () => {
+    component.market = sampleMarket;
+
+    const form = component.newAlertForm;
+    const marketIdInput = form.controls.marketId;
+    const contractIdInput = form.controls.contractId;
+    const indicatorInput = form.controls.indicator;
+    const operatorInput = form.controls.operator;
+    const limitInput = form.controls.limit;
+
+    marketIdInput.setValue('55');
+    contractIdInput.setValue('1234');
+    indicatorInput.setValue('buyprice');
+    operatorInput.setValue('=');
+    limitInput.setValue(45);
+
+    spyOn(form, 'patchValue');
+
+    expect(form.get('contractName')?.value).toBe('');
+    expect(form.get('contractId')?.value).toBe('1234')
+
+    component.setFormContractName();
+    
+    expect(form.patchValue).toHaveBeenCalled();
   });
 
 });

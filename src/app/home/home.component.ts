@@ -43,7 +43,6 @@ export class HomeComponent implements OnInit {
     indicator: new FormControl('', [Validators.required]),
     operator: new FormControl('', [Validators.required]),
     limit: new FormControl('', [Validators.required, Validators.min(1), Validators.max(99)]),
-    // constant
   });
 
   get marketId(): AbstractControl {
@@ -70,7 +69,7 @@ export class HomeComponent implements OnInit {
     return this.newAlertForm.get('limit')!;
   }
 
-  setFormContractName() { // TODO: Test this
+  setFormContractName() {
     let contract = this.market?.contracts.find(contract => {
       return contract.id === this.newAlertForm.get('contractId')?.value
     })
@@ -83,7 +82,7 @@ export class HomeComponent implements OnInit {
         this.alerts = data
       },
       error => {
-        console.log(error);
+        this.openSnackBar('Issue loading alerts, please try again', 'Ok' );
       }
     );
   }
@@ -92,10 +91,10 @@ export class HomeComponent implements OnInit {
     this.alertService.saveAlerts(this.alerts).subscribe(
       data => {
         this.alerts = data
-        this.openSnackBar('Alerts saved  successfully', 'Ok' );
+        this.openSnackBar('Alerts saved successfully', 'Ok' );
       },
       error => {
-        console.log(error);
+        this.openSnackBar('Issue saving alerts, please try again', 'Ok' );
       }
     );
   }
@@ -129,7 +128,6 @@ export class HomeComponent implements OnInit {
   }
 
   addNewAlert(newAlert: Alert) {
-    //TODO: testing to make robust
     newAlert.openMarket = true;
     newAlert.sent = false;
     newAlert.marketName = this.market?.name ? this.market.name : '';
