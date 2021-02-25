@@ -7,7 +7,8 @@
     "serve": "node server",
     "start": "concurrently -c \"yellow.bold,green.bold\" -n \"SERVER,BUILD\" \"nodemon server\" \"ng build --watch\"",
     "build": "ng build --prod",
-    "test": "ng test",
+    "test-init": "./node_modules/jasmine/bin/jasmine.js init",
+    "test": "./node_modules/jasmine/bin/jasmine.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
@@ -68,6 +69,7 @@
     "@types/node": "~12.12.14",
     "codelyzer": "^6.0.0",
     "concurrently": "^3.5.1",
+    "jasmine": "^3.6.4",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
