@@ -4,7 +4,9 @@ const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 module.exports = {
   getMarket,
-  getState
+  getState,
+  makeRequest,
+  parseStateFromResponse
 }
 
 
