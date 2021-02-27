@@ -101,7 +101,8 @@ marketRequest = {
         },
     params: {
       id: '7085'
-    }
+    },
+    body: 'req body here'
 }
 
 badMarketRequest = {

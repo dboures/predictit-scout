@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken');
 const marketCtrl = require("../../server/controllers/market.controller.js");
 const fixture = require("./fixture.js");
-const fetch = require("node-fetch");
 
 describe("marketCtrl", () => {
 
-    beforeEach(function() {
+    beforeEach(function () {
         spyOn(marketCtrl, 'makeRequest').and.returnValue(Promise.resolve(fixture.rawRequest));
     });
 
@@ -18,7 +17,6 @@ describe("marketCtrl", () => {
         spyOn(marketCtrl, 'getCompleteContracts');
 
         let result = marketCtrl.getState(7085);
-
         result.then(() => {
             expect(marketCtrl.makeRequest).toHaveBeenCalled();
             expect(marketCtrl.parseStateFromResponse).toHaveBeenCalled();
@@ -40,12 +38,10 @@ describe("marketCtrl", () => {
 
     it("getMarket will return error if auth is bad", () => {
         let res = {
-            status: function(s) {this.statusCode = s; return this;},
-            send: function(m) {return this;}
+            status: function (s) { this.statusCode = s; return this; },
+            send: function (m) { return this; }
         };
-
-        const value = marketCtrl.getMarket(fixture.badMarketRequest, res)
-
+        const value = marketCtrl.getMarket(fixture.badMarketRequest, res);
         expect(value.statusCode).toEqual(401);
     });
 
@@ -53,12 +49,10 @@ describe("marketCtrl", () => {
         spyOn(jwt, 'verify').and.returnValue(true);
 
         let res = {
-            status: function(s) {this.statusCode = s; return this;},
-            send: function(m) {return this;}
+            status: function (s) { this.statusCode = s; return this; },
+            send: function (m) { return this; }
         };
-
         const value = marketCtrl.getMarket(fixture.marketRequest, res);
-
         expect(value).toBeInstanceOf(Promise);
         value.then(() => {
             expect(jwt.verify).toHaveBeenCalled();

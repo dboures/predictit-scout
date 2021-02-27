@@ -5,16 +5,16 @@ const User = require('../models/user.model');
 
 module.exports = {
   loadAlerts,
-  saveAlerts
+  saveAlerts,
+  getTwitterHandleFromHeader
 }
 
 
 function loadAlerts(req, res) {
   const userHandle = getTwitterHandleFromHeader(req, res);
-
   User.findOne({ twitterHandle: userHandle },
-    (err, user) => {
-      if (err) return res.status(200).send(err)
+    (error, user) => {
+      if (error) return res.status(200).send(error)
       return res.status(200).send(user.alerts)
     }
   );
@@ -22,14 +22,13 @@ function loadAlerts(req, res) {
 
 function saveAlerts(req, res) {
   const userHandle = getTwitterHandleFromHeader(req, res);
-  //TODO: DeprecationWarning: Mongoose: `findOneAndUpdate()` and `findOneAndDelete()` without the `useFindAndModify` option set to false are deprecated. See: https://mongoosejs.com/docs/deprecations.html#findandmodify
   User.findOneAndUpdate(
     { twitterHandle: userHandle },
     { alerts: req.body },
     { new: true },
 
-    (err, user) => {
-      if (err) return res.status(200).send(err)
+    (error, user) => {
+      if (error) return res.status(200).send(error)
       return res.status(200).send(user.alerts)
     }
   );
@@ -39,14 +38,14 @@ function getTwitterHandleFromHeader(req, res) {
   const authHeader = req.headers.authorization
   if (authHeader.startsWith("Bearer ")) {
     token = authHeader.substring(7, authHeader.length);
-  } else { res.status(401).send('Unauthorized') }
+  } else { return res.status(401).send('Unauthorized') }
 
-  jwt.verify(token, config.jwtSecret, (err, verifiedJwt) => {
-    if (err) {
-      res.status(200).send(err.message)
-    } else {
-      userHandle = verifiedJwt.twitterHandle;
-    }
-  })
-  return userHandle
+  try {
+    let verifiedJwt = jwt.verify(token, config.jwtSecret);
+    userHandle = verifiedJwt.twitterHandle;
+    return userHandle;
+  }
+  catch (error) {
+    return res.status(200).send(error.message);
+  }
 }

@@ -15,6 +15,7 @@ mongoose.connect(mongoUri, {
 mongoose.connection.on('error', () => {
   throw new Error(`unable to connect to database: ${mongoUri}`);
 });
+mongoose.set('useFindAndModify', false);
 
 // print mongoose logs in dev env
 if (config.MONGOOSE_DEBUG) {
