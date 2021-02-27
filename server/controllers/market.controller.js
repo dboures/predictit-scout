@@ -6,7 +6,9 @@ module.exports = {
   getMarket,
   getState,
   makeRequest,
-  parseStateFromResponse
+  parseStateFromResponse,
+  getPartialContracts,
+  getCompleteContracts
 }
 
 
@@ -14,26 +16,25 @@ function getMarket(req, res) {
   const authHeader = req.headers.authorization
   if (authHeader.startsWith("Bearer ")) {
     token = authHeader.substring(7, authHeader.length);
-  } else { res.status(401).send('Unauthorized') }
+  } else { return res.status(401).send('Unauthorized') }
 
-  jwt.verify(token, config.jwtSecret, (err, verifiedJwt) => {
-    if (err) {
-      res.status(200).send(err.message)
-    } else {
-      const marketId = req.params.id;
-      const base_url = "https://www.predictit.org/api/marketdata/markets/";
-      const url = base_url.concat(marketId)
-      makeRequest(url)
-        .then(function (response) {
-          let marketObject = parseMarketFromResponse(response); 
-          return res.status(200).send(marketObject);
-        })
-        .catch(function (err) {
-          console.log('Something went wrong', err);
-          return res.status(200).send(err);
-        });
-    }
-  })
+  try {
+    jwt.verify(token, config.jwtSecret);
+    const marketId = req.params.id;
+    const base_url = "https://www.predictit.org/api/marketdata/markets/";
+    const url = base_url.concat(marketId);
+    return makeRequest(url)
+      .then(function (response) {
+        let marketObject = parseMarketFromResponse(response);
+        return res.status(200).send(marketObject);
+      })
+      .catch(function (err) {
+        console.log('Something went wrong', err);
+        return res.status(200).send(err);
+      });
+  } catch(err) {
+    return res.status(200).send(err.message)
+  }
 }
 
 function getState(marketId) {
