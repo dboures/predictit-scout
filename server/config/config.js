@@ -10,7 +10,7 @@ const envVarsSchema = Joi.object({
     .default('development'),
   SERVER_PORT: Joi.number()
     .default(4040),
-  MONGOOSE_DEBUG: Joi.boolean()
+  MONGOOSE_DEBUG: Joi.boolean()//TODO: make mongo host like this for testing I think?
     .when('NODE_ENV', {
       is: Joi.string().equal('development'),
       then: Joi.boolean().default(true),

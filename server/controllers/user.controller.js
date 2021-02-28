@@ -14,7 +14,8 @@ const userSchema = Joi.object({
 
 module.exports = {
   insert,
-  resetPassword
+  resetPassword,
+  getTwitterId
 }
 
 async function insert(user) {
@@ -30,8 +31,8 @@ function resetPassword(req, res) {
     User.updateOne(
       { hashedPassword: old_hash, twitterId_str: id_str },
       { $set: { hashedPassword: bcrypt.hashSync(req.body.password, 10) }},
-      (err, result) => {
-        if (err) return res.status(200).send(err)
+      (error, result) => {
+        if (error) return res.status(200).send(error)
         return res.status(200).send(result)
       });
 }
@@ -47,7 +48,7 @@ async function getTwitterId(twitterHandle) {
       }})
       .then(response => response.json())
       .catch(error => console.log('error', error));
-    return data.id_str; //ids can be longer than 17 places which is higher than javascripts number precision
+    return data.id_str; //ids can be longer than 17 sig figs which is higher than javascript's number precision
   
 }
 

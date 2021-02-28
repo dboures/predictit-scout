@@ -111,8 +111,16 @@ badMarketRequest = {
         }
 }
 
+resetPassword = {
+  body: {
+      changekey: "oldHash-123456",
+      password: "newPass"
+      }
+}
+
 exports.rawRequest = rawRequest;
 exports.marketObject =  marketObject;
 exports.stateObject = stateObject; 
 exports.marketRequest = marketRequest;
 exports.badMarketRequest = badMarketRequest;
+exports.resetPassword = resetPassword;
