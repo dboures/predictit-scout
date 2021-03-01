@@ -6,15 +6,15 @@ const fixture = require("./fixture.js");
 
 describe("notifCtrl", () => {
 
-    it("findAlertstoSend will return if market is not found", () => {
-        spyOn(notifCtrl, 'findAlertstoSend').and.callThrough();
-        spyOn(notifCtrl, 'closeAlert');
+    // it("findAlertstoSend will return if market is not found", () => {
+    //     spyOn(notifCtrl, 'findAlertstoSend').and.callThrough();
+    //     spyOn(notifCtrl, 'closeAlert');
 
-        let values = notifCtrl.findAlertstoSend(fixture.invalidAlerts, fixture.marketStates);
-        expect(values).toEqual([]);
-        expect(notifCtrl.closeAlert).not.toHaveBeenCalled();
-        expect(notifCtrl.findAlertstoSend).toHaveBeenCalled();
-    });
+    //     let values = notifCtrl.findAlertstoSend(fixture.invalidAlerts, fixture.marketStates);
+    //     expect(values).toEqual([]);
+    //     expect(notifCtrl.closeAlert).not.toHaveBeenCalled();
+    //     expect(notifCtrl.findAlertstoSend).toHaveBeenCalled();
+    // });
 
     // it("findAlertstoSend will call closeAlert if market is closed", () => {
     //     spyOn(notifCtrl, 'findAlertstoSend').and.callThrough();
@@ -42,17 +42,6 @@ describe("notifCtrl", () => {
     it("findAlertstoSend will push proper alerts with > operator", () => {
         let values = notifCtrl.findAlertstoSend(fixture.greaterThanAlerts, fixture.marketStates);
         expect(values).toEqual([fixture.greaterThanAlerts[0]])
-    });
-
-
-    it("getTwitterId makes a GET request to twitter", () => {
-        let value = userCtrl.getTwitterId('twitterUser');
-        expect(value).toBeInstanceOf(Promise);
-        value.then((result) => {
-            expect(result).toEqual('13177568');
-        }, (error) => {
-            fail()
-        });
     });
 
 });

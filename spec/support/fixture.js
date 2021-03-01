@@ -113,7 +113,7 @@ badMarketRequest = {
 
 resetPassword = {
   body: {
-      changekey: "oldHash-123456",
+      changekey: "oldHash-5944518036",
       password: "newPass"
       }
 }
@@ -299,6 +299,29 @@ marketStates = [
   }
 ]
 
+user1 = {
+  "alerts" : [],
+  "roles" : [],
+  "twitterHandle" : "twitterUser",
+  "twitterId_str" : "5944518036",
+  "hashedPassword" : "oldHash"
+}
+
+user2 = {
+  "alerts" : [],
+  "roles" : [],
+  "twitterHandle" : "otherTwitterUser",
+  "twitterId_str" : "777663321",
+  "hashedPassword" : "$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq"
+}
+
+noIdUser = {
+  "twitterHandle" : "noIdTwitterUser",
+  "twitterId_str" : "",
+  "password" : "password",
+  "repeatPassword" : "password"
+}
+
 exports.rawRequest = rawRequest;
 exports.marketObject =  marketObject;
 exports.stateObject = stateObject; 
@@ -311,3 +334,6 @@ exports.equalAlerts = equalAlerts;
 exports.closedAlerts = closedAlerts;
 exports.invalidAlerts = invalidAlerts;
 exports.marketStates = marketStates;
+exports.user1 = user1;
+exports.user2 = user2;
+exports.noIdUser = noIdUser;
