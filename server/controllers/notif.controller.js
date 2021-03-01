@@ -7,7 +7,8 @@ const oauthSignature = require("oauth-signature");
 
 module.exports = {
   handleAllNotifications,
-  sendResetKey
+  sendResetKey,
+  findAlertstoSend
 }
 
 const messageUrl = "https://api.twitter.com/1.1/direct_messages/events/new.json";
@@ -23,8 +24,8 @@ async function handleAllNotifications(){
 
 function getCurrentMarkets() {
   return State.find({},{_id:0}, 
-    function (err, res) {
-      if (err) { return [] }
+    function (error, res) {
+      if (error) { return [] }
       else { return res }
       }
     );
@@ -43,8 +44,8 @@ function getUserAlerts() {
     {$replaceWith : "$result"},
     {$match: {"sent":false}}
     ],
-    function (err, res) {
-      if (err) { return [] }
+    function (error, res) {
+      if (error) { return [] }
       else { return res }
       }
     );
@@ -157,9 +158,9 @@ async function sendResetKey(req, res) {
 
 async function getUser(handle){
   const user = await User.findOne({ twitterHandle: handle },
-    (err, user) => {
-      if (err) {
-        return res.status(200).send(err);
+    (error, user) => {
+      if (error) {
+        return res.status(200).send(error);
       }
     });
     return user

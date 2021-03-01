@@ -118,9 +118,196 @@ resetPassword = {
       }
 }
 
+lessThanAlerts = [
+  {
+    "marketId" : 7035,
+    "contractName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "contractId" : 24678,
+    "indicator" : "BestBuyYesCost",
+    "operator" : "<",
+    "limit" : 2,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "13622945",
+    "ind" : 1
+  },
+  {
+    "marketId" : 7035,
+    "contractName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "contractId" : 24678,
+    "indicator" : "BestBuyYesCost",
+    "operator" : "<",
+    "limit" : 80,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "13622945",
+    "ind" : 2
+  }
+]
+equalAlerts = [
+  {
+    "marketId" : 7035,
+    "contractName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "contractId" : 24678,
+    "indicator" : "lastTradePrice",
+    "operator" : "=",
+    "limit" : 55,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "13622945",
+    "ind" : 3
+  },
+  {
+    "marketId" : 7035,
+    "contractName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "contractId" : 24678,
+    "indicator" : "lastTradePrice",
+    "operator" : "=",
+    "limit" : 70,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "13622945",
+    "ind" : 4
+  }
+]
+greaterThanAlerts = [
+  {
+    "marketId" : 7035,
+    "contractName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "contractId" : 24678,
+    "indicator" : "bestBuyNoCost",
+    "operator" : ">",
+    "limit" : 20,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "13622945",
+    "ind" : 6
+  },
+  {
+    "marketId" : 7035,
+    "contractName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "contractId" : 24678,
+    "indicator" : "bestBuyNoCost",
+    "operator" : ">",
+    "limit" : 55,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "13622945",
+    "ind" : 5
+  }
+]
+closedAlerts = [
+  {
+    "marketId" : 6951,
+    "contractName" : "Marty Walsh",
+    "contractId" : 24372,
+    "indicator" : "BestBuyNoCost",
+    "operator" : ">",
+    "limit" : 98,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Who will be the Senate-confirmed Secretary of Labor on Mar. 1?",
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "13622945",
+    "ind" : 7
+}
+]
+
+invalidAlerts = [
+  {
+    "marketId" : 1234,
+    "contractName" : "invalid",
+    "contractId" : 67890,
+    "indicator" : "BestBuyNoCost",
+    "operator" : ">",
+    "limit" : 98,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Who will be the champion?",
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "13622945",
+    "ind" : 7
+}
+]
+
+marketStates = [
+  {
+  "contracts" : [ 
+      {
+          "id" : 24678,
+          "name" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+          "shortName" : "Netanyahu Israeli PM on 6/30?",
+          "status" : "Open",
+          "lastTradePrice" : 70,
+          "bestBuyYesCost" : 71,
+          "bestBuyNoCost" : 30,
+          "bestSellYesCost" : 70,
+          "bestSellNoCost" : 29,
+          "lastClosePrice" : 70
+      }
+  ],
+  "id" : 7035,
+  "name" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+  "shortName" : "Netanyahu Israeli PM on 6/30?",
+  "url" : "https://www.predictit.org/markets/detail/7035/Will-Benjamin-Netanyahu-be-prime-minister-of-Israel-on-June-30,-2021",
+  "isOpen" : true
+  },
+  {
+    "contracts" : [
+        {
+            "id" : 24372,
+            "name" : "Marty Walsh",
+            "shortName" : "Walsh",
+            "status" : "Open",
+            "lastTradePrice" : 1,
+            "bestBuyYesCost" : 1,
+            "bestBuyNoCost" : 0,
+            "bestSellYesCost" : 0,
+            "bestSellNoCost" : 99,
+            "lastClosePrice" : 1
+        },
+        {
+            "id" : 24619,
+            "name" : "Rahm Emanuel",
+            "shortName" : "Emanuel",
+            "status" : "Open",
+            "lastTradePrice" : 1,
+            "bestBuyYesCost" : 1,
+            "bestBuyNoCost" : 0,
+            "bestSellYesCost" : 0,
+            "bestSellNoCost" : 99,
+            "lastClosePrice" : 1
+        }
+    ],
+    "id" : 6951,
+    "name" : "Who will be the Senate-confirmed Secretary of Labor on Mar. 1?",
+    "shortName" : "Secretary of Labor on Mar. 1?",
+    "url" : "https://www.predictit.org/markets/detail/6951/Who-will-be-the-Senate-confirmed-Secretary-of-Labor-on-Mar-1",
+    "isOpen" : false
+  }
+]
+
 exports.rawRequest = rawRequest;
 exports.marketObject =  marketObject;
 exports.stateObject = stateObject; 
 exports.marketRequest = marketRequest;
 exports.badMarketRequest = badMarketRequest;
 exports.resetPassword = resetPassword;
+exports.lessThanAlerts = lessThanAlerts;
+exports.greaterThanAlerts = greaterThanAlerts;
+exports.equalAlerts = equalAlerts;
+exports.closedAlerts = closedAlerts;
+exports.invalidAlerts = invalidAlerts;
+exports.marketStates = marketStates;
