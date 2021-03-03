@@ -41,17 +41,28 @@ describe("userCtrl", () => {
 
 describe("userCtrl async specs", () => { 
     beforeEach(() => {
-    nock('https://api.twitter.com/1.1')
-      .get('/users/show.json?screen_name=noIdTwitterUser')
-      .reply(200, {id_str: '13177568'});
-  });
-    it('userCtrl insert should save to the database without original password', async function () {
         mongoose.connect(mongoTestUri, { 
             keepAlive: 1,
             useCreateIndex: true,
             useNewUrlParser: true, 
             useUnifiedTopology: true
-          });
+        });
+
+        nock('https://api.twitter.com/1.1')
+            .get('/users/show.json?screen_name=noIdTwitterUser')
+            .reply(200, {id_str: '13177568'});
+        });
+    afterEach( async function() {
+        let deleteResponse = await User.deleteMany({}, (error,result) => {
+            if (error){
+                fail();
+            }
+            return true;
+        });
+        expect(deleteResponse.ok).toBe(1);
+    });
+
+    it('userCtrl insert should save to the database without original password', async function () {
 
 		spyOn(userCtrl, 'insert').and.callThrough();
 		spyOn(userCtrl, 'getTwitterId').and.callThrough()
@@ -66,24 +77,9 @@ describe("userCtrl async specs", () => {
         expect(result[0].hashedPassword).not.toBe('password');
         expect(result[0].password).toBeUndefined();
         expect(result[0].alerts.length).toBe(0);
-
-        let deleteResponse = await User.deleteMany({}, (error,result) => {
-            if (error){
-                fail();
-            }
-            return true;
-        });
-
-        expect(deleteResponse.ok).toBe(1);
 	});  
 
     it('userCtrl reset password should reset the correct users password', async function () {
-        mongoose.connect(mongoTestUri, { 
-                keepAlive: 1,
-                useCreateIndex: true,
-                useNewUrlParser: true, 
-                useUnifiedTopology: true
-              });
 
 		spyOn(userCtrl, 'resetPassword').and.callThrough();
         let res = {
@@ -132,16 +128,6 @@ describe("userCtrl async specs", () => {
         expect(oldUsers[1].twitterHandle).toBe('otherTwitterUser');
         expect(oldUsers[1].twitterId_str).toBe('777663321');
         expect(oldUsers[1].hashedPassword).toBe('$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq');
-        expect(oldUsers[1].alerts.length).toBe(2);	
-
-        let deleteResponse = await User.deleteMany({}, (error,result) => {
-            if (error){
-                fail();
-            }
-            return true;
-        });
-
-        expect(deleteResponse.ok).toBe(1);
-        });
-
+        expect(oldUsers[1].alerts.length).toBe(2);
+    });	
 });

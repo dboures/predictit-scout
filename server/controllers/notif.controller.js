@@ -8,7 +8,9 @@ const oauthSignature = require("oauth-signature");
 module.exports = {
   handleAllNotifications,
   sendResetKey,
-  findAlertstoSend
+  findAlertstoSend,
+  getUser,
+  closeAlert
 }
 
 const messageUrl = "https://api.twitter.com/1.1/direct_messages/events/new.json";

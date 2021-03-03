@@ -53,6 +53,12 @@ describe("alertCtrl", () => {
 describe("alertCtrl async specs", () => {
     let res;
     beforeEach(() => {
+        mongoose.connect(mongoTestUri, { 
+            keepAlive: 1,
+            useCreateIndex: true,
+            useNewUrlParser: true, 
+            useUnifiedTopology: true
+          });
         res = {
             alerts: [],
             status: function (s) { this.statusCode = s; return this; },
@@ -60,13 +66,18 @@ describe("alertCtrl async specs", () => {
         };
     });
 
+    afterEach(async function() {
+        let deleteResponse = await User.deleteMany({}, (error,result) => {
+            if (error){
+                fail();
+            }
+            return true;
+        });
+        expect(deleteResponse.ok).toBe(1);
+    });
+
     it("loadAlerts finds the right user", async function () {
-        mongoose.connect(mongoTestUri, { 
-            keepAlive: 1,
-            useCreateIndex: true,
-            useNewUrlParser: true, 
-            useUnifiedTopology: true
-          });
+
 
         spyOn(jwt, 'verify').and.returnValue({ twitterHandle: 'otherTwitterUser' });
         spyOn(User, 'findOne').and.callThrough();
@@ -94,12 +105,6 @@ describe("alertCtrl async specs", () => {
     });
 
     it("saveAlerts updates the alert field on the given user", async function () {
-        mongoose.connect(mongoTestUri, { 
-            keepAlive: 1,
-            useCreateIndex: true,
-            useNewUrlParser: true, 
-            useUnifiedTopology: true
-          });
 
         spyOn(jwt, 'verify').and.returnValue({ twitterHandle: 'otherTwitterUser' });
         spyOn(User, 'findOneAndUpdate').and.callThrough();
@@ -107,10 +112,7 @@ describe("alertCtrl async specs", () => {
         let u =  await User.insertMany([User(fixture.user1), User(fixture.user2)],
                      function (error) {expect(error).toBeNull();});
 
-        let saved = await User.find({}, function (error, result) {
-            expect(error).toBeNull();
-            return result;
-        });
+        let saved = await User.find({});
 
         expect(saved.length).toBe(2);
         expect(saved[0].twitterHandle).toBe('twitterUser');
@@ -131,15 +133,6 @@ describe("alertCtrl async specs", () => {
 
         expect(results.alerts.length).toBe(1);
         expect(results.alerts).toEqual(fixture.marketRequest.body);
-
-        let deleteResponse = await User.deleteMany({}, (error,result) => {
-            if (error){
-                fail();
-            }
-            return true;
-        });
-
-        expect(deleteResponse.ok).toBe(1);
     }); 
 
 });
