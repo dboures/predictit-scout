@@ -102,7 +102,17 @@ marketRequest = {
     params: {
       id: '7085'
     },
-    body: 'req body here'
+    body: [{
+      "marketId" : 7085,
+      "contractName" : "Republican",
+      "contractId" : 24914,
+      "indicator" : "LastTradePrice",
+      "operator" : "=",
+      "limit" : 5,
+      "openMarket" : true,
+      "sent" : false,
+      "marketName" : "Which party will win the U.S. Senate election in Ohio in 2022?"
+  }]
 }
 
 badMarketRequest = {
@@ -308,7 +318,30 @@ user1 = {
 }
 
 user2 = {
-  "alerts" : [],
+  "alerts" : [
+    {
+      "marketId" : 7035,
+      "contractName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+      "contractId" : 24678,
+      "indicator" : "BestBuyYesCost",
+      "operator" : "<",
+      "limit" : 80,
+      "openMarket" : true,
+      "sent" : true,
+      "marketName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?"
+    }, 
+    {
+      "marketId" : 6951,
+      "contractName" : "Marty Walsh",
+      "contractId" : 24372,
+      "indicator" : "BestBuyNoCost",
+      "operator" : ">",
+      "limit" : 98,
+      "openMarket" : true,
+      "sent" : false,
+      "marketName" : "Who will be the Senate-confirmed Secretary of Labor on Mar. 1?"
+    }
+  ],
   "roles" : [],
   "twitterHandle" : "otherTwitterUser",
   "twitterId_str" : "777663321",

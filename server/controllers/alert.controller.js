@@ -12,21 +12,20 @@ module.exports = {
 
 function loadAlerts(req, res) {
   const userHandle = getTwitterHandleFromHeader(req, res);
-  User.findOne({ twitterHandle: userHandle },
+  return User.findOne({ twitterHandle: userHandle },
     (error, user) => {
-      if (error) return res.status(200).send(error)
-      return res.status(200).send(user.alerts)
+      if (error) return res.status(200).send(error) 
+      return res.status(200).send(user.alerts);
     }
   );
 }
 
 function saveAlerts(req, res) {
   const userHandle = getTwitterHandleFromHeader(req, res);
-  User.findOneAndUpdate(
+  return User.findOneAndUpdate(
     { twitterHandle: userHandle },
     { alerts: req.body },
     { new: true },
-
     (error, user) => {
       if (error) return res.status(200).send(error)
       return res.status(200).send(user.alerts)

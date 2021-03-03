@@ -91,7 +91,8 @@ describe("userCtrl async specs", () => {
             send: function (m) { return this; }
         };
 
-		let u1 =  await User(fixture.user1).save(function (error) {expect(error).toBeNull();});
+		let u =  await User.insertMany([User(fixture.user1), User(fixture.user2)],
+                    function (error) {expect(error).toBeNull();});
 
         let oldUsers = await User.find({}, (error,result) => {
             if(error){
@@ -111,16 +112,27 @@ describe("userCtrl async specs", () => {
         });
 
         // expectations
+        expect(oldUsers.length).toBe(2);
         expect(oldUsers[0].twitterHandle).toBe('twitterUser');
         expect(oldUsers[0].twitterId_str).toBe('5944518036');
         expect(oldUsers[0].hashedPassword).toBe('oldHash');
         expect(oldUsers[0].alerts.length).toBe(0);
+        
+        expect(oldUsers[1].twitterHandle).toBe('otherTwitterUser');
+        expect(oldUsers[1].twitterId_str).toBe('777663321');
+        expect(oldUsers[1].hashedPassword).toBe('$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq');
+        expect(oldUsers[1].alerts.length).toBe(2);
 
+        expect(users.length).toBe(2);
         expect(users[0].twitterHandle).toBe('twitterUser');
         expect(users[0].twitterId_str).toBe('5944518036');
         expect(users[0].hashedPassword).not.toBe('oldHash');
         expect(users[0].alerts.length).toBe(0);
-				
+
+        expect(oldUsers[1].twitterHandle).toBe('otherTwitterUser');
+        expect(oldUsers[1].twitterId_str).toBe('777663321');
+        expect(oldUsers[1].hashedPassword).toBe('$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq');
+        expect(oldUsers[1].alerts.length).toBe(2);	
 
         let deleteResponse = await User.deleteMany({}, (error,result) => {
             if (error){
