@@ -40,19 +40,19 @@ describe("userCtrl", () => {
 });
 
 describe("userCtrl async specs", () => { 
-    beforeEach(() => {
+    beforeEach((done) => {
         mongoose.connect(mongoTestUri, { 
             keepAlive: 1,
             useCreateIndex: true,
             useNewUrlParser: true, 
             useUnifiedTopology: true
         });
-
         nock('https://api.twitter.com/1.1')
             .get('/users/show.json?screen_name=noIdTwitterUser')
             .reply(200, {id_str: '13177568'});
+        done();
         });
-    afterEach( async function() {
+    afterEach( async function(done) {
         let deleteResponse = await User.deleteMany({}, (error,result) => {
             if (error){
                 fail();
@@ -60,14 +60,12 @@ describe("userCtrl async specs", () => {
             return true;
         });
         expect(deleteResponse.ok).toBe(1);
+        done();
     });
 
     it('userCtrl insert should save to the database without original password', async function () {
-
-		spyOn(userCtrl, 'insert').and.callThrough();
-		spyOn(userCtrl, 'getTwitterId').and.callThrough()
-
 		expect(fixture.noIdUser.password).toEqual('password');
+
 		let ins = await userCtrl.insert(fixture.noIdUser);
 		
 		let result = await User.find({});
@@ -80,8 +78,6 @@ describe("userCtrl async specs", () => {
 	});  
 
     it('userCtrl reset password should reset the correct users password', async function () {
-
-		spyOn(userCtrl, 'resetPassword').and.callThrough();
         let res = {
             status: function (s) { this.statusCode = s; return this; },
             send: function (m) { return this; }
@@ -97,7 +93,7 @@ describe("userCtrl async specs", () => {
             return result;
         });
 
-        let reset = userCtrl.resetPassword(fixture.resetPassword, res);
+        let reset =  await userCtrl.resetPassword(fixture.resetPassword, res);
 
         // get users
         let users = await User.find({}, (error,result) => {

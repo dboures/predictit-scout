@@ -59,6 +59,7 @@ describe("alertCtrl async specs", () => {
             useNewUrlParser: true, 
             useUnifiedTopology: true
           });
+        mongoose.set('useFindAndModify', false);
         res = {
             alerts: [],
             status: function (s) { this.statusCode = s; return this; },
@@ -77,8 +78,6 @@ describe("alertCtrl async specs", () => {
     });
 
     it("loadAlerts finds the right user", async function () {
-
-
         spyOn(jwt, 'verify').and.returnValue({ twitterHandle: 'otherTwitterUser' });
         spyOn(User, 'findOne').and.callThrough();
 
@@ -105,7 +104,6 @@ describe("alertCtrl async specs", () => {
     });
 
     it("saveAlerts updates the alert field on the given user", async function () {
-
         spyOn(jwt, 'verify').and.returnValue({ twitterHandle: 'otherTwitterUser' });
         spyOn(User, 'findOneAndUpdate').and.callThrough();
 

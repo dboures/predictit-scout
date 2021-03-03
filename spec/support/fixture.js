@@ -128,6 +128,16 @@ resetPassword = {
       }
 }
 
+sendResetKey = {
+  body: {
+    "alerts" : [],
+    "roles" : [],
+    "twitterHandle" : "twitterUser",
+    "twitterId_str" : "5944518036",
+    "hashedPassword" : "oldHash"
+  }
+}
+
 lessThanAlerts = [
   {
     "marketId" : 7035,
@@ -348,6 +358,37 @@ user2 = {
   "hashedPassword" : "$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq"
 }
 
+user3 = {
+  "alerts" : [
+    {
+      "marketId" : 7035,
+      "contractName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?",
+      "contractId" : 24678,
+      "indicator" : "BestBuyYesCost",
+      "operator" : "<",
+      "limit" : 80,
+      "openMarket" : true,
+      "sent" : false,
+      "marketName" : "Will Benjamin Netanyahu be prime minister of Israel on June 30, 2021?"
+    }, 
+    {
+      "marketId" : 6951,
+      "contractName" : "Marty Walsh",
+      "contractId" : 24372,
+      "indicator" : "BestBuyNoCost",
+      "operator" : ">",
+      "limit" : 98,
+      "openMarket" : false,
+      "sent" : false,
+      "marketName" : "Who will be the Senate-confirmed Secretary of Labor on Mar. 1?"
+    }
+  ],
+  "roles" : [],
+  "twitterHandle" : "thirdUser",
+  "twitterId_str" : "734563321",
+  "hashedPassword" : "$2b$10$Sdfkh3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq"
+}
+
 noIdUser = {
   "twitterHandle" : "noIdTwitterUser",
   "twitterId_str" : "",
@@ -369,4 +410,6 @@ exports.invalidAlerts = invalidAlerts;
 exports.marketStates = marketStates;
 exports.user1 = user1;
 exports.user2 = user2;
+exports.user3 = user3;
 exports.noIdUser = noIdUser;
+exports.sendResetKey = sendResetKey;
