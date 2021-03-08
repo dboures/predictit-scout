@@ -24,7 +24,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [RouterModule],
+  imports: [RouterModule, MatDialogModule],
   exports: [
     FormsModule,
     ReactiveFormsModule,

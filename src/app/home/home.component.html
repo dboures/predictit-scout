@@ -18,7 +18,7 @@
         <table mat-table>
           <tr>
             <th colspan="12" class="market-name">
-              {{this.market.name}}
+              {{this.market?.name}}
             </th>
           </tr>
           <tr>
@@ -39,7 +39,7 @@
             <td>
               <mat-form-field>
                 <select matNativeControl formControlName="contractId" name="contractId" (change)="setFormContractName()" class="input-center">
-                  <option *ngFor="let contract of market.contracts" [ngValue]="contract.id">
+                  <option *ngFor="let contract of market?.contracts" [ngValue]="contract.id">
                     {{contract.shortName}}
                   </option>
                 </select>
@@ -81,8 +81,8 @@
 
 
     </form>
-    <span *ngIf="!this.alerts.length > 0"> Add some alerts!</span>
-    <table *ngIf="this.alerts.length > 0">
+    <span *ngIf="!(this?.alerts?.length > 0)"> Add some alerts!</span>
+    <table *ngIf="this?.alerts?.length > 0">
       <tr>
         <th>
           Market Name
@@ -128,7 +128,7 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="loadAlerts()" color="primary">Load Alerts</button>
-    <button mat-raised-button (click)="saveAlerts()" color="primary" [disabled]="!this.alerts.length > 0">Save Alerts</button>
+    <button mat-raised-button (click)="saveAlerts()" color="primary" [disabled]="!(this?.alerts?.length > 0)">Save Alerts</button>
 <!-- how to create alert popup -->
   </mat-card-actions>
 </mat-card>
