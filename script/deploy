@@ -2,6 +2,7 @@ ssh scout@104.236.32.187 <<EOF
  cd ~/predictit-scout
  git pull
  npm install --production
+ npm run-script build
  pm2 restart all
  exit
 EOF
