@@ -1,0 +1,7 @@
+ssh scout@104.236.32.187 <<EOF
+ cd ~/predictic-scout
+ git pull
+ npm install — production
+ pm2 restart all
+ exit
+EOF
