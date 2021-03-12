@@ -128,7 +128,8 @@
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button (click)="loadAlerts()" color="primary">Load Alerts</button>
-    <button mat-raised-button (click)="saveAlerts()" color="primary">Save Alerts</button>
+    <button mat-raised-button (click)="saveAlerts()" color="primary" [disabled]="!(this?.alerts?.length > 0)">Save Alerts</button>
+<!-- how to create alert popup -->
   </mat-card-actions>
 </mat-card>
 

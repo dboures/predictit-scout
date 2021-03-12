@@ -17,20 +17,22 @@ if (!module.parent) {
     let interval = 5000;
 
 
-    setInterval(function() {
-    //console.log("Handle notifications (15 seconds)");
-      notifCtrl.handleAllNotifications();
-      }, 3 * interval);
+    // setInterval(function() {
+    // console.log("Handle notifications (15 seconds)");
+    // notifCtrl.handleAllNotifications();
+    // }, 1 * interval);
 
-    setInterval(function() {
-      //console.log("Update state (minute)");
-      marketState.syncMarketState();
-      }, 3 * interval);
+    // setInterval(function() {
+    //   console.log("Update state (minute)");
+    //   marketState.syncMarketState();
+    //   }, 1 * interval);
 
 
     // setInterval(function() {;
     //   userCtrl.getTwitterId('deanboures');
     // }, 1 * interval);
+
+
 
   });
 }
