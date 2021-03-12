@@ -1,0 +1,4 @@
+git pull
+npm install --production
+npm run-script build
+pm2 restart all
