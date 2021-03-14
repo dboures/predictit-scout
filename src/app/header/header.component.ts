@@ -24,4 +24,8 @@ export class HeaderComponent {
     this.router.navigateByUrl('/');
   }
 
+  gotoFeedback(): void {
+    this.router.navigateByUrl('/feedback');
+  }
+
 }

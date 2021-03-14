@@ -1,21 +1,17 @@
-html {
-  height: 100%;
-}
-
-body {
+.basic {
   font-family: 'Lato', sans-serif;
-  color: #888;
+  //color: #888;
   margin: 0;
 }
 
-#main {
+.main {
   display: table;
   width: 100%;
   height: 65vh;
   text-align: center;
 }
 
-.fof {
+.content {
   display: table-cell;
   vertical-align: middle;
 }

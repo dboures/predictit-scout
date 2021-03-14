@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guards';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+  },
+  {
+    path: 'feedback',
+    component: FeedbackComponent
   },
   {
     path: '404',

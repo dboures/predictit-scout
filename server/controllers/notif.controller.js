@@ -19,7 +19,6 @@ module.exports = {
 const messageUrl = "https://api.twitter.com/1.1/direct_messages/events/new.json";
 
 async function handleAllNotifications(){
-  console.log('handle');
 
   let currentMarkets = await getCurrentMarkets();
   let userAlerts = await getUserAlerts();

@@ -1,4 +1,5 @@
 git pull
 npm install --production
+#sudo chown -R $USER ~/predictit-scout
 npm run-script build
 pm2 restart all
