@@ -18,12 +18,12 @@ if (!module.parent) {
 
 
     setInterval(function() {
-    console.log("Handle notifications (15 seconds)");
+    // console.log("Handle notifications (15 seconds)");
     notifCtrl.handleAllNotifications();
     }, 2 * interval);
 
     setInterval(function() {
-      console.log("Update state (minute)");
+    // console.log("Update state (minute)");
       marketState.syncMarketState();
       }, 3 * interval);
 

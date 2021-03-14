@@ -29,7 +29,7 @@ function getMarket(req, res) {
         return res.status(200).send(marketObject);
       })
       .catch(function (err) {
-        console.log('Something went wrong', err);
+        console.log('Something went wrong in get market', err);
         return res.status(200).send(err);
       });
   } catch(err) {
@@ -47,7 +47,7 @@ function getState(marketId) {
       return stateObject;
     })
     .catch(function (err) {
-      console.log('Something went wrong', err);
+      console.log('Something went wrong in get state', err);
       return ;
     });
   
