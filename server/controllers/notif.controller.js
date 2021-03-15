@@ -13,7 +13,8 @@ module.exports = {
   closeAlert,
   getUserAlerts,
   getCurrentMarkets,
-  generateMessageRequest
+  generateMessageRequest,
+  sendStartupMessage
 }
 
 const messageUrl = "https://api.twitter.com/1.1/direct_messages/events/new.json";
@@ -101,7 +102,11 @@ function camelCase(string) {
 
 function sendNotifications(alerts) {
   alerts.forEach(alert => {
-    requestOptions = generateMessageRequest(alert);
+
+    let message = "Hello " + alert.twitterHandle + ",\n\nOne of your alerts has been activated:\n\n" +  "Market:\n" + alert.marketName +  "\n\nContract:\n" + alert.contractName + "\n\nCondition:\n" +
+    alert.indicator + " " + alert.operator + " " + alert.limit + "\n\nAccess the market here: " + alert.url +  "\n\nHappy Trading!";
+
+    requestOptions = generateMessageRequest(alert.twitterId_str, message);
     fetch(messageUrl, requestOptions)
       .then(response => response.text())
       .then(result => {
@@ -116,6 +121,13 @@ function sendNotifications(alerts) {
       })
       .catch(error => console.log('error', error)); 
   });
+}
+
+function sendStartupMessage(user) {
+  let message = "Welcome to Predictit Scout! If you are seeing this message, it means that your Twitter account is configured properly and can receive direct messages from us.";
+  const requestOptions = generateMessageRequest(user.twitterId_str, message);
+  fetch(messageUrl, requestOptions)
+  .catch(error => console.log('error', error)); 
 }
 
 function closeAlert(alert) {
@@ -140,8 +152,9 @@ async function sendResetKey(req, res) {
 
   //create the secret
   try {
+    let message = "A password reset has been requested. Please use the following key to reset your password:\n\n";
     let secret = user.hashedPassword + '-' + user.twitterId_str;
-    const requestOptions = generateMessageRequest(user, secret);
+    const requestOptions = generateMessageRequest(user.twitterId_str, message + secret);
     return fetch(messageUrl, requestOptions)
       .then(response => response.text())
       .then(result => {
@@ -167,7 +180,7 @@ async function getUser(handle){
 }
 
 
-  function generateMessageRequest(obj, reset = '') {
+  function generateMessageRequest(twitterId_str, message) {
      //db - 1360038203667922945 - pi_scout-  1359741091092828162 - ed - 599018036
      let httpMethod = "POST";
  
@@ -191,16 +204,8 @@ async function getUser(handle){
      myHeaders.append("Authorization", "OAuth oauth_consumer_key=" + config.twitterConsumerKey + ",oauth_token=" +  config.twitterAccessToken + 
                        ",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=" + timestamp + ",oauth_nonce=" + nonce + ",oauth_version=\"1.0\",oauth_signature=" + signature);
      myHeaders.append("Content-Type", "application/json");
-
-     if (reset.length > 0){
-      message = "A password reset has been requested. Please use the following key to reset your password:\n\n" + reset;
-     }
-     else {
-      message = "Hello " + obj.twitterHandle + ",\n\nOne of your alerts has been activated:\n\n" +  "Market:\n" + obj.marketName +  "\n\nContract:\n" + obj.contractName + "\n\nCondition:\n" +
-      obj.indicator + " " + obj.operator + " " + obj.limit + "\n\nAccess the market here: " + obj.url +  "\n\nHappy Trading!";
-     }
      
-     var message_body = JSON.stringify({"event":{"type":"message_create","message_create":{"target":{"recipient_id":obj.twitterId_str},"message_data":{"text":message}}}});
+     var message_body = JSON.stringify({"event":{"type":"message_create","message_create":{"target":{"recipient_id":twitterId_str},"message_data":{"text":message}}}});
      
      var requestOptions = {
        method: httpMethod,

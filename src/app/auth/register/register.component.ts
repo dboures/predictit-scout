@@ -10,6 +10,8 @@ import {
 
 import { AuthService } from '@app/shared/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MessagesModalComponent } from '@app/shared/other/messages-modal/messages-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['../auth.component.scss'],
 })
 export class RegisterComponent {
-  constructor(private router: Router, private authService: AuthService, public snackBar: MatSnackBar) { }
+  constructor(private router: Router, private authService: AuthService, public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   passwordsMatchValidator(control: FormControl): ValidationErrors | null {
     const password = control.root.get('password');
@@ -54,7 +56,7 @@ export class RegisterComponent {
     const { twitterHandle, password, repeatPassword } = this.userForm.getRawValue();
 
     this.authService.register(twitterHandle, password, repeatPassword).subscribe(data => {
-      this.router.navigate(['']);
+      this.openMessagesModal();
     },
     error => {
       if (error.status === 500){
@@ -64,5 +66,10 @@ export class RegisterComponent {
        });
       }
     });
+  }
+
+  openMessagesModal(): void {
+    const dialogRef = this.dialog.open(MessagesModalComponent, {}
+    );
   }
 }

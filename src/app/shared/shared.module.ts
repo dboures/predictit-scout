@@ -22,6 +22,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { InfoModalComponent } from './other/info-modal/info-modal.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
+import { MessagesModalComponent } from './other/messages-modal/messages-modal.component';
 
 @NgModule({
   imports: [RouterModule, MatDialogModule],
@@ -47,6 +48,6 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatProgressBarModule,
   ],
-  declarations: [InfoModalComponent, NotFoundComponent],
+  declarations: [InfoModalComponent, NotFoundComponent, MessagesModalComponent],
 })
 export class SharedModule {}

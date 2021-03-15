@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Market } from '@app/shared/interfaces/market.interface';
 import { marketIdValidator } from '@app/shared/marketId/marketId.validator';
@@ -30,10 +30,11 @@ export class HomeComponent implements OnInit {
 
   operators: String[] = ['>', '=', '<'];
 
-  constructor(private router: Router, private alertService: AlertService, private marketService: MarketService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
+  constructor(private router: Router, private route: ActivatedRoute, private alertService: AlertService, private marketService: MarketService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.loadAlerts()
+    console.log(this.route.params);
+    this.loadAlerts();
   }
 
   newAlertForm = new FormGroup({
@@ -158,7 +159,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  openDialog(): void {
+  openHelpModal(): void {
     const dialogRef = this.dialog.open(InfoModalComponent, {}
     );
   }

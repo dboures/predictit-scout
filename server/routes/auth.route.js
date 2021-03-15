@@ -15,12 +15,12 @@ router.post('/resetKey',  function (req, res) { notifCtrl.sendResetKey(req, res)
 router.put('/reset',  function (req, res) { userCtrl.resetPassword(req, res) });
 router.get('/me', passport.authenticate('jwt', { session: false }), login);
 
-
 async function register(req, res, next) {
   let user = await userCtrl.insert(req.body);
   user = user.toObject();
   delete user.hashedPassword;
   req.user = user;
+  notifCtrl.sendStartupMessage(user);
   next()
 }
 

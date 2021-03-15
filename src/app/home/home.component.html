@@ -50,7 +50,6 @@
               <select matNativeControl formControlName="indicator" name="indicator" class="input-center">
                 <option *ngFor="let indicator of indicators" [ngValue]="indicator">
                   {{indicator}}
-                  <!-- TODO: Where is the arrow? -->
                 </option>
               </select>
             </mat-form-field>
@@ -60,7 +59,6 @@
               <select matNativeControl formControlName="operator" name="operator" class="input-center">
                 <option *ngFor="let operator of operators" [ngValue]="operator">
                   {{operator}}
-                  <!-- TODO: Where is the arrow? -->
                 </option>
               </select>
             </mat-form-field>
@@ -129,9 +127,8 @@
   <mat-card-actions>
     <button mat-raised-button (click)="loadAlerts()" color="primary">Load Alerts</button>
     <button mat-raised-button (click)="saveAlerts()" color="primary">Save Alerts</button>
-<!-- how to create alert popup -->
   </mat-card-actions>
 </mat-card>
 
 
-<button mat-raised-button (click)="openDialog()">Help</button>
+<button mat-raised-button (click)="openHelpModal()">Help</button>

@@ -77,53 +77,53 @@ describe("userCtrl async specs", () => {
         expect(result[0].alerts.length).toBe(0);
 	});  
 
-    // it('userCtrl reset password should reset the correct users password', async function () {
-    //     let res = {
-    //         status: function (s) { this.statusCode = s; return this; },
-    //         send: function (m) { return this; }
-    //     };
+    it('userCtrl reset password should reset the correct users password', async function () {
+        let res = {
+            status: function (s) { this.statusCode = s; return this; },
+            send: function (m) { return this; }
+        };
 
-	// 	let u =  await User.insertMany([User(fixture.user1), User(fixture.user2)],
-    //                 function (error) {expect(error).toBeNull();});
+		let u =  await User.insertMany([User(fixture.user1), User(fixture.user2)],
+                    function (error) {expect(error).toBeNull();});
 
-    //     let oldUsers = await User.find({}, (error,result) => {
-    //         if(error){
-    //             fail();
-    //         }
-    //         return result;
-    //     });
+        let oldUsers = await User.find({}, (error,result) => {
+            if(error){
+                fail();
+            }
+            return result;
+        });
 
-    //     let reset =  await userCtrl.resetPassword(fixture.resetPassword, res);
+        let reset =  await userCtrl.resetPassword(fixture.resetPassword, res);
 
-    //     // get users
-    //     let users = await User.find({}, (error,result) => {
-    //         if(error){
-    //             fail();
-    //         }
-    //         return result;
-    //     });
+        // get users
+        let users = await User.find({}, (error,result) => {
+            if(error){
+                fail();
+            }
+            return result;
+        });
 
-    //     // expectations
-    //     expect(oldUsers.length).toBe(2);
-    //     expect(oldUsers[0].twitterHandle).toBe('twitterUser');
-    //     expect(oldUsers[0].twitterId_str).toBe('5944518036');
-    //     expect(oldUsers[0].hashedPassword).toBe('oldHash');
-    //     expect(oldUsers[0].alerts.length).toBe(0);
+        // expectations
+        expect(oldUsers.length).toBe(2);
+        expect(oldUsers[0].twitterHandle).toBe('twitterUser');
+        expect(oldUsers[0].twitterId_str).toBe('5944518036');
+        expect(oldUsers[0].hashedPassword).toBe('oldHash');
+        expect(oldUsers[0].alerts.length).toBe(0);
         
-    //     expect(oldUsers[1].twitterHandle).toBe('otherTwitterUser');
-    //     expect(oldUsers[1].twitterId_str).toBe('777663321');
-    //     expect(oldUsers[1].hashedPassword).toBe('$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq');
-    //     expect(oldUsers[1].alerts.length).toBe(2);
+        expect(oldUsers[1].twitterHandle).toBe('otherTwitterUser');
+        expect(oldUsers[1].twitterId_str).toBe('777663321');
+        expect(oldUsers[1].hashedPassword).toBe('$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq');
+        expect(oldUsers[1].alerts.length).toBe(2);
 
-    //     expect(users.length).toBe(2);
-    //     expect(users[0].twitterHandle).toBe('twitterUser');
-    //     expect(users[0].twitterId_str).toBe('5944518036');
-    //     expect(users[0].hashedPassword).not.toBe('oldHash');
-    //     expect(users[0].alerts.length).toBe(0);
+        expect(users.length).toBe(2);
+        expect(users[0].twitterHandle).toBe('twitterUser');
+        expect(users[0].twitterId_str).toBe('5944518036');
+        expect(users[0].hashedPassword).not.toBe('oldHash');
+        expect(users[0].alerts.length).toBe(0);
 
-    //     expect(oldUsers[1].twitterHandle).toBe('otherTwitterUser');
-    //     expect(oldUsers[1].twitterId_str).toBe('777663321');
-    //     expect(oldUsers[1].hashedPassword).toBe('$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq');
-    //     expect(oldUsers[1].alerts.length).toBe(2);
-    // });	
+        expect(oldUsers[1].twitterHandle).toBe('otherTwitterUser');
+        expect(oldUsers[1].twitterId_str).toBe('777663321');
+        expect(oldUsers[1].hashedPassword).toBe('$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq');
+        expect(oldUsers[1].alerts.length).toBe(2);
+    });	
 });
