@@ -1,6 +1,6 @@
 <mat-card class="main-card">
   <mat-card-header>
-    <mat-card-title>Current Alerts</mat-card-title>
+    <mat-card-title font-size ="96px">Current Alerts</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="newAlertForm">
@@ -9,8 +9,7 @@
           <input matInput placeholder="Market Id" formControlName="marketId" name="marketId" OnlyNumber="true" required>
           <mat-error *ngIf="(marketId.invalid && marketId.hasError('marketId'))">Invalid MarketId</mat-error>
         </mat-form-field>
-        spacer
-        <button mat-raised-button (click)="createAlert()" [disabled]="showAlertCreation" color="primary">Create
+        <button class = "createAlertButton" mat-raised-button (click)="createAlert()" [disabled]="showAlertCreation" color="primary">Create
           Alert</button>
       </div>
       <br>
@@ -119,7 +118,10 @@
           {{alert.limit}}
         </td>
         <td>
-          <button mat-raised-button (click)="removeAlert(alert)" color="primary">X</button>
+          <button mat-raised-button (click)="removeAlert(alert)">
+            <mat-icon svgIcon="delete">
+            </mat-icon>
+          </button>
         </td>
       </tr>
     </table>

@@ -7,6 +7,7 @@ table {
 
 .main-card {
   font-size: medium;
+  font-family: 'Lato', sans-serif !important;
   max-width: 70vw;
   min-width: 260px;
   margin: 10% auto;
@@ -17,6 +18,10 @@ table {
   align-items: center;
   flex-direction: column;
   vertical-align: text-top;
+}
+
+mat-card-title {
+  font-size: x-large;
 }
 
 .market-name {
@@ -38,4 +43,14 @@ table {
 
 .sent {
   background-color: green; // TODO: change colors
+}
+
+.createAlertButton {
+  margin-left: 50px;
+}
+
+.body {
+  font-family: 'Lato', sans-serif !important;
+  // color: #888;
+  margin: 0;
 }

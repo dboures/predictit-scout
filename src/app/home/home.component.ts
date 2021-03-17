@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,24 +18,32 @@ import { MarketService } from '@app/shared/services/market/market.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   alerts: Alert[] = [];
   showAlertCreation: boolean = false;
   marketErrorMessage: any = { show: false, marketId: 0 };
   market: Market | undefined;
-  indicators: String[] =
-    ['LastTradePrice',
-      'BestBuyYesCost',
-      'BestBuyNoCost',
-      'BestSellYesCost',
-      'BestSellNoCost',
-      'LastClosePrice'];
+  indicators: String[] = [
+    'LastTradePrice',
+    'BestBuyYesCost',
+    'BestBuyNoCost',
+    'BestSellYesCost',
+    'BestSellNoCost',
+    'LastClosePrice',
+  ];
 
   operators: String[] = ['>', '=', '<'];
 
-  constructor(private router: Router, private route: ActivatedRoute, private alertService: AlertService, private marketService: MarketService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private alertService: AlertService,
+    private marketService: MarketService,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     console.log(this.route.params);
@@ -43,7 +56,11 @@ export class HomeComponent implements OnInit {
     contractId: new FormControl('', [Validators.required]),
     indicator: new FormControl('', [Validators.required]),
     operator: new FormControl('', [Validators.required]),
-    limit: new FormControl('', [Validators.required, Validators.min(1), Validators.max(99)]),
+    limit: new FormControl('', [
+      Validators.required,
+      Validators.min(1),
+      Validators.max(99),
+    ]),
   });
 
   get marketId(): AbstractControl {
@@ -71,51 +88,55 @@ export class HomeComponent implements OnInit {
   }
 
   setFormContractName() {
-    let contract = this.market?.contracts.find(contract => {
-      return contract.id === this.newAlertForm.get('contractId')?.value
-    })
-    this.newAlertForm.patchValue({ 'contractName' : contract?.name});
+    let contract = this.market?.contracts.find((contract) => {
+      return contract.id === this.newAlertForm.get('contractId')?.value;
+    });
+    this.newAlertForm.patchValue({ contractName: contract?.name });
   }
 
   loadAlerts() {
     this.alertService.loadAlerts().subscribe(
-      data => {
-        this.alerts = data
+      (data) => {
+        this.alerts = data;
       },
-      error => {
-        this.openSnackBar('Issue loading alerts, please try again', 'Ok' );
+      (error) => {
+        this.openSnackBar('Issue loading alerts, please try again', 'Ok');
       }
     );
   }
 
   saveAlerts() {
     this.alertService.saveAlerts(this.alerts).subscribe(
-      data => {
-        this.alerts = data
-        this.openSnackBar('Alerts saved successfully', 'Ok' );
+      (data) => {
+        this.alerts = data;
+        this.openSnackBar('Alerts saved successfully', 'Ok');
       },
-      error => {
-        this.openSnackBar('Issue saving alerts, please try again', 'Ok' );
+      (error) => {
+        this.openSnackBar('Issue saving alerts, please try again', 'Ok');
       }
     );
   }
 
   createAlert() {
     if (this.newAlertForm.get('marketId')?.invalid) {
-      return
+      return;
     }
     let marketId = this.newAlertForm.get('marketId')?.value;
     this.marketService.getMarket(marketId).subscribe(
-      data => {
+      (data) => {
         if (data.isOpen) {
           this.market = data;
           this.showAlertCreation = true;
         } else {
-          
-          this.openSnackBar('Market with id ' + marketId.toString() + ' is closed or does not exist', 'Ok' );
+          this.openSnackBar(
+            'Market with id ' +
+              marketId.toString() +
+              ' is closed or does not exist',
+            'Ok'
+          );
         }
       },
-      error => {
+      (error) => {
         console.log(error);
       }
     );
@@ -134,40 +155,38 @@ export class HomeComponent implements OnInit {
     newAlert.marketName = this.market?.name ? this.market.name : '';
     newAlert.marketId = +newAlert.marketId;
     newAlert.limit = +newAlert.limit;
-    if (!this.alerts.some(a => this.alertsAreSame(a,newAlert))) {
+    if (!this.alerts.some((a) => this.alertsAreSame(a, newAlert))) {
       this.alerts.push(newAlert);
     } else {
-      this.openSnackBar('Alert already exists', 'Ok' );
+      this.openSnackBar('Alert already exists', 'Ok');
     }
   }
 
   alertsAreSame(alert: Alert, newAlert: Alert) {
-    let isSame = alert.marketName === newAlert.marketName
-              && alert.contractName == newAlert.contractName 
-              && alert.contractId == newAlert.contractId 
-              && alert.indicator === newAlert.indicator 
-              && alert.operator === newAlert.operator 
-              && alert.limit === newAlert.limit;
+    let isSame =
+      alert.marketName === newAlert.marketName &&
+      alert.contractName == newAlert.contractName &&
+      alert.contractId == newAlert.contractId &&
+      alert.indicator === newAlert.indicator &&
+      alert.operator === newAlert.operator &&
+      alert.limit === newAlert.limit;
 
-    return isSame
+    return isSame;
   }
 
   removeTemporaryAlert() {
-
     this.newAlertForm.reset();
     this.showAlertCreation = false;
   }
 
-
   openHelpModal(): void {
-    const dialogRef = this.dialog.open(InfoModalComponent, {}
-    );
+    const dialogRef = this.dialog.open(InfoModalComponent, {});
   }
 
-  openSnackBar(message: string, action: string ): void {
+  openSnackBar(message: string, action: string): void {
     this.snackBar.open(message, action, {
       duration: 5000,
-      verticalPosition: 'top'
-   });
+      verticalPosition: 'top',
+    });
   }
 }
