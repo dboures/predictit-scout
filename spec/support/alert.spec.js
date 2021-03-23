@@ -15,18 +15,6 @@ describe("alertCtrl", () => {
         };
     });
 
-    it("getTwitterHandleFromHeader will return error if auth is bad", () => {
-        const value = alertCtrl.getTwitterHandleFromHeader(fixture.badMarketRequest, res);
-        expect(value.statusCode).toEqual(401);
-    });
-
-    it("getTwitterHandleFromHeader will return handle if auth is good", () => {
-        spyOn(jwt, 'verify').and.returnValue({ twitterHandle: 'handle' });
-
-        const value = alertCtrl.getTwitterHandleFromHeader(fixture.marketRequest, res);
-        expect(value).toEqual('handle');
-    });
-
     it("loadAlerts calls findOne", () => {
         spyOn(jwt, 'verify').and.returnValue({ twitterHandle: 'handle' });
         spyOn(User, 'findOne');
@@ -131,6 +119,27 @@ describe("alertCtrl async specs", () => {
 
         expect(results.alerts.length).toBe(1);
         expect(results.alerts).toEqual(fixture.marketRequest.body);
-    }); 
+    });
+    
+    it("saveAlerts will not allow users to have more than 3 alerts", async function () {
+        spyOn(jwt, 'verify').and.returnValue({ twitterHandle: 'otherTwitterUser' });
+        spyOn(User, 'findOneAndUpdate').and.callThrough();
 
+
+        let u =  await User.insertMany([User(fixture.user2)],
+                     function (error) {expect(error).toBeNull();});
+
+        let saved = await User.find({});
+
+        expect(saved.length).toBe(1);
+        expect(saved[0].twitterHandle).toBe('otherTwitterUser');
+        expect(saved[0].twitterId_str).toBe('777663321');
+        expect(saved[0].hashedPassword).toBe('$2b$10$So1b3bnziF/uVMIjYrIHbu69lhU9Ob9zm0uGgFaXGDMiVVmuSrupq');
+        expect(saved[0].alerts.length).toBe(2);
+
+        let results = await alertCtrl.saveAlerts(fixture.request4Alerts, res);
+
+        expect(User.findOneAndUpdate).not.toHaveBeenCalled();
+        expect(results.statusCode).toBe(401);
+    });
 });

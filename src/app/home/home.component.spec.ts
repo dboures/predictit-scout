@@ -39,6 +39,18 @@ describe('HomeComponent', () => {
     limit: 50
   };
 
+  const otherSampleAlert: Alert = {
+    marketId:57,
+    contractId:1244,
+    openMarket:true,
+    sent:false,
+    marketName: 'this is a market',
+    contractName: 'that one contract',
+    indicator: 'buyprice',
+    operator: '>',
+    limit: 50
+  };
+
   const sampleMarket: Market = {
     id: 55,
     name: 'dummy market',
@@ -213,7 +225,7 @@ describe('HomeComponent', () => {
       operator: '=',
       limit: 42
     };
-
+ 
     component.alerts =  [sampleAlert];
     const old_len = component.alerts.length;
     component.addNewAlert(newAlert);
@@ -221,6 +233,17 @@ describe('HomeComponent', () => {
 
     expect(old_len).toBeLessThan(component.alerts.length);
     expect(component.alerts.length).toBe(2);
+  });
+
+  it('addnewAlert will only allow 3 to be saved', () => {
+    spyOn(component.snackBar, 'open').and.stub();
+    component.alerts =  [sampleAlert, sampleAlert, sampleAlert];
+    const old_len = component.alerts.length;
+    component.addNewAlert(otherSampleAlert);
+    fixture.detectChanges();
+
+    expect(old_len).toEqual(component.alerts.length);
+    expect(component.snackBar.open).toHaveBeenCalledWith('Currently you can only open 3 alerts', 'Ok', {duration:5000, verticalPosition: 'top'} );
   });
 
   it('removeAlert will remove an alert', () => {

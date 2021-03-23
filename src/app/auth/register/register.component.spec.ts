@@ -6,6 +6,8 @@ import { AuthService } from '@app/shared/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Overlay } from '@angular/cdk/overlay';
 import { throwError } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -15,7 +17,7 @@ describe('RegisterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [RouterTestingModule, HttpClientTestingModule, MatDialogModule, BrowserAnimationsModule ],
       declarations: [RegisterComponent],
       providers: [AuthService, MatSnackBar, Overlay],
     })

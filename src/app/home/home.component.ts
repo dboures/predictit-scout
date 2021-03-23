@@ -12,7 +12,7 @@ import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Market } from '@app/shared/interfaces/market.interface';
 import { marketIdValidator } from '@app/shared/marketId/marketId.validator';
 import { InfoModalComponent } from '@app/shared/other/info-modal/info-modal.component';
-import { AlertService } from '@app/shared/services';
+import { AlertService, AuthService } from '@app/shared/services';
 import { MarketService } from '@app/shared/services/market/market.service';
 
 @Component({
@@ -156,7 +156,12 @@ export class HomeComponent implements OnInit {
     newAlert.marketId = +newAlert.marketId;
     newAlert.limit = +newAlert.limit;
     if (!this.alerts.some((a) => this.alertsAreSame(a, newAlert))) {
-      this.alerts.push(newAlert);
+      if(this.alerts.length <  3){
+        this.alerts.push(newAlert);
+      }
+      else {
+        this.openSnackBar('Currently you can only open 3 alerts', 'Ok');  
+      }
     } else {
       this.openSnackBar('Alert already exists', 'Ok');
     }

@@ -115,6 +115,61 @@ marketRequest = {
   }]
 }
 
+request4Alerts = {
+  headers: {
+      authorization: "Bearer 123457891011"
+      },
+  params: {
+    id: '7085'
+  },
+  user: {roles: []},
+  body: [{
+    "marketId" : 7085,
+    "contractName" : "Republican",
+    "contractId" : 24914,
+    "indicator" : "LastTradePrice",
+    "operator" : "=",
+    "limit" : 5,
+    "openMarket" : true,
+    "sent" : false,
+    "marketName" : "Which party will win the U.S. Senate election in Ohio in 2022?"
+},
+{
+  "marketId" : 7085,
+  "contractName" : "Republican",
+  "contractId" : 24914,
+  "indicator" : "LastTradePrice",
+  "operator" : "=",
+  "limit" : 5,
+  "openMarket" : true,
+  "sent" : false,
+  "marketName" : "Which party will win the U.S. Senate election in Ohio in 2022?"
+},
+{
+  "marketId" : 7085,
+  "contractName" : "Republican",
+  "contractId" : 24914,
+  "indicator" : "LastTradePrice",
+  "operator" : "=",
+  "limit" : 5,
+  "openMarket" : true,
+  "sent" : false,
+  "marketName" : "Which party will win the U.S. Senate election in Ohio in 2022?"
+},
+{
+  "marketId" : 7085,
+  "contractName" : "Republican",
+  "contractId" : 24914,
+  "indicator" : "LastTradePrice",
+  "operator" : "=",
+  "limit" : 5,
+  "openMarket" : true,
+  "sent" : false,
+  "marketName" : "Which party will win the U.S. Senate election in Ohio in 2022?"
+},
+]
+}
+
 badMarketRequest = {
     headers: {
         authorization: "junk 123457891011"
@@ -400,6 +455,7 @@ exports.rawRequest = rawRequest;
 exports.marketObject =  marketObject;
 exports.stateObject = stateObject; 
 exports.marketRequest = marketRequest;
+exports.request4Alerts = request4Alerts;
 exports.badMarketRequest = badMarketRequest;
 exports.resetPassword = resetPassword;
 exports.lessThanAlerts = lessThanAlerts;

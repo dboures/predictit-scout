@@ -73,7 +73,6 @@ async function makeRequest(url) {
       // Process the response
       if (request.status >= 200 && request.status < 300) {
         // If successful
-        //console.log(this.responseText);
         resolve(request.responseText);
       } else {
         // If failed

@@ -1,17 +1,13 @@
-const jwt = require('jsonwebtoken');
-const config = require('../config/config');
+const utils = require('../utilities/utilities.js');
 const User = require('../models/user.model');
-
 
 module.exports = {
   loadAlerts,
-  saveAlerts,
-  getTwitterHandleFromHeader
+  saveAlerts
 }
 
-
 function loadAlerts(req, res) {
-  const userHandle = getTwitterHandleFromHeader(req, res);
+  const userHandle = utils.getTwitterHandleFromHeader(req, res);
   return User.findOne({ twitterHandle: userHandle },
     (error, user) => {
       if (error) return res.status(200).send(error) 
@@ -21,7 +17,10 @@ function loadAlerts(req, res) {
 }
 
 function saveAlerts(req, res) {
-  const userHandle = getTwitterHandleFromHeader(req, res);
+  if (req.body.length > 3){
+    return res.status(401).send('Unauthorized')
+  }
+  const userHandle = utils.getTwitterHandleFromHeader(req, res);
   return User.findOneAndUpdate(
     { twitterHandle: userHandle },
     { alerts: req.body },
@@ -33,18 +32,4 @@ function saveAlerts(req, res) {
   );
 }
 
-function getTwitterHandleFromHeader(req, res) {
-  const authHeader = req.headers.authorization
-  if (authHeader.startsWith("Bearer ")) {
-    token = authHeader.substring(7, authHeader.length);
-  } else { return res.status(401).send('Unauthorized') }
 
-  try {
-    let verifiedJwt = jwt.verify(token, config.jwtSecret);
-    userHandle = verifiedJwt.twitterHandle;
-    return userHandle;
-  }
-  catch (error) {
-    return res.status(200).send(error.message);
-  }
-}
