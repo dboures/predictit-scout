@@ -30,6 +30,8 @@ export class AppComponent {
 
   registerSvgIcons() {
     [
+      'ethereum',
+      'bitcoin',
       'close',
       'add',
       'add-blue',

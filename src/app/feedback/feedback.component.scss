@@ -1,5 +1,5 @@
 .basic {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   //color: #888;
   margin: 0;
 }
@@ -14,4 +14,12 @@
 .content {
   display: table-cell;
   vertical-align: middle;
+}
+
+.normal-font {
+  font-weight: normal;
+}
+
+.center {
+  margin: auto;
 }
