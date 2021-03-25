@@ -1,6 +1,7 @@
 const config = require('../config/config');
 const User = require('../models/user.model');
 const State = require('../models/state.model');
+const utils = require('../utilities/utilities.js');
 const fetch = require("node-fetch");
 const crypto = require('crypto')
 const oauthSignature = require("oauth-signature");
@@ -109,15 +110,18 @@ function sendNotifications(alerts) {
     requestOptions = generateMessageRequest(alert.twitterId_str, message);
     fetch(messageUrl, requestOptions)
       .then(response => response.text())
-      .then(result => {
-        User.updateOne(
-          { "twitterHandle": alert.twitterHandle},
+      .then(() => {
+          return User.findOneAndUpdate(
+          { "twitterHandle": "deanboures" },
           { $set: { [`alerts.${alert.ind}.sent`]: true }},
+          { $returnNewDocument: true },
           (error, result) => {
             if (error) {
               console.log(error);
             }
           });
+      }).then(updatedResult => {
+        utils.emitter.emit('push alerts', 'message', {data: updatedResult.alerts});
       })
       .catch(error => console.log('error', error)); 
   });

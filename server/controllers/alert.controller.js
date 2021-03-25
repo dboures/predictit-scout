@@ -3,7 +3,8 @@ const User = require('../models/user.model');
 
 module.exports = {
   loadAlerts,
-  saveAlerts
+  saveAlerts,
+  streamAlerts
 }
 
 function loadAlerts(req, res) {
@@ -32,4 +33,16 @@ function saveAlerts(req, res) {
   );
 }
 
+function streamAlerts(req, res) {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream;charset=utf-8',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive'
+    })
+
+    utils.emitter.on('push alerts', function (event, data) {
+        res.write('event :' + String(event) + '\n' + 'data: ' + JSON.stringify(data) + '\n\n');
+        res.flush();
+    });
+}
 

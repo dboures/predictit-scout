@@ -8,3 +8,4 @@ router.use(passport.authenticate('jwt', { session: false }))
 
 router.get('/', function (req, res) { alertCtrl.loadAlerts(req, res) });
 router.put('/', function (req, res) { alertCtrl.saveAlerts(req, res) });
+router.get('/updates', function (req, res) { alertCtrl.streamAlerts(req,res) });

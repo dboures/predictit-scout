@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -7,12 +7,11 @@ import {
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Market } from '@app/shared/interfaces/market.interface';
 import { marketIdValidator } from '@app/shared/marketId/marketId.validator';
 import { InfoModalComponent } from '@app/shared/other/info-modal/info-modal.component';
-import { AlertService, AuthService } from '@app/shared/services';
+import { AlertService } from '@app/shared/services';
 import { MarketService } from '@app/shared/services/market/market.service';
 
 @Component({
@@ -20,7 +19,7 @@ import { MarketService } from '@app/shared/services/market/market.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   alerts: Alert[] = [];
   showAlertCreation: boolean = false;
   marketErrorMessage: any = { show: false, marketId: 0 };
@@ -35,10 +34,9 @@ export class HomeComponent implements OnInit {
   ];
 
   operators: String[] = ['>', '=', '<'];
+  eventSource: EventSource | undefined;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private alertService: AlertService,
     private marketService: MarketService,
     public dialog: MatDialog,
@@ -46,8 +44,16 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.route.params);
     this.loadAlerts();
+    this.alertService.getServerModifiedAlerts().subscribe((data) => {
+      this.alerts = data;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSource) {
+      this.eventSource.close();
+    }
   }
 
   newAlertForm = new FormGroup({

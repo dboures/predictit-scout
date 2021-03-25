@@ -1,8 +1,12 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
+var EventEmitter = require('events').EventEmitter;
+
+var emitter = new EventEmitter();
 
 module.exports = {
-    getTwitterHandleFromHeader
+    getTwitterHandleFromHeader,
+    emitter
   }
 
 function getTwitterHandleFromHeader(req, res) {
