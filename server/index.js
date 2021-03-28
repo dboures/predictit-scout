@@ -4,8 +4,7 @@ const app = require('./config/express');
 const marketState = require('./state/state');
 const notifCtrl = require('./controllers/notif.controller');
 require('./config/mongoose');
-const userCtrl = require('./controllers/user.controller');
-
+const utils = require('./utilities/utilities.js');
 
 // module.parent check is required to support mocha watch
 // src: https://github.com/mochajs/mocha/issues/1912
@@ -28,9 +27,10 @@ if (!module.parent) {
       }, 3 * interval);
 
 
-    // setInterval(function() {;
-    //   userCtrl.getTwitterId('deanboures');
-    // }, 1 * interval);
+    setInterval(function() {;
+      
+      utils.emitter.emit('heartbeat', 'message', {data: ''});
+    }, 1 * interval);
 
 
 

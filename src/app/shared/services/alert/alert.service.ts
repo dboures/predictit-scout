@@ -20,13 +20,15 @@ export class AlertService {
     return this.http.put<Alert[]>('/api/alerts', userAlerts)
   }
 
-  getServerModifiedAlerts(): Observable<Alert[]> {
+  getServerModifiedAlerts(): Observable<any> {
+    console.log('alert service called');
     return Observable.create((observer: { 
         next: (arg0: MessageEvent<any>) => void; 
         error: (arg0: Event) => void; 
         }) => {
           const eventSource = this.getEventSource('/api/alerts/updates');
           eventSource.onopen = (event: any) => {
+            console.log('connected');
             this._zone.run(() => {
             });
           };

@@ -44,5 +44,10 @@ function streamAlerts(req, res) {
         res.write('event :' + String(event) + '\n' + 'data: ' + JSON.stringify(data) + '\n\n');
         res.flush();
     });
+
+    utils.emitter.on('heartbeat', function (event, data) {
+      res.write('event :' + String(event) + '\n' + 'data: ' + JSON.stringify(data) + '\n\n');
+      res.flush();
+  });
 }
 

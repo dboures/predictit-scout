@@ -46,7 +46,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadAlerts();
     this.alertService.getServerModifiedAlerts().subscribe((data) => {
-      this.alerts = data;
+      console.log('subscribed to service');
+      if (data == '') {
+        console.log('successful heartbeat');
+      }
+      else {
+        this.alerts = data;
+      }
     });
   }
 
