@@ -4,7 +4,7 @@ const User = require('../models/user.model');
 module.exports = {
   loadAlerts,
   saveAlerts,
-  streamAlerts
+  handleUpdates
 }
 
 function loadAlerts(req, res) {
@@ -33,21 +33,9 @@ function saveAlerts(req, res) {
   );
 }
 
-function streamAlerts(req, res) {
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream;charset=utf-8',
-    'Cache-Control': 'no-cache',
-    'Connection': 'keep-alive'
-    })
-
-    utils.emitter.on('push alerts', function (event, data) {
-        res.write('event :' + String(event) + '\n' + 'data: ' + JSON.stringify(data) + '\n\n');
-        res.flush();
+function handleUpdates(req, res) {
+    utils.emitter.on('reload alerts', function () {
+      res.status(200).send({reload:true});
     });
-
-    utils.emitter.on('heartbeat', function (event, data) {
-      res.write('event :' + String(event) + '\n' + 'data: ' + JSON.stringify(data) + '\n\n');
-      res.flush();
-  });
 }
 

@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { Alert } from '@app/shared/interfaces/alert.interface';
 import { Observable } from 'rxjs';
-import { EventSourcePolyfill } from 'ng-event-source'
 import { AuthService } from '../auth/auth.service';
+import { repeat, retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,33 +20,12 @@ export class AlertService {
     return this.http.put<Alert[]>('/api/alerts', userAlerts)
   }
 
-  getServerModifiedAlerts(): Observable<any> {
-    console.log('alert service called');
-    return Observable.create((observer: { 
-        next: (arg0: MessageEvent<any>) => void; 
-        error: (arg0: Event) => void; 
-        }) => {
-          const eventSource = this.getEventSource('/api/alerts/updates');
-          eventSource.onopen = (event: any) => {
-            console.log('connected');
-            this._zone.run(() => {
-            });
-          };
+  longPollAlerts(): Observable<any> {
+      return this.http.get<any>('/api/alerts/updates')
+      .pipe(
+      retry(),
+      repeat(),
+    );
+  };
 
-          eventSource.onmessage = event => {
-            this._zone.run(() => {
-              observer.next(JSON.parse(event.data).data);
-            });
-          };
-          eventSource.onerror = (error: Event) => {
-            this._zone.run(() => {
-              observer.error(error);
-            });
-          };
-        });
-  }
-  private getEventSource(url: string): EventSourcePolyfill {
-    let authHeaders = this.authService.getAuthorizationHeaders();
-    return new EventSourcePolyfill(url, {headers: authHeaders});
-  }
 }

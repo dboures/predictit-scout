@@ -120,8 +120,8 @@ function sendNotifications(alerts) {
               console.log(error);
             }
           });
-      }).then(updatedResult => {
-        utils.emitter.emit('push alerts', 'message', {data: updatedResult.alerts});
+      }).then(() => {
+        utils.emitter.emit('reload alerts');
       })
       .catch(error => console.log('error', error)); 
   });

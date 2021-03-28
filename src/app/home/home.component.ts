@@ -13,6 +13,7 @@ import { marketIdValidator } from '@app/shared/marketId/marketId.validator';
 import { InfoModalComponent } from '@app/shared/other/info-modal/info-modal.component';
 import { AlertService } from '@app/shared/services';
 import { MarketService } from '@app/shared/services/market/market.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   operators: String[] = ['>', '=', '<'];
   eventSource: EventSource | undefined;
+  longPollSubscription: Subscription | undefined;
 
   constructor(
     private alertService: AlertService,
@@ -45,21 +47,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadAlerts();
-    this.alertService.getServerModifiedAlerts().subscribe((data) => {
-      console.log('subscribed to service');
-      if (data == '') {
-        console.log('successful heartbeat');
+    this.longPollSubscription = this.alertService.longPollAlerts().subscribe((data) => {
+      if(data) {
+        this.loadAlerts();
       }
-      else {
-        this.alerts = data;
-      }
-    });
+    })
   }
 
   ngOnDestroy(): void {
-    if (this.eventSource) {
-      this.eventSource.close();
-    }
+    this.longPollSubscription?.unsubscribe();
   }
 
   newAlertForm = new FormGroup({

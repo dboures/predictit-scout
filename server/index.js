@@ -26,14 +26,6 @@ if (!module.parent) {
       marketState.syncMarketState();
       }, 3 * interval);
 
-
-    setInterval(function() {;
-      
-      utils.emitter.emit('heartbeat', 'message', {data: ''});
-    }, 1 * interval);
-
-
-
   });
 }
 
