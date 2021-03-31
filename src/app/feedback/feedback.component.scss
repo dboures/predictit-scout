@@ -4,6 +4,19 @@
   margin: 0;
 }
 
+.outer {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  vertical-align: text-top;
+}
+
+mat-card {
+  width: 80%;
+}
+
 .main {
   display: table;
   width: 100%;

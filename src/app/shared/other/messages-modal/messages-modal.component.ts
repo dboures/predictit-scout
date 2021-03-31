@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-messages-modal',
   templateUrl: './messages-modal.component.html',
-  styleUrls: ['./messages-modal.component.scss']
+  styleUrls: ['../modals.scss']
 })
 export class MessagesModalComponent implements OnInit, OnDestroy {
 

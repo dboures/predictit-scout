@@ -1,13 +1,19 @@
 table {
   width: 100%;
-  text-align: center;
   border: 1px solid rgb(131, 131, 131);
   border-collapse: collapse;
+}
+table td {
+  border-left: 1px solid #000;
+}
+
+table th {
+  border-left: 1px solid #000;
 }
 
 .main-card {
   font-size: medium;
-  font-family: 'Lato', sans-serif !important;
+  font-family: "Lato", sans-serif !important;
   max-width: 70vw;
   min-width: 260px;
   margin: 10% auto;
@@ -22,6 +28,18 @@ table {
 
 mat-card-title {
   font-size: x-large;
+}
+
+mat-card-content {
+  width: 80%;
+}
+
+button:hover {
+  background-color: gray;
+}
+
+form {
+  margin-bottom: 1%;
 }
 
 .market-name {
@@ -50,7 +68,21 @@ mat-card-title {
 }
 
 .body {
-  font-family: 'Lato', sans-serif !important;
+  font-family: "Lato", sans-serif !important;
   // color: #888;
   margin: 0;
+}
+
+.add-button {
+  background-color: green;
+  :hover {
+    background-color: aquamarine;
+  }
+}
+
+.remove-button {
+  background-color: red;
+}
+.remove-button:hover {
+  background-color: orange;
 }

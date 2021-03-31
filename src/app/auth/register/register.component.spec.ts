@@ -74,7 +74,7 @@ describe('RegisterComponent', () => {
     const password = form.controls.password;
     const repeatPassword = form.controls.repeatPassword;
 
-    handle.setValue('twitter_user_lonnger_than_possible_handle');
+    handle.setValue('twitter_user_longer_than_possible_handle');
     password.setValue('pass');
     repeatPassword.setValue('pass');
 

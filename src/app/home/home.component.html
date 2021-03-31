@@ -28,7 +28,7 @@
               Indicator
             </th>
             <th>
-              Comparison Operator
+              Comparison
             </th>
             <th>
               Value
@@ -68,18 +68,14 @@
               </mat-form-field>
             </td>
           </tr>
-
         </table>
-        <!-- put this on the right of the table -->
-        <button mat-raised-button (click)="removeTemporaryAlert()" [disabled]="!showAlertCreation"
-          color="red">&times;</button>
-        <button mat-raised-button (click)="addNewAlert(newAlertForm.value)" [disabled]="newAlertForm.invalid" color="primary">Add Alert</button>
+        <!-- TODO: can I make these merged in some way? -->
+        <button mat-raised-button class="add-button" (click)="addNewAlert(newAlertForm.value)" [disabled]="newAlertForm.invalid">Add</button>
+        <button mat-raised-button class="remove-button" (click)="removeTemporaryAlert()" [disabled]="!showAlertCreation">Remove</button>
       </div>
-
-
     </form>
     <span *ngIf="!(this?.alerts?.length > 0)"> Add some alerts!</span>
-    <table *ngIf="this?.alerts?.length > 0">
+    <table class="alerts-table" *ngIf="this?.alerts?.length > 0">
       <tr>
         <th>
           Market Name
@@ -91,7 +87,7 @@
           Indicator
         </th>
         <th>
-          Operator
+          Comparison
         </th>
         <th>
           Limit

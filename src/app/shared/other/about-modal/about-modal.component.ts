@@ -2,14 +2,14 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-info-modal',
-  templateUrl: './info-modal.component.html',
+  selector: 'app-about-modal',
+  templateUrl: './about-modal.component.html',
   styleUrls: ['../modals.scss']
 })
-export class InfoModalComponent implements OnInit {
+export class AboutModalComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<InfoModalComponent>,
+    public dialogRef: MatDialogRef<AboutModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
@@ -18,6 +18,4 @@ export class InfoModalComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  
-
 }

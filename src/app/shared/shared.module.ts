@@ -23,6 +23,7 @@ import { InfoModalComponent } from './other/info-modal/info-modal.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 import { MessagesModalComponent } from './other/messages-modal/messages-modal.component';
+import { AboutModalComponent } from './other/about-modal/about-modal.component';
 
 @NgModule({
   imports: [RouterModule, MatDialogModule],
@@ -48,6 +49,6 @@ import { MessagesModalComponent } from './other/messages-modal/messages-modal.co
     MatFormFieldModule,
     MatProgressBarModule,
   ],
-  declarations: [InfoModalComponent, NotFoundComponent, MessagesModalComponent],
+  declarations: [InfoModalComponent, NotFoundComponent, MessagesModalComponent, AboutModalComponent],
 })
 export class SharedModule {}
