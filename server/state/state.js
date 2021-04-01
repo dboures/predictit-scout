@@ -11,7 +11,7 @@ async function syncMarketState() {
     //get markets we care about from users
     let marketIds = await getMarketIds();
 
-    //obtain updated market state information from Predictit
+    //obtain updated market state information from PredictIt
     let marketStates = await Promise.all(
         marketIds.map(async marketId => {
             let marketState = await marketCtrl.getState(+marketId);

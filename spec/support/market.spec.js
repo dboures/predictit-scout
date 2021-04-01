@@ -26,12 +26,12 @@ describe("marketCtrl", () => {
         });
     });
 
-    it("parseStateFromResponse will format the Predictit response properly", () => {
+    it("parseStateFromResponse will format the PredictIt response properly", () => {
         let result = marketCtrl.parseStateFromResponse(fixture.rawRequest);
         expect(result).toEqual(fixture.stateObject);
     });
 
-    it("parseMarketFromResponse will format the Predictit response properly", () => {
+    it("parseMarketFromResponse will format the PredictIt response properly", () => {
         let result = marketCtrl.parseStateFromResponse(fixture.rawRequest);
         expect(result).toEqual(fixture.stateObject);
     });

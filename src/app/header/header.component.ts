@@ -32,7 +32,7 @@ export class HeaderComponent {
   }
 
   openAboutModal(): void {
-    const dialogRef = this.dialog.open(AboutModalComponent, {});
+    const dialogRef = this.dialog.open(AboutModalComponent, {panelClass: 'modal'});
   }
 
 }

@@ -128,7 +128,7 @@ function sendNotifications(alerts) {
 }
 
 function sendStartupMessage(user) {
-  let message = "Welcome to Predictit Scout! If you are seeing this message, it means that your Twitter account is configured properly and can receive direct messages from us.";
+  let message = "Welcome to PredictIt Scout! If you are seeing this message, it means that your Twitter account is configured properly and can receive direct messages from us.";
   const requestOptions = generateMessageRequest(user.twitterId_str, message);
   fetch(messageUrl, requestOptions)
   .catch(error => console.log('error', error)); 
