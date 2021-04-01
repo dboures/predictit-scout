@@ -1,7 +1,7 @@
 header {
   width: 100%;
   .logo {
-    background-image: url('../../assets/logo.png');
+    background-image: url("../../assets/logo.png");
     width: 50px;
     height: 50px;
     background-size: contain;
@@ -12,7 +12,7 @@ header {
   }
   .links {
     color: white;
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: "Helvetica Neue", sans-serif;
     font-size: 15px;
     font-weight: initial;
     text-decoration: none;
@@ -33,5 +33,10 @@ header {
   }
   a {
     cursor: pointer;
+  }
+
+  .modal mat-dialog-container {
+    border-radius: 15px;
+    max-width: 1000px;
   }
 }

@@ -193,7 +193,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   openHelpModal(): void {
-    const dialogRef = this.dialog.open(InfoModalComponent, {});
+    const dialogRef = this.dialog.open(InfoModalComponent, {panelClass: 'modal'});
   }
 
   openSnackBar(message: string, action: string): void {

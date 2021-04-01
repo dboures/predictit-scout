@@ -69,7 +69,7 @@ export class RegisterComponent {
   }
 
   openMessagesModal(): void {
-    const dialogRef = this.dialog.open(MessagesModalComponent, {}
+    const dialogRef = this.dialog.open(MessagesModalComponent, {panelClass: 'modal'}
     );
   }
 }
