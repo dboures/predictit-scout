@@ -17,9 +17,17 @@ body {
   }
 }
 
+body button {
+  color: #1976d2;
+}
+
 .modal mat-dialog-container {
   border-radius: 15px;
   max-width: 1000px;
+}
+
+button:hover {
+  background-color: #bdbdbd;
 }
 
 //https://www.materialpalette.com/blue/blue-grey
