@@ -29,6 +29,9 @@ body {
   border-radius: 15px;
   max-width: 1000px;
 }
+.mat-form-field-prefix {
+  top: -0.063em !important;
+}
 
 button:hover {
   background-color: #bdbdbd;
