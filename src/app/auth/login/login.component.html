@@ -1,40 +1,34 @@
-<mat-card class="main-card">
-  <mat-card-header>
-    <mat-card-title>Login</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form>
-      <table cellspacing="0">
-        <tr>
-          <td>
-            <mat-form-field class="standard-field">
-              <input matInput placeholder="Twitter_Handle" [(ngModel)]="twitterHandle" name="twitterHandle" required>
-              <span matPrefix>@&nbsp;</span>
-            </mat-form-field>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <mat-form-field class="standard-field">
-              <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
-            </mat-form-field>
-          </td>
-        </tr>
-      </table>
-    </form>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button (click)="login()">Login</button>
-  </mat-card-actions>
-</mat-card>
-<mat-card class="bottom-card">
-  <span> Forgot password?<br />
-    <a [routerLink]="['/auth/reset-password']">Reset Password</a>
-  </span>
-</mat-card>
-
-<mat-card class="bottom-card">
-  <span> Don't have an account?<br />
-    <a [routerLink]="['/auth/register']">Register</a>
-  </span>
-</mat-card>
+<div id="app">
+  <div class="main">
+      <div class="spacer"> Logo in here I think</div>
+      <mat-card class="content">
+          <div class="row">
+              <h1>Login mebe logo?</h1>
+              <div class="center">
+                <form>
+                  <mat-form-field appearance="outline">
+                    <input matInput placeholder="Twitter_Handle" [(ngModel)]="twitterHandle" name="twitterHandle" required>
+                    <span class="prefix" matPrefix>@&nbsp;</span> 
+                    <!-- // fix vertical placement -->
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
+                  </mat-form-field>
+                </form>
+                <button class="nav-button" mat-raised-button (click)="login()" color="primary">Log In</button>
+              </div>
+          </div>
+          <div class="forgot">
+            <a class="link" [routerLink]="['/auth/reset-password']">Forgot Password?</a>
+          </div>
+          <div class="account-container">
+            <div class="separator">
+              <span class="textInSeparator">or</span>
+            </div>
+          </div>
+          <div class="bottom-button">
+            <button class="nav-button" mat-raised-button (click)="goToRegister()" color = "accent">Create Account</button>
+          </div>
+    </mat-card>
+  </div>
+</div>

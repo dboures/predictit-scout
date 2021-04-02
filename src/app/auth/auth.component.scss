@@ -1,61 +1,86 @@
-.example-icon {
-  padding: 0 14px;
-}
-
-.example-spacer {
-  flex: 1 1 auto;
-}
-
-.main-card {
-  font-size: medium;
-  max-width: 15vw;
-  min-width: 260px;
-  margin: 10% auto;
-  margin-bottom: 20px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.bottom-card {
-  font-size: medium;
-  max-width: 15vw;
-  min-width: 260px;
-  margin: 0 auto;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.standard-field {
-  min-width: 220px;
-  max-width: 20vw;
-}
-
-mat-card-footer {
-  margin-bottom: 0.5%;
-}
-
-button {
-  background-color: aqua;
+.nav-button {
+  width: 95%;
+  height: 40px;
+  font-weight: bold;
 }
 
 button:hover {
   background-color: #bdbdbd;
 }
 
-.mat-card-title {
-  font-size: 16px;
+.content {
+  width: 100%;
+  max-width: 450px;
 }
 
-tr {
-  display: block;
+.main {
+  width: 100%;
+  height: 65vh;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.phone {
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.top-spacer {
+  height: 135px;
+}
+
+.bottom-button {
+  margin-top: 20px;
+  height: 70px;
+}
+
+.forgot {
+  margin-top: 25px;
+}
+
+//@ need to be alittle bit higher
+//figure out logo / title
+
+// .prefix {
+//   top: -1em;
+// }
+
+// .mat-form-field-prefix {
+//   top: 0.15em !important;
+// }
+
+.link {
+  text-decoration: none;
+  color: #2196f3;
+}
+
+.account-container {
+  display: flex;
+  justify-content: center;
+  max-height: 40px;
+}
+
+.separator {
+  border-top: 1px solid #cbd2d6;
   position: relative;
+  margin: 25px 0 10px;
+  width: 95%;
+}
+
+.textInSeparator {
+  text-align: center;
+  background-color: #fff;
+  padding: 0 0.5em;
+  position: relative;
+  color: #6c7378;
+  top: -0.7em;
 }

@@ -9,16 +9,20 @@ $custom-typography: mat-typography-config(
 
 @include mat-core($custom-typography);
 
+$primary: mat-palette($mat-blue, 700, 700, 700);
+$accent: mat-palette($mat-grey, 300, 300, 300);
+
+$theme: mat-light-theme($primary, $accent);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);
+
 body {
   background-color: #f4f3f3;
   margin: 0;
   app-root * {
     font-family: "Ubuntu", sans-serif;
   }
-}
-
-body button {
-  color: #1976d2;
 }
 
 .modal mat-dialog-container {
@@ -29,5 +33,3 @@ body button {
 button:hover {
   background-color: #bdbdbd;
 }
-
-//https://www.materialpalette.com/blue/blue-grey
