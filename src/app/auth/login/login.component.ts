@@ -31,4 +31,8 @@ export class LoginComponent {
       verticalPosition: 'top'
    });
   }
+
+  goToRegister() {
+    this.router.navigateByUrl('/auth/register');
+  }
 }
