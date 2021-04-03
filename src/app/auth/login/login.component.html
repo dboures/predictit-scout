@@ -1,34 +1,35 @@
 <div id="app">
   <div class="main">
-      <div class="spacer"> Logo in here I think</div>
-      <mat-card class="content">
-          <div class="row">
-              <h1>Login mebe logo?</h1>
-              <div class="center">
-                <form>
-                  <mat-form-field appearance="outline">
-                    <input matInput placeholder="Twitter_Handle" [(ngModel)]="twitterHandle" name="twitterHandle" required>
-                    <span class="prefix" matPrefix>@&nbsp;</span> 
-                    <!-- // fix vertical placement -->
-                  </mat-form-field>
-                  <mat-form-field appearance="outline">
-                    <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
-                  </mat-form-field>
-                </form>
-                <button class="nav-button" mat-raised-button (click)="login()" color="primary">Log In</button>
-              </div>
-          </div>
-          <div class="forgot">
-            <a class="link" [routerLink]="['/auth/reset-password']">Forgot Password?</a>
-          </div>
-          <div class="account-container">
-            <div class="separator">
-              <span class="textInSeparator">or</span>
-            </div>
-          </div>
-          <div class="bottom-button">
-            <button class="nav-button" mat-raised-button (click)="goToRegister()" color = "accent">Create Account</button>
-          </div>
-    </mat-card>
+    <div class="spacer"></div>
+    <div class="content">
+      <div class="row">
+        <h1>Log In</h1>
+        <div class="center">
+          <form [formGroup]="userForm">
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Twitter_Handle" formControlName="twitterHandle" name="twitterHandle"
+                required>
+              <span class="prefix" matPrefix>@&nbsp;</span>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Password" formControlName="password" type="password" name="password"
+                required>
+            </mat-form-field>
+          </form>
+          <button class="nav-button" mat-raised-button (click)="login()" color="primary">Log In</button>
+        </div>
+      </div>
+      <div class="forgot">
+        <a class="link" [routerLink]="['/auth/reset-password']">Forgot Password?</a>
+      </div>
+      <div class="account-container">
+        <div class="separator">
+          <span class="textInSeparator">or</span>
+        </div>
+      </div>
+      <div class="bottom-button">
+        <button class="nav-button" mat-raised-button (click)="goToRegister()" color="accent">Create Account</button>
+      </div>
+    </div>
   </div>
 </div>

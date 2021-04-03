@@ -1,47 +1,38 @@
-<mat-card class="main-card">
-  <mat-card-header>
-    <mat-card-title>Register</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form>
-      <table cellspacing="0" [formGroup]="userForm">
-        <tr>
-          <td class="twitterHandle">
-            <mat-form-field class="standard-field">
-          <input matInput placeholder="Twitter_Handle" formControlName="twitterHandle" name="twitterHandle" required>
-            <span matPrefix>@&nbsp;</span>
+<div id="app">
+  <div class="main">
+    <div class="spacer"></div>
+    <div class="content">
+      <div class="row">
+        <h1>Create Account</h1>
+        <div class="center">
+          <form [formGroup]="userForm">
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="Twitter_Handle" formControlName="twitterHandle" name="twitterHandle"
+                required>
+              <span matPrefix>@&nbsp;</span>
             </mat-form-field>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <mat-form-field class="standard-field">
+            <mat-form-field appearance="outline">
               <input matInput placeholder="Password" formControlName="password" type="password" name="password"
                 required>
             </mat-form-field>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <mat-form-field class="standard-field">
+            <mat-form-field appearance="outline">
               <input matInput placeholder="Repeat Password" formControlName="repeatPassword" type="password"
                 name="repeatPassword" required>
               <mat-error *ngIf="repeatPassword.invalid && repeatPassword.hasError('passwordMatch')">Password mismatch
               </mat-error>
             </mat-form-field>
-          </td>
-        </tr>
-      </table>
-    </form>
-  </mat-card-content>
-  <mat-card-actions>
-    <button class="nav-button" mat-raised-button (click)="register()">Register</button>
-    
-  </mat-card-actions>
-</mat-card>
-<mat-card class="bottom-card">
-  <span>Already have an account?<br /> 
-    <a [routerLink]="['/auth/login']">Login</a></span>
-</mat-card>
-
-<button mat-raised-button (click)="openMessagesModal()">Help</button>
+          </form>
+          <button class="nav-button" mat-raised-button (click)="register()" color="primary">Create Account</button>
+        </div>
+      </div>
+      <div class="account-container">
+        <div class="separator">
+          <span class="textInSeparator">or</span>
+        </div>
+      </div>
+      <div class="bottom-button">
+        <button class="nav-button" mat-raised-button (click)="goToLogin()" color="accent">Log In</button>
+      </div>
+    </div>
+  </div>
+</div>

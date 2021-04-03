@@ -1,5 +1,5 @@
 .nav-button {
-  width: 95%;
+  width: 100%;
   height: 40px;
   font-weight: bold;
 }
@@ -9,13 +9,19 @@ button:hover {
 }
 
 .content {
-  width: 100%;
+  background-color: #fff;
+  padding-top: 42px;
+  padding-right: 42px;
+  padding-bottom: 36px;
+  padding-left: 42px;
   max-width: 450px;
+  overflow: hidden;
+  border: 1px solid #eaeced;
+  border-radius: 10px;
 }
 
 .main {
   width: 100%;
-  height: 65vh;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -30,12 +36,18 @@ button:hover {
   flex-direction: column;
 }
 
+form {
+  width: 100%;
+}
+
 mat-form-field {
   width: 100%;
 }
 
-.top-spacer {
+.spacer {
   height: 135px;
+  width: 100%;
+  text-align: bottom;
 }
 
 .bottom-button {
@@ -49,7 +61,7 @@ mat-form-field {
 
 //figure out logo / title
 //better hover colors
-//why is the button wrong on server?
+//why is the button wrong on server? for some reason mat-raised-button disappears on hover? maybe it needs to be a class?
 
 .link {
   text-decoration: none;
@@ -66,7 +78,7 @@ mat-form-field {
   border-top: 1px solid #cbd2d6;
   position: relative;
   margin: 25px 0 10px;
-  width: 95%;
+  width: 100%;
 }
 
 .textInSeparator {

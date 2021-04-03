@@ -72,4 +72,8 @@ export class RegisterComponent {
     const dialogRef = this.dialog.open(MessagesModalComponent, {panelClass: 'modal'}
     );
   }
+
+  goToLogin() {
+    this.router.navigateByUrl('/auth/login');
+  }
 }

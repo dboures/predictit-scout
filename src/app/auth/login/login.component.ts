@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -10,13 +11,28 @@ import { AuthService } from '@app/shared/services';
   styleUrls: ['../auth.component.scss'],
 })
 export class LoginComponent {
-  twitterHandle: string | null = null;
-  password: string | null = null;
 
   constructor(private router: Router, private authService: AuthService, public snackBar: MatSnackBar) {}
 
+  userForm = new FormGroup({
+    twitterHandle: new FormControl('', [Validators.required, Validators.maxLength(15)]),
+    password: new FormControl('', [Validators.required]),
+  });
+
+  get twitterHandle(): AbstractControl {
+    return this.userForm.get('twitterHandle')!;
+  }
+
+  get password(): AbstractControl {
+    return this.userForm.get('password')!;
+  }
+
   login(): void {
-    this.authService.login(this.twitterHandle!, this.password!).subscribe(
+    if (this.userForm.invalid) {
+      return;
+    }
+    const { twitterHandle, password } = this.userForm.getRawValue();
+    this.authService.login(twitterHandle, password).subscribe(
       data => {
         this.router.navigateByUrl('/');
       },
