@@ -3,7 +3,8 @@
     <div class="spacer"></div>
     <div class="content">
       <div class="row">
-        <h1>Log In</h1>
+        <img class="img-logo" src="assets/full.png">
+        <h2>Log In</h2>
         <div class="center">
           <form [formGroup]="userForm">
             <mat-form-field appearance="outline">
@@ -16,7 +17,7 @@
                 required>
             </mat-form-field>
           </form>
-          <button class="nav-button" mat-raised-button (click)="login()" color="primary">Log In</button>
+          <button class="nav-button-blue" mat-raised-button (click)="login()" color="primary">Log In</button>
         </div>
       </div>
       <div class="forgot">
@@ -28,7 +29,7 @@
         </div>
       </div>
       <div class="bottom-button">
-        <button class="nav-button" mat-raised-button (click)="goToRegister()" color="accent">Create Account</button>
+        <button class="nav-button-gray" mat-raised-button (click)="goToRegister()" color="accent">Create Account</button>
       </div>
     </div>
   </div>

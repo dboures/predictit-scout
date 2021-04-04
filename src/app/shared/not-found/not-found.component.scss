@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   color: #888;
   margin: 0;
 }
@@ -18,4 +18,9 @@ body {
 .fof {
   display: table-cell;
   vertical-align: middle;
+}
+
+.link {
+  text-decoration: none;
+  color: #2196f3;
 }

@@ -9,7 +9,14 @@ $custom-typography: mat-typography-config(
 
 @include mat-core($custom-typography);
 
-$primary: mat-palette($mat-blue, 700, 700, 700);
+$pi-scout: (
+  600: #449bb8,
+  contrast: (
+    600: white,
+  ),
+);
+
+$primary: mat-palette($pi-scout, 600, 600, 600);
 $accent: mat-palette($mat-grey, 300, 300, 300);
 
 $theme: mat-light-theme($primary, $accent);

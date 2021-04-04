@@ -1,11 +1,21 @@
-.nav-button {
+.nav-button-gray {
   width: 100%;
   height: 40px;
   font-weight: bold;
 }
 
-button:hover {
+.nav-button-blue {
+  width: 100%;
+  height: 40px;
+  font-weight: bold;
+}
+
+.nav-button-gray:hover {
   background-color: #bdbdbd;
+}
+
+.nav-button-blue:hover {
+  background-color: #00838f;
 }
 
 .content {
@@ -45,7 +55,7 @@ mat-form-field {
 }
 
 .spacer {
-  height: 135px;
+  height: 80px;
   width: 100%;
   text-align: bottom;
 }
@@ -59,13 +69,9 @@ mat-form-field {
   margin-top: 25px;
 }
 
-//figure out logo / title
-//better hover colors
-//why is the button wrong on server? for some reason mat-raised-button disappears on hover? maybe it needs to be a class?
-
 .link {
   text-decoration: none;
-  color: #2196f3;
+  color: #00bcd4;
 }
 
 .account-container {
@@ -88,4 +94,8 @@ mat-form-field {
   position: relative;
   color: #6c7378;
   top: -0.7em;
+}
+
+.img-logo {
+  margin-bottom: 30px;
 }

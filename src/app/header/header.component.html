@@ -5,8 +5,6 @@
     </a>
     <span class="example-spacer"></span>
     <a class="links side" (click)="openAboutModal()" *ngIf="!user">About</a>
-    <!-- <a class="links side" routerLink="/auth/login" *ngIf="!user">Login</a>
-    <a class="links side" routerLink="/auth/register" *ngIf="!user">Register</a> -->
     <div>
       <mat-icon *ngIf="user" [matMenuTriggerFor]="menu">menu</mat-icon>
       <mat-menu #menu="matMenu">
